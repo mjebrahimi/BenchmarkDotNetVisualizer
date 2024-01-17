@@ -1,5 +1,4 @@
 
-
 # BenchmarkDotNetVisualizer
 
 Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)
@@ -15,11 +14,12 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
 - [1. Install Package](#1-install-package)
 - [2. Using Exporters](#2-using-exporters)
   - [Example 1 (Json Serializers Benchmark)](#example-1-json-serializers-benchmark)
-- [3. Using Extensions methods on benchmark's Summary (SaveAsHtmlAndImageAsync and etc...)](#3-using-extensions-methods-on-benchmarks-summary-saveashtmlandimageasync-and-etc)
+- [3. Using Extensions methods on benchmark's Summary](#3-using-extensions-methods-on-benchmarks-summary)
   - [Example 2 (Iterators for/foreach/ForEach() Benchmark)](#example-2-iterators-forforeachforeach-benchmark)
-- [4. Using JoinReports method to Join and Pivot reports (JoinReportsAndSaveAsHtmlAndImageAsync, and etc...)](#4-using-joinreports-method-to-join-and-pivot-reports-joinreportsandsaveashtmlandimageasync-and-etc)
-  - [Example 3 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET)](#example-3-performance-comparison-between-for-foreach-and-foreach-method-among-different-versions-of-net)
-  - [Example 4 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET)](#example-4-performance-comparison-between-for-foreach-and-foreach-method-among-different-versions-of-net)
+- [4. Using JoinReports method to Join and Pivot reports](#4-using-joinreports-method-to-join-and-pivot-reports)
+  - [Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)](#example-3-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net)
+  - [Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)](#example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net)
+- [Todo](#todo)
 - [Contributing](#contributing)
 - [Give a Star! ⭐️](#give-a-star-️)
 - [License](#license)
@@ -69,7 +69,7 @@ To see the results, navigate to path:
 
 `[ProjectDirectory]\bin\[Debug|Release]\[.NET-version]\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.html|png`
 
-### 3. Using Extensions methods on benchmark's Summary (SaveAsHtmlAndImageAsync and etc...)
+### 3. Using Extensions methods on benchmark's Summary
 
 ```csharp
 var summary = BenchmarkRunner.Run<JsonSerializersBenchmark>(); 
@@ -135,9 +135,9 @@ Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/m
 **Output Image:**
 ![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.webp)
 
-### 4. Using JoinReports method to Join and Pivot reports (JoinReportsAndSaveAsHtmlAndImageAsync, and etc...)
+### 4. Using JoinReports method to Join and Pivot reports
 
-#### Example 3 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET)
+#### Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)
 
 ```csharp
 //BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
@@ -172,7 +172,7 @@ Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/m
 **Output Image:**
 ![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.webp)
 
-#### Example 4 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET)
+#### Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)
 
 ```csharp
 //BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode

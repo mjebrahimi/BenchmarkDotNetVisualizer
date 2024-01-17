@@ -38,17 +38,18 @@
 <li><a href="#example-1-json-serializers-benchmark">Example 1 (Json Serializers Benchmark)</a></li>
 </ul>
 </li>
-<li><a href="#3-using-extensions-methods-on-benchmarks-summary-saveashtmlandimageasync-and-etc">3. Using Extensions methods on benchmark's Summary (SaveAsHtmlAndImageAsync and etc...)</a>
+<li><a href="#3-using-extensions-methods-on-benchmarks-summary">3. Using Extensions methods on benchmark's Summary</a>
 <ul>
 <li><a href="#example-2-iterators-forforeachforeach-benchmark">Example 2 (Iterators for/foreach/ForEach() Benchmark)</a></li>
 </ul>
 </li>
-<li><a href="#4-using-joinreports-method-to-join-and-pivot-reports-joinreportsandsaveashtmlandimageasync-and-etc">4. Using JoinReports method to Join and Pivot reports (JoinReportsAndSaveAsHtmlAndImageAsync, and etc...)</a>
+<li><a href="#4-using-joinreports-method-to-join-and-pivot-reports">4. Using JoinReports method to Join and Pivot reports</a>
 <ul>
-<li><a href="#example-3-performance-comparison-between-for-foreach-and-foreach-method-among-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET)</a></li>
-<li><a href="#example-4-performance-comparison-between-for-foreach-and-foreach-method-among-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET)</a></li>
+<li><a href="#example-3-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)</a></li>
+<li><a href="#example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)</a></li>
 </ul>
 </li>
+<li><a href="#todo">Todo</a></li>
 <li><a href="#contributing">Contributing</a></li>
 <li><a href="#give-a-star-%EF%B8%8F">Give a Star! ⭐️</a></li>
 <li><a href="#license">License</a></li>
@@ -83,7 +84,7 @@
 </code></pre><p><strong>Output:</strong></p>
 <p>To see the results, navigate to path:</p>
 <p><code>[ProjectDirectory]\bin\[Debug|Release]\[.NET-version]\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.html|png</code></p>
-<h3 id="3-using-extensions-methods-on-benchmarks-summary-saveashtmlandimageasync-and-etc">3. Using Extensions methods on benchmark's Summary (SaveAsHtmlAndImageAsync and etc...) </h3>
+<h3 id="3-using-extensions-methods-on-benchmarks-summary">3. Using Extensions methods on benchmark's Summary </h3>
 <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token class-name"><span class="token keyword keyword-var">var</span></span> summary <span class="token operator">=</span> BenchmarkRunner<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Run</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>JsonSerializersBenchmark<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
 <span class="token comment">//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.html</span>
@@ -135,8 +136,8 @@ Also it <strong>Warns</strong> you if you are running project <strong>incorrectl
 Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.html">HTML file</a> in <code>samples/Reports/Iterators/Benchmark.html</code></p>
 <p><strong>Output Image:</strong><br>
 <img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.webp" alt="Iterators Benchmark"></p>
-<h3 id="4-using-joinreports-method-to-join-and-pivot-reports-joinreportsandsaveashtmlandimageasync-and-etc">4. Using JoinReports method to Join and Pivot reports (JoinReportsAndSaveAsHtmlAndImageAsync, and etc...) </h3>
-<h4 id="example-3-performance-comparison-between-for-foreach-and-foreach-method-among-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET) </h4>
+<h3 id="4-using-joinreports-method-to-join-and-pivot-reports">4. Using JoinReports method to Join and Pivot reports </h3>
+<h4 id="example-3-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET) </h4>
 <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode</span>
 <span class="token comment">//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)</span>
 <span class="token class-name"><span class="token keyword keyword-var">var</span></span> summary <span class="token operator">=</span> BenchmarkAutoRunner<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Run</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>IteratorsBenchmark<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//Recommend instead use BenchmarkAutoRunner.Run&lt;IteratorsBenchmark&gt;();</span>
@@ -165,7 +166,7 @@ Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/mast
 Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html">HTML file</a> in <code>samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html</code></p>
 <p><strong>Output Image:</strong><br>
 <img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.webp" alt="Iterators Benchmark"></p>
-<h4 id="example-4-performance-comparison-between-for-foreach-and-foreach-method-among-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() method among different versions of .NET) </h4>
+<h4 id="example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET) </h4>
 <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode</span>
 <span class="token comment">//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)</span>
 <span class="token class-name"><span class="token keyword keyword-var">var</span></span> summary <span class="token operator">=</span> BenchmarkAutoRunner<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Run</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>IteratorsBenchmark<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//Recommend instead use BenchmarkAutoRunner.Run&lt;IteratorsBenchmark&gt;();</span>
