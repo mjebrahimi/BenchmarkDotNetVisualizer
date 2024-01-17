@@ -3,7 +3,7 @@
 
 Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)
 
-**You can create something like this:**
+**You can create something like this 👇**
 
 ![for, foreach, ForEach() Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/Demo.webp)
 
@@ -21,7 +21,7 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
     - [Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)](#example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net)
 - [Todo](#todo)
 - [Contributing](#contributing)
-- [Give a Star! ⭐️](#give-a-star-️)
+- [Give it a Star! ⭐️](#give-it-a-star-️)
 - [License](#license)
 
 ## A Real World Demo (DotNet Collections Benchmark)
@@ -224,7 +224,7 @@ If you want to develop this project :
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-## Give a Star! ⭐️
+## Give it a Star! ⭐️
 
 If you find this repository useful and like it, why not give it a star? if not, never mind! :)
 
