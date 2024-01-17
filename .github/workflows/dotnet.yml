@@ -30,14 +30,11 @@ jobs:
     - name: Build (Release)
       run: dotnet build --configuration Release --no-restore
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-      
     - name: Test (Release)
       run: dotnet test --configuration Release --no-build --no-restore
 
     - name: Pack (Release)
-      run: dotnet pack --configuration Release --output .\nuget --no-build --no-restore
+      run: dotnet pack --configuration Release --output ./nuget --no-build --no-restore
 
     - name: Publish
       if: github.event_name == 'workflow_dispatch' # manually run
