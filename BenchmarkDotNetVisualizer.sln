@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkDotNetVisualizer", "src\BenchmarkDotNetVisualizer.csproj", "{BDB45959-AE1C-4D3F-B9A3-92480C93706A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkDotNetVisualizer.Demo", "samples\BenchmarkDotNetVisualizer.Demo.csproj", "{21CB02F6-7B14-46FB-A9CA-A6C77DB130CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDB45959-AE1C-4D3F-B9A3-92480C93706A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB45959-AE1C-4D3F-B9A3-92480C93706A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB45959-AE1C-4D3F-B9A3-92480C93706A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB45959-AE1C-4D3F-B9A3-92480C93706A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21CB02F6-7B14-46FB-A9CA-A6C77DB130CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CB02F6-7B14-46FB-A9CA-A6C77DB130CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21CB02F6-7B14-46FB-A9CA-A6C77DB130CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21CB02F6-7B14-46FB-A9CA-A6C77DB130CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F69802B0-D9DB-4D05-ACFA-287E4E26EB4B}
+	EndGlobalSection
+EndGlobal

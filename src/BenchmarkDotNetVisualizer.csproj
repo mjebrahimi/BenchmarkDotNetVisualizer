@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1;<!--netcoreapp3.0;netcoreapp3.1;-->net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>12.0</LangVersion>
+		<AssemblyName>BenchmarkDotNetVisualizer</AssemblyName>
+		<PackageId>BenchmarkDotNetVisualizer</PackageId>
+		<Title>BenchmarkDotNetVisualizer</Title>
+		<Product>BenchmarkDotNetVisualizer</Product>
+		<Version>1.0.0</Version>
+		<PackageVersion>1.0.0</PackageVersion>
+		<AssemblyVersion>1.0.0</AssemblyVersion>
+		<Authors>Mohammad Javad Ebrahimi</Authors>
+		<Company>Mohammad Javad Ebrahimi</Company>
+		<Copyright>Copyright © Mohammad Javad Ebrahimi 2024</Copyright>
+		<Description>
+			Renders your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and markdown files (and maybe charts in the future!)
+		</Description>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>BenchmarkDotNet Benchmark Benchmarking Exporter Visualizer</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/mjebrahimi/BenchmarkDotNetVisualizer</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/mjebrahimi/BenchmarkDotNetVisualizer</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<PackageIcon>package-icon.png</PackageIcon>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<!-- Recommended: Embed symbols containing Source Link in the main file (exe/dll) -->
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="DataProcessor.T.cs" />
+	  <Compile Remove="Utilities\EnumerableExtensions.Orderer.T.cs" />
+	  <Compile Remove="Utilities\FileLockHunter.cs" />
+	  <Compile Remove="Utilities\HtmlHelper.T.cs" />
+	  <Compile Remove="Utilities\MarkdownHelper.T.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+		<!--<PackageReference Include="NuGetizer" Version="1.2.0" PrivateAssets="all" />-->
+		<PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+		<PackageReference Include="PuppeteerSharp" Version="13.0.2" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' AND '$(TargetFramework)'!='net5.0'">
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.2" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1' OR '$(TargetFramework)'=='net5.0'">
+		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.6" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(SolutionDir)\README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+</Project>
