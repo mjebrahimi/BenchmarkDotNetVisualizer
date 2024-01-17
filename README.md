@@ -209,7 +209,7 @@ Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/m
 
 ## Todo
 
-- [ ] Dark Theme (Need some help for this, wanna help? Please design a beautiful style for a dark theme and send a PR)
+- [ ] Dark Theme (Need some help for this, wanna help? Please design a beautiful style for dark theme and send a PR)
 - [ ] Chart Visualization
 
 ## Contributing
