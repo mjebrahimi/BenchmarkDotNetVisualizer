@@ -5,7 +5,7 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
 
 **You can create something like this 👇**
 
-![for, foreach, ForEach() Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/Demo.webp)
+![for, foreach, ForEach() Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/Demo.png)
 
 ## Table of Content
 
@@ -48,7 +48,7 @@ BenchmarkRunner.Run<JsonSerializersBenchmark>();
     title: "Json Serializers Benchmark", 
     groupByColumns: ["Method"],             // Groups by 'Method' column and highlights groups
     spectrumColumns: ["Mean", "Allocated"], // Colorizes 'Mean' and 'Allocated' columns as Spectrum and Sorts the result by them 
-    //format: ImageFormat.Webp              // You can set image format (Default is ImageFormat.Png)
+    //format: ImageFormat.Webp or Jpeg      // You can set image format (Default is ImageFormat.Png)
 )]  
 
 //Exports feature-rich HTML
@@ -96,7 +96,7 @@ await summary.SaveAsHtmlAndImageAsync(
 Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.html) in `samples/Reports/JsonSerializers/Benchmark.html`
 
 **Output Image:**
-![Json Serializers Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.webp)
+![Json Serializers Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.png)
 
 #### Example 2 (Iterators for/foreach/ForEach() Benchmark)
 
@@ -133,7 +133,7 @@ await summary.SaveAsHtmlAndImageAsync(
 Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.html) in `samples/Reports/Iterators/Benchmark.html`
 
 **Output Image:**
-![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.webp)
+![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.png)
 
 ### 4. Using JoinReports method to Join and Pivot reports
 
@@ -170,7 +170,7 @@ await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
 Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html`
 
 **Output Image:**
-![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.webp)
+![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.png)
 
 #### Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)
 
@@ -205,7 +205,7 @@ await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
 Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html`
 
 **Output Image:**
-![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.webp)
+![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.png)
 
 ## Todo
 

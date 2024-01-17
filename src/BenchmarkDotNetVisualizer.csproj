@@ -19,7 +19,7 @@
 			Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)
 		</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>BenchmarkDotNet Benchmark Benchmarking Exporter Visualizer</PackageTags>
+		<PackageTags>BenchmarkDotNet Benchmark Benchmarking Exporter Visualizer Visualization</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/mjebrahimi/BenchmarkDotNetVisualizer</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/mjebrahimi/BenchmarkDotNetVisualizer</RepositoryUrl>

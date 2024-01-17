@@ -27,7 +27,7 @@
 <h1 id="benchmarkdotnetvisualizer">BenchmarkDotNetVisualizer </h1>
 <p>Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)</p>
 <p><strong>You can create something like this 👇</strong></p>
-<p><img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/Demo.webp" alt="for, foreach, ForEach() Benchmark"></p>
+<p><img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/Demo.png" alt="for, foreach, ForEach() Benchmark"></p>
 <h2 id="table-of-content">Table of Content </h2>
 <ul>
 <li><a href="#a-real-world-demo-dotnet-collections-benchmark">A Real World Demo (DotNet Collections Benchmark)</a></li>
@@ -71,7 +71,7 @@
     <span class="token named-parameter punctuation">title</span><span class="token punctuation">:</span> <span class="token string">"Json Serializers Benchmark"</span><span class="token punctuation">,</span> 
     <span class="token named-parameter punctuation">groupByColumns</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Method"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>             <span class="token comment">// Groups by 'Method' column and highlights groups</span>
     spectrumColumns<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Mean"</span><span class="token punctuation">,</span> <span class="token string">"Allocated"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// Colorizes 'Mean' and 'Allocated' columns as Spectrum and Sorts the result by them </span>
-    <span class="token comment">//format: ImageFormat.Webp              // You can set image format (Default is ImageFormat.Png)</span>
+    <span class="token comment">//format: ImageFormat.Webp or Jpeg      // You can set image format (Default is ImageFormat.Png)</span>
 <span class="token punctuation">)</span><span class="token punctuation">]</span>  
 
 <span class="token comment">//Exports feature-rich HTML</span>
@@ -109,7 +109,7 @@
 </code></pre><p><strong>Output HTML:</strong><br>
 Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.html">HTML file</a> in <code>samples/Reports/JsonSerializers/Benchmark.html</code></p>
 <p><strong>Output Image:</strong><br>
-<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.webp" alt="Json Serializers Benchmark"></p>
+<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.png" alt="Json Serializers Benchmark"></p>
 <h4 id="example-2-iterators-forforeachforeach-benchmark">Example 2 (Iterators for/foreach/ForEach() Benchmark) </h4>
 <p><strong>Note (Recommended to use BenchmarkAutoRunner instead of BenchmarkRunner):</strong></p>
 <p><code>BenchmarkAutoRunner</code> is similar to <code>BenchmarkRunner</code> but uses <code>Job.Dry</code> with <code>InProcessEmitToolchain</code> for <code>DEBUG</code> Mode (due to ease of debugging) and your defined job for <code>RELEASE</code> Mode<br>
@@ -138,7 +138,7 @@ Also it <strong>Warns</strong> you if you are running project <strong>incorrectl
 </code></pre><p><strong>Output HTML:</strong><br>
 Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.html">HTML file</a> in <code>samples/Reports/Iterators/Benchmark.html</code></p>
 <p><strong>Output Image:</strong><br>
-<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.webp" alt="Iterators Benchmark"></p>
+<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.png" alt="Iterators Benchmark"></p>
 <h3 id="4-using-joinreports-method-to-join-and-pivot-reports">4. Using JoinReports method to Join and Pivot reports </h3>
 <h4 id="example-3-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET) </h4>
 <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode</span>
@@ -168,7 +168,7 @@ Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/mast
 </code></pre><p><strong>Output HTML:</strong><br>
 Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html">HTML file</a> in <code>samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html</code></p>
 <p><strong>Output Image:</strong><br>
-<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.webp" alt="Iterators Benchmark"></p>
+<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.png" alt="Iterators Benchmark"></p>
 <h4 id="example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET) </h4>
 <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code><span class="token comment">//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode</span>
 <span class="token comment">//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)</span>
@@ -197,7 +197,7 @@ Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/mast
 </code></pre><p><strong>Output HTML:</strong><br>
 Visit <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html">HTML file</a> in <code>samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html</code></p>
 <p><strong>Output Image:</strong><br>
-<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.webp" alt="Iterators Benchmark"></p>
+<img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.png" alt="Iterators Benchmark"></p>
 <h2 id="todo">Todo </h2>
 <ul>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Dark Theme (Need some help for this, wanna help? Please design a beautiful style for a dark theme and send a PR)</li>
