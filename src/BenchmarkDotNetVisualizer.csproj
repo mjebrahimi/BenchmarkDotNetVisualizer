@@ -16,7 +16,7 @@
 		<Company>Mohammad Javad Ebrahimi</Company>
 		<Copyright>Copyright © Mohammad Javad Ebrahimi 2024</Copyright>
 		<Description>
-			Renders your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and markdown files (and maybe charts in the future!)
+			Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)
 		</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>BenchmarkDotNet Benchmark Benchmarking Exporter Visualizer</PackageTags>
