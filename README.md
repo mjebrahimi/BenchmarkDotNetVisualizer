@@ -41,7 +41,7 @@ PM> Install-Package BenchmarkDotNetVisualizer
 
 ### 2. Using Exporters
 
-#### Example 1 (Json Serializers Benchmark)
+#### Example 1 (JSON Serializers Benchmark)
 
 ```csharp
 BenchmarkRunner.Run<JsonSerializersBenchmark>();
@@ -68,7 +68,7 @@ public class JsonSerializersBenchmark { ... }
 
 **Output:**
 
-To see the results, navigate to path:
+To see the results, navigate to the following path:
 
 `[ProjectDirectory]\bin\[Debug|Release]\[.NET-version]\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.html|png`
 
