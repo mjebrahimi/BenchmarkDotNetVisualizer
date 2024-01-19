@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Json Serializers Benchmark</title>
+<style type="text/css">
+    body { font-family: system-ui; padding: 0 30px 30px 30px; width: min-content; display: inline-block; }
+    h1, h2 { border-bottom: solid 1px #D8DEE4;}
+    h1, h2, h3 { padding-bottom: 0.3em; }
+    table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
+    td, th { padding: 6px 13px; border: 1px solid #CCC; text-align: right; white-space: nowrap; }
+    tr { background-color: #FFF !important; border-top: 1px solid #CCC; }
+    tr:nth-child(even):not(.divider) { background: #F8F8F8 !important; }
+    tr.divider { border: 0; font-size: 10px; }
+    tr.divider td { padding: 0; border: 0; }
+    pre { background: #EFEFEF; padding: 0 1em; }
+    thead th { background-color: #EFEFEF; }
+    tbody tr:not(.divider):hover { background-color: #EFEFEF !important; border: 2px solid #ADADAD; }
+    .powered-by { text-align: center; margin-bottom: -20px !important; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Json Serializers Benchmark</h1>
+<pre>
+<code>
+BenchmarkDotNet v0.13.12, Windows 11 (10.0.22631.3007/23H2/2023Update/SunValley3)
+AMD Ryzen 7 5800H with Radeon Graphics, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 8.0.101
+  [Host]   : .NET 8.0.1 (8.0.123.58001), X64 RyuJIT AVX2
+  ShortRun : .NET 8.0.1 (8.0.123.58001), X64 RyuJIT AVX2
+
+Job=ShortRun  IterationCount=3  LaunchCount=1  
+WarmupCount=3
+</code>
+</pre>
+<h2>JsonSerializerBenchmark</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Categories</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;background-color: #FFCCFF"><strong>Serialize</strong></td>
+<td style="text-align: left"><strong>SystemTextSourceGen</strong></td>
+<td style="background-color: #99FF99"><strong>717.3 ns</strong></td>
+<td style=""><strong>39.63 ns</strong></td>
+<td style=""><strong>2.17 ns</strong></td>
+<td style="background-color: #99FF99"><strong>728 B</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;background-color: #FFCCFF">Serialize</td>
+<td style="text-align: left">SystemTextJson</td>
+<td style="background-color: #F8FF99">1,191.1 ns</td>
+<td style="">145.53 ns</td>
+<td style="">7.98 ns</td>
+<td style="background-color: #C8FF99">1040 B</td>
+</tr>
+<tr>
+<td style="text-align: left;background-color: #FFCCFF">Serialize</td>
+<td style="text-align: left">NewtonsoftJson</td>
+<td style="background-color: #FF9999">1,996.0 ns</td>
+<td style="">1,089.30 ns</td>
+<td style="">59.71 ns</td>
+<td style="background-color: #FF9999">3048 B</td>
+</tr>
+<tr class="divider">
+<td colspan="6">&nbsp;</td>
+</tr>
+<tr class="divider">
+<td colspan="6"></td>
+</tr>
+<tr>
+<td style="text-align: left;background-color: #CCFFFF"><strong>Deserialize</strong></td>
+<td style="text-align: left"><strong>SystemTextJson</strong></td>
+<td style="background-color: #99FF99"><strong>1,996.8 ns</strong></td>
+<td style=""><strong>135.25 ns</strong></td>
+<td style=""><strong>7.41 ns</strong></td>
+<td style="background-color: #A3FF99">1784 B</td>
+</tr>
+<tr>
+<td style="text-align: left;background-color: #CCFFFF">Deserialize</td>
+<td style="text-align: left">SystemTextSourceGen</td>
+<td style="background-color: #A9FF99">2,076.9 ns</td>
+<td style="">142.06 ns</td>
+<td style="">7.79 ns</td>
+<td style="background-color: #99FF99"><strong>1688 B</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;background-color: #CCFFFF">Deserialize</td>
+<td style="text-align: left">NewtonsoftJson</td>
+<td style="background-color: #FFD799">3,623.9 ns</td>
+<td style="">250.80 ns</td>
+<td style="">13.75 ns</td>
+<td style="background-color: #FF9999">5504 B</td>
+</tr>
+</tbody>
+</table>
+
+<div class="powered-by">Powered by <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer">https://github.com/mjebrahimi/BenchmarkDotNetVisualizer</a></div>
+</body>
+</html>

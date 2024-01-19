@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Performance Comparison between for, foreach, and ForEeach() method</title>
+<style type="text/css">
+    body { font-family: system-ui; padding: 0 30px 30px 30px; width: min-content; display: inline-block; }
+    h1, h2 { border-bottom: solid 1px #D8DEE4;}
+    h1, h2, h3 { padding-bottom: 0.3em; }
+    table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
+    td, th { padding: 6px 13px; border: 1px solid #CCC; text-align: right; white-space: nowrap; }
+    tr { background-color: #FFF !important; border-top: 1px solid #CCC; }
+    tr:nth-child(even):not(.divider) { background: #F8F8F8 !important; }
+    tr.divider { border: 0; font-size: 10px; }
+    tr.divider td { padding: 0; border: 0; }
+    pre { background: #EFEFEF; padding: 0 1em; }
+    thead th { background-color: #EFEFEF; }
+    tbody tr:not(.divider):hover { background-color: #EFEFEF !important; border: 2px solid #ADADAD; }
+    .powered-by { text-align: center; margin-bottom: -20px !important; font-weight: bold; }
+</style>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.4/css/colReorder.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<style type="text/css">
+    input[type="search"] { font-size: 1em !important; padding: 9px 12px !important; }
+    thead th:hover { background-color: #E0E0E0; }
+</style>
+</head>
+<body>
+<h1>Performance Comparison between for, foreach, and ForEeach() method</h1>
+<pre>
+<code>
+BenchmarkDotNet v0.13.12, Windows 11 (10.0.22631.3007/23H2/2023Update/SunValley3)
+AMD Ryzen 7 5800H with Radeon Graphics, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 8.0.101
+  [Host]                 : .NET 8.0.1 (8.0.123.58001), X64 RyuJIT AVX2
+  ShortRun-.NET 5.0      : .NET 5.0.17 (5.0.1722.21314), X64 RyuJIT AVX2
+  ShortRun-.NET 6.0      : .NET 6.0.26 (6.0.2623.60508), X64 RyuJIT AVX2
+  ShortRun-.NET 7.0      : .NET 7.0.15 (7.0.1523.57226), X64 RyuJIT AVX2
+  ShortRun-.NET 8.0      : .NET 8.0.1 (8.0.123.58001), X64 RyuJIT AVX2
+  ShortRun-.NET Core 3.0 : .NET Core 3.1.32 (CoreCLR 4.700.22.55902, CoreFX 4.700.22.56512), X64 RyuJIT AVX2
+  ShortRun-.NET Core 3.1 : .NET Core 3.1.32 (CoreCLR 4.700.22.55902, CoreFX 4.700.22.56512), X64 RyuJIT AVX2
+
+IterationCount=3  LaunchCount=1  WarmupCount=3
+</code>
+</pre>
+<h2>IteratorsBenchmark</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Runtime</th><th>Categories</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>for</strong></td>
+<td style="text-align: left;background-color: #FFCCFF"><strong>.NET 5.0</strong></td>
+<td style="text-align: left"><strong>Array</strong></td>
+<td style=""><strong>1000</strong></td>
+<td style="background-color: #99FF99"><strong>267.8 ns</strong></td>
+<td style=""><strong>144.87 ns</strong></td>
+<td style=""><strong>7.94 ns</strong></td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 5.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #ADFF99">354.0 ns</td>
+<td style="">9.20 ns</td>
+<td style="">0.50 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 5.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #C9FF99">487.2 ns</td>
+<td style="">60.76 ns</td>
+<td style="">3.33 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 5.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #FFE599">1,424.1 ns</td>
+<td style="">398.58 ns</td>
+<td style="">21.85 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 5.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FFD099">1,632.8 ns</td>
+<td style="">38.65 ns</td>
+<td style="">2.12 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 5.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FF9999">1,868.0 ns</td>
+<td style="">67.89 ns</td>
+<td style="">3.72 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Runtime</th><th>Categories</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>foreach</strong></td>
+<td style="text-align: left;background-color: #CCFFFF"><strong>.NET 6.0</strong></td>
+<td style="text-align: left"><strong>Array</strong></td>
+<td style=""><strong>1000</strong></td>
+<td style="background-color: #99FF99"><strong>235.9 ns</strong></td>
+<td style=""><strong>11.99 ns</strong></td>
+<td style=""><strong>0.66 ns</strong></td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 6.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #9BFF99">244.0 ns</td>
+<td style="">143.79 ns</td>
+<td style="">7.88 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 6.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #B8FF99">353.6 ns</td>
+<td style="">15.84 ns</td>
+<td style="">0.87 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 6.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #F3FF99">706.2 ns</td>
+<td style="">119.70 ns</td>
+<td style="">6.56 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 6.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #FFD499">1,410.8 ns</td>
+<td style="">129.07 ns</td>
+<td style="">7.08 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 6.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FF9999">1,646.3 ns</td>
+<td style="">17.09 ns</td>
+<td style="">0.94 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Runtime</th><th>Categories</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>foreach</strong></td>
+<td style="text-align: left;background-color: #FFCCFF"><strong>.NET 7.0</strong></td>
+<td style="text-align: left"><strong>Array</strong></td>
+<td style=""><strong>1000</strong></td>
+<td style="background-color: #99FF99"><strong>238.4 ns</strong></td>
+<td style=""><strong>41.99 ns</strong></td>
+<td style=""><strong>2.30 ns</strong></td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 7.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #99FF99">239.9 ns</td>
+<td style="">68.04 ns</td>
+<td style="">3.73 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 7.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #D4FF99">470.3 ns</td>
+<td style="">42.41 ns</td>
+<td style="">2.32 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 7.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #D5FF99">475.0 ns</td>
+<td style="">19.81 ns</td>
+<td style="">1.09 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 7.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #FFBD99">1,476.6 ns</td>
+<td style="">2,370.46 ns</td>
+<td style="">129.93 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET 7.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FF9999">1,560.1 ns</td>
+<td style="">1,026.42 ns</td>
+<td style="">56.26 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Runtime</th><th>Categories</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>foreach</strong></td>
+<td style="text-align: left;background-color: #CCFFFF"><strong>.NET 8.0</strong></td>
+<td style="text-align: left"><strong>Array</strong></td>
+<td style=""><strong>1000</strong></td>
+<td style="background-color: #99FF99"><strong>234.4 ns</strong></td>
+<td style=""><strong>39.83 ns</strong></td>
+<td style=""><strong>2.18 ns</strong></td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 8.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #9DFF99">239.1 ns</td>
+<td style="">56.95 ns</td>
+<td style="">3.12 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 8.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #E6FF99">353.5 ns</td>
+<td style="">38.56 ns</td>
+<td style="">2.11 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 8.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #F8FF99">407.7 ns</td>
+<td style="">995.06 ns</td>
+<td style="">54.54 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 8.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #FFFF99">467.2 ns</td>
+<td style="">30.19 ns</td>
+<td style="">1.65 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET 8.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FF9999">704.2 ns</td>
+<td style="">23.72 ns</td>
+<td style="">1.30 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Runtime</th><th>Categories</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>for</strong></td>
+<td style="text-align: left;background-color: #FFCCFF"><strong>.NET Core 3.0</strong></td>
+<td style="text-align: left"><strong>Array</strong></td>
+<td style=""><strong>1000</strong></td>
+<td style="background-color: #99FF99"><strong>286.5 ns</strong></td>
+<td style=""><strong>34.44 ns</strong></td>
+<td style=""><strong>1.89 ns</strong></td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET Core 3.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #C7FF99">465.4 ns</td>
+<td style="">21.01 ns</td>
+<td style="">1.15 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET Core 3.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #C9FF99">472.1 ns</td>
+<td style="">85.65 ns</td>
+<td style="">4.69 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET Core 3.0</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #FFAF99">1,627.6 ns</td>
+<td style="">142.32 ns</td>
+<td style="">7.80 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET Core 3.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FFAD99">1,631.3 ns</td>
+<td style="">24.71 ns</td>
+<td style="">1.35 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #FFCCFF">.NET Core 3.0</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FF9999">1,658.8 ns</td>
+<td style="">156.41 ns</td>
+<td style="">8.57 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th>Method</th><th>Runtime</th><th>Categories</th><th>Length</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Allocated</th></tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left"><strong>foreach</strong></td>
+<td style="text-align: left;background-color: #CCFFFF"><strong>.NET Core 3.1</strong></td>
+<td style="text-align: left"><strong>Array</strong></td>
+<td style=""><strong>1000</strong></td>
+<td style="background-color: #99FF99"><strong>235.7 ns</strong></td>
+<td style=""><strong>25.77 ns</strong></td>
+<td style=""><strong>1.41 ns</strong></td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET Core 3.1</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #A7FF99">288.7 ns</td>
+<td style="">40.74 ns</td>
+<td style="">2.23 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">for</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET Core 3.1</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #D2FF99">473.1 ns</td>
+<td style="">115.86 ns</td>
+<td style="">6.35 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET Core 3.1</td>
+<td style="text-align: left">Array</td>
+<td style="">1000</td>
+<td style="background-color: #FFD699">1,397.3 ns</td>
+<td style="">54.72 ns</td>
+<td style="">3.00 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ForEach()</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET Core 3.1</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FFCD99">1,467.3 ns</td>
+<td style="">1,345.75 ns</td>
+<td style="">73.76 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">foreach</td>
+<td style="text-align: left;background-color: #CCFFFF">.NET Core 3.1</td>
+<td style="text-align: left">List</td>
+<td style="">1000</td>
+<td style="background-color: #FF9999">1,653.8 ns</td>
+<td style="">402.41 ns</td>
+<td style="">22.06 ns</td>
+<td style="text-align: left;background-color: #99FF99"><strong>-</strong></td>
+</tr>
+</tbody>
+</table>
+
+<div class="powered-by">Powered by <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer">https://github.com/mjebrahimi/BenchmarkDotNetVisualizer</a></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/colreorder/1.5.4/js/dataTables.colReorder.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+</body>
+<script>
+    $(document).ready( function () {
+        DataTable.ext.type.order['custom-orderer-pre'] = function (d) {
+            d = d.replace(/(<([^>]+)>)/gi, ""); //remove html tags
+            if (!d.match(/^\d/)) //if not started with number
+                return d;
+            var regex = /[\d,]+(?:\.\d+)?/;
+            var number = d.match(regex)[0].replace(/,/g, ""); //extract number
+            return parseFloat(number); //Number
+        };
+        $('table').DataTable({
+            info: false,
+            paging: false,
+            colReorder: true,
+            order: [], //remove default order
+            columnDefs: [
+                {
+                    type: 'custom-orderer',
+                    targets: '_all'
+                }
+            ],
+            dom: 'Bfrtip',
+            buttons: ['colvis']
+        });
+    });
+</script>
+</html>

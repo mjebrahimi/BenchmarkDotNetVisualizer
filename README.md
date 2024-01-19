@@ -1,3 +1,6 @@
+[![NuGet](https://buildstats.info/nuget/BenchmarkDotNetVisualizer)](https://www.nuget.org/packages/BenchmarkDotNetVisualizer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/workflows/.NET/badge.svg)](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer)
 
 # BenchmarkDotNetVisualizer
 
@@ -5,7 +8,7 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
 
 **You can create something like this 👇**
 
-![for, foreach, ForEach() Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/Demo.png)
+![for, foreach, ForEach() Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/Demo.png)
 
 ## Table of Content
 
@@ -93,10 +96,10 @@ await summary.SaveAsHtmlAndImageAsync(
 ```
 
 **Output HTML:**
-Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.html) in `samples/Reports/JsonSerializers/Benchmark.html`
+Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/json-serializers-benchmark.html) in `samples/Reports/JsonSerializers/Benchmark.html`
 
 **Output Image:**
-![Json Serializers Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/JsonSerializers/Benchmark.png)
+![Json Serializers Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/JsonSerializers/Benchmark.png)
 
 #### Example 2 (Iterators for/foreach/ForEach() Benchmark)
 
@@ -130,10 +133,10 @@ await summary.SaveAsHtmlAndImageAsync(
 ```
 
 **Output HTML:**
-Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.html) in `samples/Reports/Iterators/Benchmark.html`
+Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark1.html) in `samples/Reports/Iterators/Benchmark.html`
 
 **Output Image:**
-![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/Benchmark.png)
+![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/Benchmark.png)
 
 ### 4. Using JoinReports method to Join and Pivot reports
 
@@ -167,10 +170,10 @@ await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
 ```
 
 **Output HTML:**
-Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html`
+Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark2.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html`
 
 **Output Image:**
-![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.png)
+![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.png)
 
 #### Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)
 
@@ -202,10 +205,10 @@ await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
 ```
 
 **Output HTML:**
-Visit [HTML file](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html`
+Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark3.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html`
 
 **Output Image:**
-![Iterators Benchmark](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/blob/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.png)
+![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.png)
 
 ## Todo
 

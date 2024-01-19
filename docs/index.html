@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>BenchmarkDotNetVisualizer</title>
+    <meta name="title" content="BenchmarkDotNetVisualizer" />
+    <meta name="description" content="Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)" />
+
+    <link rel="stylesheet" href="assets/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/site.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/vs.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/xcode.min.css" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/base16/one-light.min.css" /> -->
+
+    <style>
+        body { background: #fdf6e3; }
+        nav.navbar { background-color: #fefbf4 !important; }
+        pre { border: 1px solid #ffdead; border-radius: 3px;}
+        code { background: #fff !important; }
+        code:not(pre code) { color: #1e2427; background-color: #fbedc6 !important; border-radius: 3px; }
+        img { border: 1px solid lightgrey; border-radius: 3px; margin-top: 10px; }
+        h2, h3, h4 { margin-top: 1em; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">BenchmarkDotNetVisualizer</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="json-serializers-benchmark.html">Example 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="iterators-benchmark1.html">Example 2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="iterators-benchmark2.html">Example 3</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="iterators-benchmark3.html">Example 4</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div>
+                <p><a href="https://www.nuget.org/packages/BenchmarkDotNetVisualizer"><img src="https://buildstats.info/nuget/BenchmarkDotNetVisualizer" alt="NuGet"></a>
+                <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT"></a>
+                <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer"><img src="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/workflows/.NET/badge.svg" alt="Build Status"></a></p>
+                <h1 id="benchmarkdotnetvisualizer">BenchmarkDotNetVisualizer </h1>
+                <hr/>
+                <p>Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)</p>
+                <p><strong>You can create something like this 👇</strong></p>
+                <p><img src="https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/Demo.png" alt="for, foreach, ForEach() Benchmark"></p>
+                <h2 id="table-of-content">Table of Content </h2>
+                <hr/>
+                <ul>
+                <li><a href="#a-real-world-demo-dotnet-collections-benchmark">A Real World Demo (DotNet Collections Benchmark)</a></li>
+                <li><a href="#getting-started">Getting Started</a>
+                <ul>
+                <li><a href="#1-install-package">1. Install Package</a></li>
+                <li><a href="#2-using-exporters">2. Using Exporters</a>
+                <ul>
+                <li><a href="#example-1-json-serializers-benchmark">Example 1 (Json Serializers Benchmark)</a></li>
+                </ul>
+                </li>
+                <li><a href="#3-using-extensions-methods-on-benchmarks-summary">3. Using Extensions methods on benchmark's Summary</a>
+                <ul>
+                <li><a href="#example-2-iterators-forforeachforeach-benchmark">Example 2 (Iterators for/foreach/ForEach() Benchmark)</a></li>
+                </ul>
+                </li>
+                <li><a href="#4-using-joinreports-method-to-join-and-pivot-reports">4. Using JoinReports method to Join and Pivot reports</a>
+                <ul>
+                <li><a href="#example-3-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)</a></li>
+                <li><a href="#example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)</a></li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                <li><a href="#todo">Todo</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+                <li><a href="#give-it-a-star-%EF%B8%8F">Give it a Star! ⭐️</a></li>
+                <li><a href="#license">License</a></li>
+                </ul>
+                <h2 id="a-real-world-demo-dotnet-collections-benchmark">A Real World Demo (DotNet Collections Benchmark) </h2>
+                <hr/>
+                <p><a href="https://github.com/mjebrahimi/DotNet-Collections-Benchmark/">A comprehensive performance comparison benchmark through different .NET collections.</a></p>
+                <h2 id="getting-started">Getting Started </h2>
+                <hr/>
+                <h3 id="1-install-package">1. Install Package </h3>
+                <pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code>PM&gt; Install-Package BenchmarkDotNetVisualizer</code></pre>
+                <h3 id="2-using-exporters">2. Using Exporters </h3>
+                <hr/>
+                <h4 id="example-1-json-serializers-benchmark">Example 1 (Json Serializers Benchmark) </h4>
+                <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code>//Program.cs
+//Run your benchmark and export the results
+BenchmarkRunner.Run&lt;JsonSerializersBenchmark&gt;();
+
+//Exports colorful image
+[RichImageExporter(
+    title: &quot;Json Serializers Benchmark&quot;, 
+    groupByColumns: [&quot;Method&quot;],             // Groups by &#39;Method&#39; column and highlights groups
+    spectrumColumns: [&quot;Mean&quot;, &quot;Allocated&quot;], // Colorizes &#39;Mean&#39; and &#39;Allocated&#39; columns as Spectrum and Sorts the result by them 
+    //format: ImageFormat.Webp or Jpeg      // You can set image format (Default is ImageFormat.Png)
+)]  
+
+//Exports feature-rich HTML
+[RichHtmlExporter(
+    title: &quot;Json Serializers Benchmark&quot;, 
+    groupByColumns: [&quot;Method&quot;],             // Groups by &#39;Method&#39; column and highlights groups
+    spectrumColumns: [&quot;Mean&quot;, &quot;Allocated&quot;]  // Colorizes &#39;Mean&#39; and &#39;Allocated&#39; columns as Spectrum and Sorts the result by them 
+    //sortByColumns: [&quot;Mean&quot;, &quot;Allocated&quot;]  // You can also sort by other columns as you wish
+)]
+
+[MemoryDiagnoser(displayGenColumns: false)] // Displays Allocated column (without GC per Generation columns (Gen 0, Gen 1, Gen 2) due to false option)
+public class JsonSerializersBenchmark { ... }</code></pre>
+                <p><strong>Output:</strong></p>
+                <p>To see the results, navigate to path:</p>
+                <p><code>[ProjectDirectory]\bin\[Debug|Release]\[.NET-version]\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.html|png</code></p>
+                <h3 id="3-using-extensions-methods-on-benchmarks-summary">3. Using Extensions methods on benchmark's Summary </h3>
+                <hr/>
+                <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code>var summary = BenchmarkRunner.Run&lt;JsonSerializersBenchmark&gt;(); 
+
+//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.html
+var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@&quot;Reports\JsonSerializers\Benchmark.html&quot;);
+
+//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.png
+var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@&quot;Reports\JsonSerializers\Benchmark.png&quot;);
+await summary.SaveAsHtmlAndImageAsync(
+    htmlPath: htmlFileName, 
+    imagePath: imageFileName,
+    options: new ReportHtmlOptions
+    {
+        Title = &quot;Json Serializers Benchmark&quot;,
+        GroupByColumns = [&quot;Method&quot;],                          // Groups by &#39;Method&#39; column and highlights groups
+        SpectrumColumns = [&quot;Mean&quot;, &quot;Allocated&quot;],              // Colorizes &#39;Mean&#39; and &#39;Allocated&#39; columns as Spectrum
+        DividerMode = RenderTableDividerMode.EmptyDividerRow, // Separates tables by Empty Divider Row
+        HtmlWrapMode = HtmlDocumentWrapMode.Simple            // Uses simple HTML table
+    });</code></pre><p><strong>Output HTML:</strong><br>
+                Visit <a href="json-serializers-benchmark.html">HTML file</a> in <code>samples/Reports/JsonSerializers/Benchmark.html</code></p>
+                <p><strong>Output Image:</strong><br>
+                <img src="https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/JsonSerializers/Benchmark.png" alt="Json Serializers Benchmark"></p>
+                <h4 id="example-2-iterators-forforeachforeach-benchmark">Example 2 (Iterators for/foreach/ForEach() Benchmark) </h4>
+                <p><strong>Note (Recommended to use BenchmarkAutoRunner instead of BenchmarkRunner):</strong></p>
+                <p><code>BenchmarkAutoRunner</code> is similar to <code>BenchmarkRunner</code> but uses <code>Job.Dry</code> with <code>InProcessEmitToolchain</code> for <code>DEBUG</code> Mode (due to ease of debugging) and your defined job for <code>RELEASE</code> Mode<br>
+                Also it <strong>Warns</strong> you if you are running project <strong>incorrectly</strong> (For example running with <strong>Attached Debugger</strong> while <code>RELEASE</code> Mode is enabled)</p>
+                <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code>//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
+//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)
+var summary = BenchmarkAutoRunner.Run&lt;IteratorsBenchmark&gt;(); //Recommend instead use BenchmarkAutoRunner.Run&lt;IteratorsBenchmark&gt;();
+
+//[ProjectDirectory]\Reports\Iterators\Benchmark.html
+var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@&quot;Reports\Iterators\Benchmark.html&quot;);
+
+//[ProjectDirectory]\Reports\Iterators\Benchmark.png
+var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@&quot;Reports\Iterators\Benchmark.png&quot;);
+
+await summary.SaveAsHtmlAndImageAsync(
+    htmlPath: htmlFileName,
+    imagePath: imageFileName,
+    options: new ReportHtmlOptions
+    {
+        Title = &quot;Performance Comparison between for, foreach, and ForEeach() method&quot;,
+        GroupByColumns = [&quot;Runtime&quot;],                        // Groups by column &#39;Runtime&#39;
+        SpectrumColumns = [&quot;Mean&quot;, &quot;Allocated&quot;],             // Colorizes &#39;Mean&#39; and &#39;Allocated&#39; columns as Spectrum
+        DividerMode = RenderTableDividerMode.SeparateTables, // Separates tables by Grouping by &#39;GroupByColumns&#39;
+        HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  // Uses feature-rich https://datatables.net plugin
+    });</code></pre><p><strong>Output HTML:</strong><br>
+                Visit <a href="iterators-benchmark1.html">HTML file</a> in <code>samples/Reports/Iterators/Benchmark.html</code></p>
+                <p><strong>Output Image:</strong><br>
+                <img src="https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/Benchmark.png" alt="Iterators Benchmark"></p>
+                <h3 id="4-using-joinreports-method-to-join-and-pivot-reports">4. Using JoinReports method to Join and Pivot reports </h3>
+                <hr/>
+                <h4 id="example-3-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET) </h4>
+                <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code>//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
+//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)
+var summary = BenchmarkAutoRunner.Run&lt;IteratorsBenchmark&gt;(); //Recommend instead use BenchmarkAutoRunner.Run&lt;IteratorsBenchmark&gt;();
+
+//[ProjectDirectory]\Reports\Iterators\JoinedBenchmark-PivotBy-Runtime.html
+var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@&quot;Reports\Iterators\JoinedBenchmark-PivotBy-Runtime.html&quot;);
+
+//[ProjectDirectory]\Reports\Iterators\JoinedBenchmark-PivotBy-Runtime.png
+var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@&quot;Reports\Iterators\JoinedBenchmark-PivotBy-Runtime.png&quot;);
+
+await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
+    htmlPath: htmlFileName,
+    imagePath: imageFileName,
+    options: new JoinReportHtmlOptions
+    {
+        Title = &quot;Performance Comparison between for, foreach, and ForEeach() method&quot;,
+        MainColumn = &quot;Method&quot;,
+        GroupByColumns = [&quot;Categories&quot;, &quot;Length&quot;],           // Groups by column &#39;Categories&#39; and &#39;Length&#39;
+        PivotProperty = &quot;Runtime&quot;,
+        StatisticColumns = [&quot;Mean&quot;],
+        ColumnsOrder = [&quot;.NET Core 3.0&quot;, &quot;.NET Core 3.1&quot;, &quot;.NET 5.0&quot;, &quot;.NET 6.0&quot;, &quot;.NET 7.0&quot;, &quot;.NET 8.0&quot;], // Order of columns 
+        DividerMode = RenderTableDividerMode.SeparateTables, //Separates tables by Grouping by &#39;GroupByColumns&#39;
+        HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  //Uses feature-rich https://datatables.net plugin
+    });</code></pre><p><strong>Output HTML:</strong><br>
+                Visit <a href="iterators-benchmark2.html">HTML file</a> in <code>samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html</code></p>
+                <p><strong>Output Image:</strong><br>
+                <img src="https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.png" alt="Iterators Benchmark"></p>
+                <h4 id="example-4-performance-comparison-between-for-foreach-and-foreach-in-different-versions-of-net">Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET) </h4>
+                <pre data-role="codeBlock" data-info="csharp" class="language-csharp csharp"><code>//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
+//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)
+var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>(); //Recommend instead use BenchmarkAutoRunner.Run<IteratorsBenchmark>();
+
+//[ProjectDirectory]\Reports\Iterators\JoinedBenchmark-PivotBy-Method.html
+var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\JoinedBenchmark-PivotBy-Method.html");
+
+//[ProjectDirectory]\Reports\Iterators\JoinedBenchmark-PivotBy-Method.png
+var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\JoinedBenchmark-PivotBy-Method.png");
+
+await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
+    htmlPath: htmlFileName,
+    imagePath: imageFileName,
+    options: new JoinReportHtmlOptions
+    {
+        Title = "Performance Comparison between for, foreach, and ForEeach() method",
+        MainColumn = "Runtime",
+        GroupByColumns = ["Categories", "Length"],           // Groups by column 'Categories' and 'Length'
+        PivotProperty = "Method",
+        StatisticColumns = ["Mean"],
+        ColumnsOrder = ["for", "foreach", "ForEach()"],      // Order of columns 
+        DividerMode = RenderTableDividerMode.SeparateTables, // Separates tables by Grouping by 'GroupByColumns'
+        HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  // Uses feature-rich https://datatables.net plugin
+    });</code></pre><p><strong>Output HTML:</strong><br>
+                Visit <a href="iterators-benchmark3.html">HTML file</a> in <code>samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html</code></p>
+                <p><strong>Output Image:</strong><br>
+                <img src="https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.png" alt="Iterators Benchmark"></p>
+                <h2 id="todo">Todo </h2>
+                <hr/>
+                <ul>
+                <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Dark Theme (Need some help for this, wanna help? Please design a beautiful style for dark theme and send a PR)</li>
+                <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Chart Visualization</li>
+                </ul>
+                <h2 id="contributing">Contributing </h2>
+                <hr/>
+                <p>Create an <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/issues/new">issue</a> if you find a BUG or have a Suggestion or Question.</p>
+                <p>If you want to develop this project :</p>
+                <ol>
+                <li>Fork it!</li>
+                <li>Create your feature branch: <code>git checkout -b my-new-feature</code></li>
+                <li>Commit your changes: <code>git commit -am 'Add some feature'</code></li>
+                <li>Push to the branch: <code>git push origin my-new-feature</code></li>
+                <li>Submit a pull request</li>
+                </ol>
+                <h2 id="give-it-a-star-️">Give it a Star! ⭐️ </h2>
+                <hr/>
+                <p>If you find this repository useful and like it, why not give it a star? if not, never mind! :)</p>
+                <h2 id="license">License </h2>
+                <hr/>
+                <p>Copyright © 2024 <a href="https://github.com/mjebrahimi">Mohammad Javad Ebrahimi</a> under the <a href="https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/LICENSE">MIT License</a>.</p>
+                </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            Copyright &copy; 2024 - BenchmarkDotNetVisualizer
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+    <script src="assets/cshtml-razor.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
