@@ -12,7 +12,7 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
 
 ## Table of Content
 
-- [A Real World Demo (DotNet Collections Benchmark)](#a-real-world-demo-dotnet-collections-benchmark)
+- [A Real World Demo (.NET Collections Benchmark)](#a-real-world-demo-net-collections-benchmark)
 - [Getting Started](#getting-started)
   - [1. Install Package](#1-install-package)
   - [2. Using Exporters](#2-using-exporters)
@@ -27,9 +27,9 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
 - [Give it a Star! ⭐️](#give-it-a-star-️)
 - [License](#license)
 
-## A Real World Demo (DotNet Collections Benchmark)
+## A Real World Demo (.NET Collections Benchmark)
 
-[A comprehensive performance comparison benchmark through different .NET collections.](https://github.com/mjebrahimi/DotNet-Collections-Benchmark/)
+[A comprehensive performance comparison benchmark between different .NET collections.](https://github.com/mjebrahimi/DotNet-Collections-Benchmark/)
 
 ## Getting Started
 
