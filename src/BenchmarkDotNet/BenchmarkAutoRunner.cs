@@ -1,4 +1,7 @@
-﻿using BenchmarkDotNet.Configs;
+﻿// Do not remove this, it is needed to retain calls to conditional methods in release builds
+#define DEBUG
+
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNetVisualizer.Utilities;
