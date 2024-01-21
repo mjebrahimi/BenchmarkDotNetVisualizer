@@ -9,9 +9,9 @@
 		<PackageId>BenchmarkDotNetVisualizer</PackageId>
 		<Title>BenchmarkDotNetVisualizer</Title>
 		<Product>BenchmarkDotNetVisualizer</Product>
-		<Version>1.0.2</Version>
-		<PackageVersion>1.0.2</PackageVersion>
-		<AssemblyVersion>1.0.2</AssemblyVersion>
+		<Version>1.0.3</Version>
+		<PackageVersion>1.0.3</PackageVersion>
+		<AssemblyVersion>1.0.3</AssemblyVersion>
 		<Authors>Mohammad Javad Ebrahimi</Authors>
 		<Company>Mohammad Javad Ebrahimi</Company>
 		<Copyright>Copyright © Mohammad Javad Ebrahimi 2024</Copyright>
