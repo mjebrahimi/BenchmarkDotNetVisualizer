@@ -1,7 +1,4 @@
-﻿// Do not remove this, it is needed to retain calls to conditional methods in release builds
-#define DEBUG
-
-using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNetVisualizer.Utilities;
@@ -152,21 +149,13 @@ public static class BenchmarkAutoRunner
     /// </returns>
     public static bool IsRunningInDebugMode()
     {
-        //NOTE: #if Directives does not work because applies in compile-time not run-time
-        //#if DEBUG
-        //return true;
-        //#else
-        //return false;
-        //#endif
-        RunIfDebug();
-        return debugging;
+        //NOTE: #if DEBUG or [Conditional("DEBUG")] don't work for libraries because these are applied in compile-time not run-time
+        var customAttributes = Assembly.GetEntryAssembly()!.GetCustomAttributes(typeof(DebuggableAttribute), false);
+        if (customAttributes?.Length == 1)
+        {
+            var attribute = (DebuggableAttribute)customAttributes[0];
+            return attribute.IsJITOptimizerDisabled && attribute.IsJITTrackingEnabled;
+        }
+        return false;
     }
-
-    [Conditional("DEBUG")]
-    private static void RunIfDebug()
-    {
-        debugging = true;
-    }
-
-    private static bool debugging;
 }
