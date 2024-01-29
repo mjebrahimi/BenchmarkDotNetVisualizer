@@ -51,7 +51,7 @@
 		<PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 		<!--<PackageReference Include="NuGetizer" Version="1.2.0" PrivateAssets="all" />-->
 		<PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
-		<PackageReference Include="PuppeteerSharp" Version="13.0.2" />
+		<PackageReference Include="PuppeteerSharp" Version="14.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' AND '$(TargetFramework)'!='net5.0'">
