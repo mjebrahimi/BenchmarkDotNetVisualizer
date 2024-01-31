@@ -133,7 +133,7 @@ public static partial class HtmlHelper
             cancellationToken.ThrowIfCancellationRequested();
 
             var bounding = await elementHandle.BoundingBoxAsync(); // await elementHandle.BoxModelAsync();
-            var options = new ScreenshotOptions
+            var options = new ElementScreenshotOptions
             {
                 Clip = new Clip() { X = 0, Y = 0, Height = bounding.Height, Width = bounding.Width },
                 Type = ScreenshotType.Png, // Poor quality with Jpeg/WebP.
