@@ -73,7 +73,6 @@ public static partial class EnumerableExtensions
         ArgumentNullException.ThrowIfNull(source, nameof(source));
         ArgumentNullException.ThrowIfNull(condition, nameof(condition));
 
-        //for example calling new[] { 0, 0, 1, 2, 0, 0, 3, 4, 0, 0 }.SplitByOccurrence(p => p == 0).Select(p => p.ToList()).ToList() => must returns [ [1,2], [3,4] ]
         var section = 0;
         return source.GroupBy(p =>
         {
@@ -98,7 +97,8 @@ public static partial class EnumerableExtensions
         ArgumentNullException.ThrowIfNull(source, nameof(source));
         ArgumentNullException.ThrowIfNull(keySelector, nameof(keySelector));
 
-        //for example calling new[] { 0, 0, 1, 2, 0, 0, 3, 3, 0, 0 }.SplitByOccurrence(p => p == 0).Select(p => p.ToList()).ToList() => must returns [ [0, 0], [1], [2], [0, 0], [3, 3], [0, 0] ]
+        //for example calling new[] { 0, 0, 1, 2, 0, 0, 3, 3, 0, 0 }.SplitByOccurrence(p => p).Select(p => p.ToList()).ToList() => must returns [ [0, 0], [1], [2], [0, 0], [3, 3], [0, 0] ]
+
         var section = 0;
         TKey? previeusGroupValue = default;
         return source.GroupBy(p =>
@@ -111,6 +111,29 @@ public static partial class EnumerableExtensions
                 section++;
             return section;
         }).Select(p => p.Select(p => p));
+
+        //NOTE: Old implementation
+        //return Enumerate(source, keySelector);
+        //static IEnumerable<IEnumerable<T>> Enumerate(IEnumerable<T> source, Func<T, TKey> keySelector)
+        //{
+        //    TKey? previeusGroupValue = default;
+        //    var startIndex = 0;
+        //    var currentIndex = 0;
+        //    foreach (var item in source)
+        //    {
+        //        var currentGroupValue = keySelector(item);
+        //        var shouldSplit = previeusGroupValue is not null && currentGroupValue!.Equals(previeusGroupValue) is false;
+        //        previeusGroupValue = currentGroupValue;
+
+        //        if (shouldSplit)
+        //        {
+        //            yield return source.Skip(startIndex).Take(currentIndex - startIndex);
+        //            startIndex = currentIndex;
+        //        }
+        //        currentIndex++;
+        //    }
+        //    yield return source.Skip(startIndex);
+        //}
     }
 
     /// <summary>
@@ -127,9 +150,35 @@ public static partial class EnumerableExtensions
         ArgumentNullException.ThrowIfNull(keySelector, nameof(keySelector));
 
         //for example calling new[] { 0, 0, 1, 2, 0, 0, 3, 3, 0, 0 }.SplitByGroup(p => p == 0).Select(p => p.ToList()).ToList() => must returns [ [0, 0, 0, 0, 0, 0], [1], [2], [3, 3], ]
+
         return source
             .GroupBy(keySelector)
             .Select(p => p.AsEnumerable());
+
+        //NOTE: Old implementation (it buffers the enumerable, as opposite to new implementation)
+        //return Enumerate(source, keySelector);
+        //static IEnumerable<IEnumerable<T>> Enumerate(IEnumerable<T> source, Func<T, TKey> keySelector)
+        //{
+        //    source = source.OrderBy(keySelector); //Ordering is necessary
+
+        //    TKey? previeusGroupValue = default;
+        //    var startIndex = 0;
+        //    var currentIndex = 0;
+        //    foreach (var item in source)
+        //    {
+        //        var currentGroupValue = keySelector(item);
+        //        var shouldSplit = previeusGroupValue is not null && currentGroupValue!.Equals(previeusGroupValue) is false;
+        //        previeusGroupValue = currentGroupValue;
+
+        //        if (shouldSplit)
+        //        {
+        //            yield return source.Skip(startIndex).Take(currentIndex - startIndex);
+        //            startIndex = currentIndex;
+        //        }
+        //        currentIndex++;
+        //    }
+        //    yield return source.Skip(startIndex);
+        //}
     }
 
     /// <summary>

@@ -21,6 +21,17 @@ public static partial class NumberExtensions
     }
 
     /// <summary>
+    /// Extracts the number from the <paramref name="input"/> or default.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns></returns>
+    public static decimal ExtractNumberOrDefault(this string input)
+    {
+        TryExtractNumber(input, out var value);
+        return value;
+    }
+
+    /// <summary>
     /// Tries to extract the number from the <paramref name="input"/>.
     /// </summary>
     /// <param name="input">The input.</param>
@@ -36,17 +47,6 @@ public static partial class NumberExtensions
 
         var str = GetExtractNumberRegex().Match(input).Value;// .Value.Replace(",", "");
         return decimal.TryParse(str, out value);
-    }
-
-    /// <summary>
-    /// Extracts the number from the <paramref name="input"/> or default.
-    /// </summary>
-    /// <param name="input">The input.</param>
-    /// <returns></returns>
-    public static decimal ExtractNumberOrDefault(this string input)
-    {
-        TryExtractNumber(input, out var value);
-        return value;
     }
 
     /// <summary>

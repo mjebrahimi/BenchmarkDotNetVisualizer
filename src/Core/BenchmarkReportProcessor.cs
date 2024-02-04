@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: expando
 
 using BenchmarkDotNetVisualizer.Utilities;
+using Force.DeepCloner;
 using System.Dynamic;
 
 namespace BenchmarkDotNetVisualizer;
@@ -37,23 +38,27 @@ public static class BenchmarkReportProcessor
 
         otherColumnsToSelect ??= ["Categories"];
 
+        enumerable = enumerable.Select(innerCollection => innerCollection.Select(expando => expando?.CloneWithMetaProperties()).ToArray()).ToArray();
+
         enumerable = enumerable
             .MergeAndSplitByGroup(pivotProperty).ToArray();
         //.OrderCollectionsByValues(pivotProperty, columnsOrder).ToArray(); //Old approach for columns ordering
 
-        PivotColumnEachCollection(enumerable, pivotProperty, statisticColumn);
+        enumerable = PivotColumnEachCollection(enumerable, pivotProperty, statisticColumn);
 
         string[] joinKeyColumns = [mainColumn, .. groupByColumns];
         var joined = JoinCollectionsTogether(enumerable, joinKeyColumns, columnsOrder);
 
         RemoveMarkdownBoldFromProperties(joined);
 
-        string[] allColumnsByOrder = [mainColumn, .. otherColumnsToSelect, .. groupByColumns, .. columnsOrder];
-        joined.RemovePropertiesExcept(allColumnsByOrder);
-        joined.SetColumnsOrder(allColumnsByOrder); //The new approach is SetColumnsOrder
-
         var spectrumColumns = spectrumStatisticColumn ? columnsOrder : null;
-        return Process(joined, groupByColumns, spectrumColumns, columnsOrder, highlightGroups, boldEntireRowOfLowestValue: false);
+        var result = Process(joined, groupByColumns, spectrumColumns, columnsOrder, highlightGroups, boldEntireRowOfLowestValue: false);
+
+        string[] allColumnsByOrder = [mainColumn, .. otherColumnsToSelect, .. groupByColumns, .. columnsOrder];
+        result.RemovePropertiesExcept(allColumnsByOrder);
+        result.SetColumnsOrder(allColumnsByOrder); //The new approach is SetColumnsOrder
+
+        return result;
     }
 
     /// <summary>
@@ -70,6 +75,7 @@ public static class BenchmarkReportProcessor
         string[]? groupByColumns = null, string[]? spectrumColumns = null, string[]? sortByColumns = null, bool highlightGroups = true, bool boldEntireRowOfLowestValue = true)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
+
         if (highlightGroups && groupByColumns.IsNullOrEmpty())
         {
             throw new System.ArgumentException(
@@ -77,7 +83,7 @@ public static class BenchmarkReportProcessor
                 $"Set '{nameof(highlightGroups)}' to false or provide '{nameof(groupByColumns)}", nameof(groupByColumns));
         }
 
-        enumerable = enumerable.ToArray().AsEnumerable();
+        enumerable = enumerable.Select(expando => expando?.CloneWithMetaProperties()).ToArray().AsEnumerable();
         enumerable.RemoveMarkdownBoldFromProperties();
 
         if (groupByColumns.IsNotNullOrEmpty())
@@ -89,7 +95,7 @@ public static class BenchmarkReportProcessor
         }
 
         if (spectrumColumns.IsNotNullOrEmpty())
-            SplitByNullAndSpectrumColumns(enumerable, spectrumColumns, boldEntireRowOfLowestValue);
+            enumerable = SplitByNullAndSpectrumColumns(enumerable, spectrumColumns, boldEntireRowOfLowestValue);
 
         if (sortByColumns.IsNotNullOrEmpty())
             enumerable = SplitByNullAndSortEachCollection(enumerable, sortByColumns);
@@ -155,10 +161,13 @@ public static class BenchmarkReportProcessor
     /// <param name="statisticColumn">The statistic column.</param>
     /// <param name="removeStatisticColumn">Remove statistic column if set to <c>true</c>.</param>
     /// <returns></returns>
-    public static void PivotColumnEachCollection(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable, string pivotColumn, string statisticColumn, bool removeStatisticColumn = true)
+    public static IEnumerable<IEnumerable<ExpandoObject?>> PivotColumnEachCollection(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable, string pivotColumn, string statisticColumn, bool removeStatisticColumn = true)
     {
-        foreach (var innerCollection in enumerable)
-            PivotColumn(innerCollection, pivotColumn, statisticColumn, removeStatisticColumn);
+        Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
+        ArgumentException.ThrowIfNullOrWhiteSpace(pivotColumn, nameof(pivotColumn));
+        ArgumentException.ThrowIfNullOrWhiteSpace(statisticColumn, nameof(statisticColumn));
+
+        return enumerable.Select(innerCollection => PivotColumn(innerCollection, pivotColumn, statisticColumn, removeStatisticColumn));
     }
 
     /// <summary>
@@ -169,12 +178,21 @@ public static class BenchmarkReportProcessor
     /// <param name="statisticColumn">The statistic column.</param>
     /// <param name="removeStatisticColumn">Remove statistic column if set to <c>true</c>.</param>
     /// <returns></returns>
-    public static void PivotColumn(this IEnumerable<ExpandoObject?> enumerable, string pivotColumn, string statisticColumn, bool removeStatisticColumn = true)
+    public static IEnumerable<ExpandoObject?> PivotColumn(this IEnumerable<ExpandoObject?> enumerable, string pivotColumn, string statisticColumn, bool removeStatisticColumn = true)
     {
+        Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
+        ArgumentException.ThrowIfNullOrWhiteSpace(pivotColumn, nameof(pivotColumn));
+        ArgumentException.ThrowIfNullOrWhiteSpace(statisticColumn, nameof(statisticColumn));
+
+        enumerable = enumerable.Select(expando => expando?.CloneWithMetaProperties()).ToArray().AsEnumerable();
+
         foreach (var expando in enumerable)
         {
             if (expando is null)
+            {
+                yield return expando;
                 continue;
+            }
 
             var pivotValue = expando.GetProperty(pivotColumn)?.ToString()?.RemoveMarkdownBold();
             expando.ChangePropertyName(statisticColumn, pivotValue!);
@@ -182,6 +200,8 @@ public static class BenchmarkReportProcessor
 
             if (removeStatisticColumn)
                 expando.RemoveProperty(pivotColumn);
+
+            yield return expando;
         }
     }
     #endregion
@@ -200,7 +220,9 @@ public static class BenchmarkReportProcessor
         Guard.ThrowIfNullOrEmpty(joinKeyColumns, nameof(joinKeyColumns));
         Guard.ThrowIfNullOrEmpty(selectColumns, nameof(selectColumns));
 
-        var joined = enumerable.Aggregate((current, next) =>
+        enumerable = enumerable.Select(innerCollection => innerCollection.Select(expando => expando?.CloneWithMetaProperties()).ToArray()).ToArray();
+
+        return enumerable.Aggregate((current, next) =>
         {
             return current.Join(next,
                 left => left.GenerateKeyFromPropertiesOrDefault(joinKeyColumns),
@@ -222,9 +244,7 @@ public static class BenchmarkReportProcessor
 
                     return left;
                 });
-        }).ToArray(); //Use ToArray() because it's a modifier operation and running more than once causes Exception
-
-        return joined!;
+        })!; //Not needed because of cloning -- .ToArray(); //Use ToArray() because it's a modifier operation and running more than once causes Exception
     }
 
     #region AddNullDivider
@@ -271,9 +291,9 @@ public static class BenchmarkReportProcessor
     /// <param name="enumerable">The enumerable.</param>
     /// <param name="groupByProperties">The group by properties.</param>
     /// <returns></returns>
-    public static void SplitByGroupAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, params string[] groupByProperties)
+    public static IEnumerable<ExpandoObject?> SplitByGroupAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, params string[] groupByProperties)
     {
-        SplitByGroupAndHighlightColumns(enumerable, groupByProperties, HighlightColor1, HighlightColor2);
+        return SplitByGroupAndHighlightColumns(enumerable, groupByProperties, HighlightColor1, HighlightColor2);
     }
 
     /// <summary>
@@ -284,16 +304,17 @@ public static class BenchmarkReportProcessor
     /// <param name="color1">The color1.</param>
     /// <param name="color2">The color2.</param>
     /// <returns></returns>
-    public static void SplitByGroupAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, string[] groupByProperties, string color1, string color2)
+    public static IEnumerable<ExpandoObject?> SplitByGroupAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, string[] groupByProperties, string color1, string color2)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(groupByProperties, nameof(groupByProperties));
         ArgumentException.ThrowIfNullOrWhiteSpace(color1, nameof(color1));
         ArgumentException.ThrowIfNullOrWhiteSpace(color2, nameof(color2));
 
-        enumerable
+        var result = enumerable
             .SplitByGroup(groupByProperties)
             .HighlightColumnsOfEachCollection(groupByProperties, color1, color2);
+        return enumerable.HasNullDivider() ? result.ConcatByNull() : result.Concat();
 
         //=========== Old Implementation ===========
         //var toggleColor = false;
@@ -326,9 +347,9 @@ public static class BenchmarkReportProcessor
     /// <param name="enumerable">The enumerable.</param>
     /// <param name="colorizingColumns">The colorizing columns.</param>
     /// <returns></returns>
-    public static void SplitByNullAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, params string[] colorizingColumns)
+    public static IEnumerable<ExpandoObject?> SplitByNullAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, params string[] colorizingColumns)
     {
-        SplitByNullAndHighlightColumns(enumerable, colorizingColumns, HighlightColor1, HighlightColor2);
+        return SplitByNullAndHighlightColumns(enumerable, colorizingColumns, HighlightColor1, HighlightColor2);
     }
 
     /// <summary>
@@ -339,16 +360,17 @@ public static class BenchmarkReportProcessor
     /// <param name="color1">The color1.</param>
     /// <param name="color2">The color2.</param>
     /// <returns></returns>
-    public static void SplitByNullAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, string[] highlightColumns, string color1, string color2)
+    public static IEnumerable<ExpandoObject?> SplitByNullAndHighlightColumns(this IEnumerable<ExpandoObject?> enumerable, string[] highlightColumns, string color1, string color2)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(highlightColumns, nameof(highlightColumns));
         ArgumentException.ThrowIfNullOrWhiteSpace(color1, nameof(color1));
         ArgumentException.ThrowIfNullOrWhiteSpace(color2, nameof(color2));
 
-        enumerable
+        return enumerable
             .SplitByNull()
-            .HighlightColumnsOfEachCollection(highlightColumns, color1, color2);
+            .HighlightColumnsOfEachCollection(highlightColumns, color1, color2)
+            .ConcatByNull();
     }
 
     /// <summary>
@@ -357,9 +379,9 @@ public static class BenchmarkReportProcessor
     /// <param name="enumerable">The enumerable.</param>
     /// <param name="highlightColumns">The highlight columns.</param>
     /// <returns></returns>
-    public static void HighlightColumnsOfEachCollection(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable, params string[] highlightColumns)
+    public static IEnumerable<IEnumerable<ExpandoObject?>> HighlightColumnsOfEachCollection(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable, params string[] highlightColumns)
     {
-        HighlightColumnsOfEachCollection(enumerable, highlightColumns, HighlightColor1, HighlightColor2);
+        return HighlightColumnsOfEachCollection(enumerable, highlightColumns, HighlightColor1, HighlightColor2);
     }
 
     /// <summary>
@@ -370,11 +392,13 @@ public static class BenchmarkReportProcessor
     /// <param name="color1">The color1.</param>
     /// <param name="color2">The color2.</param>
     /// <returns></returns>
-    public static void HighlightColumnsOfEachCollection(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable, string[] highlightColumns, string color1, string color2)
+    public static IEnumerable<IEnumerable<ExpandoObject?>> HighlightColumnsOfEachCollection(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable, string[] highlightColumns, string color1, string color2)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         ArgumentException.ThrowIfNullOrWhiteSpace(color1, nameof(color1));
         ArgumentException.ThrowIfNullOrWhiteSpace(color2, nameof(color2));
+
+        enumerable = enumerable.Select(innerCollection => innerCollection.Select(expando => expando?.CloneWithMetaProperties()).ToArray()).ToArray();
 
         var toggleColor = false;
         foreach (var innerCollection in enumerable)
@@ -393,6 +417,7 @@ public static class BenchmarkReportProcessor
                 }
             }
             toggleColor ^= true;
+            yield return innerCollection;
         }
     }
     #endregion
@@ -407,6 +432,14 @@ public static class BenchmarkReportProcessor
     public static decimal SpectrumMaxThreshold { get; set; } = 2;
 
     /// <summary>
+    /// Gets or sets the get maximum function.
+    /// </summary>
+    /// <value>
+    /// The get maximum function.
+    /// </value>
+    public static Func<string, decimal[], decimal>? GetMaximumFunc { get; set; }
+
+    /// <summary>
     /// Splits the by group and spectrum columns.
     /// </summary>
     /// <param name="enumerable">The enumerable.</param>
@@ -414,15 +447,16 @@ public static class BenchmarkReportProcessor
     /// <param name="spectrumColumns">The spectrum columns.</param>
     /// <param name="boldEntireRowOfLowestValue">if set to <c>true</c> bolds the entire row of the lowest value.</param>
     /// <returns></returns>
-    public static void SplitByGroupAndSpectrumColumns(this IEnumerable<ExpandoObject?> enumerable, string[] groupByProperties, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
+    public static IEnumerable<ExpandoObject?> SplitByGroupAndSpectrumColumns(this IEnumerable<ExpandoObject?> enumerable, string[] groupByProperties, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(groupByProperties, nameof(groupByProperties));
         Guard.ThrowIfNullOrEmpty(spectrumColumns, nameof(spectrumColumns));
 
-        enumerable
+        var result = enumerable
             .SplitByGroup(groupByProperties)
             .SpectrumColumns(spectrumColumns, boldEntireRowOfLowestValue);
+        return enumerable.HasNullDivider() ? result.ConcatByNull() : result.Concat();
     }
 
     /// <summary>
@@ -432,14 +466,15 @@ public static class BenchmarkReportProcessor
     /// <param name="spectrumColumns">The spectrum columns.</param>
     /// <param name="boldEntireRowOfLowestValue">if set to <c>true</c> bolds the entire row of the lowest value.</param>
     /// <returns></returns>
-    public static void SplitByNullAndSpectrumColumns(this IEnumerable<ExpandoObject?> enumerable, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
+    public static IEnumerable<ExpandoObject?> SplitByNullAndSpectrumColumns(this IEnumerable<ExpandoObject?> enumerable, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(spectrumColumns, nameof(spectrumColumns));
 
-        enumerable
+        return enumerable
             .SplitByNull()
-            .SpectrumColumns(spectrumColumns, boldEntireRowOfLowestValue);
+            .SpectrumColumns(spectrumColumns, boldEntireRowOfLowestValue)
+            .ConcatByNull();
     }
 
     /// <summary>
@@ -449,13 +484,12 @@ public static class BenchmarkReportProcessor
     /// <param name="spectrumColumns">The spectrum columns.</param>
     /// <param name="boldEntireRowOfLowestValue">if set to <c>true</c> bolds the entire row of the lowest value.</param>
     /// <returns></returns>
-    public static void SpectrumColumns(this IEnumerable<IEnumerable<ExpandoObject>> enumerable, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
+    public static IEnumerable<IEnumerable<ExpandoObject>> SpectrumColumns(this IEnumerable<IEnumerable<ExpandoObject>> enumerable, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(spectrumColumns, nameof(spectrumColumns));
 
-        foreach (var innerCollection in enumerable)
-            SpectrumColumns(innerCollection, spectrumColumns, boldEntireRowOfLowestValue);
+        return enumerable.Select(innerCollection => SpectrumColumns(innerCollection, spectrumColumns, boldEntireRowOfLowestValue));
     }
 
     /// <summary>
@@ -465,48 +499,99 @@ public static class BenchmarkReportProcessor
     /// <param name="spectrumColumns">The spectrum columns.</param>
     /// <param name="boldEntireRowOfLowestValue">if set to <c>true</c> bolds the entire row of the lowest value.</param>
     /// <returns></returns>
-    public static void SpectrumColumns(this IEnumerable<ExpandoObject> enumerable, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
+    public static IEnumerable<ExpandoObject> SpectrumColumns(this IEnumerable<ExpandoObject> enumerable, string[] spectrumColumns, bool boldEntireRowOfLowestValue = true)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(spectrumColumns, nameof(spectrumColumns));
 
-        var isFirstColumn = true;
-        foreach (var numericColumn in spectrumColumns)
+        enumerable = enumerable.Select(expando => expando.CloneWithMetaProperties()).ToArray().AsEnumerable();
+
+        var dictionary = spectrumColumns
+            .Select(spectrumColumn =>
+            {
+                var statisticValues = enumerable.Select(expando =>
+                {
+                    var str = expando.GetProperty(spectrumColumn)!.ToString()!.RemoveMarkdownBold();
+                    var statisticValue = str.ExtractNumberOrDefault();
+                    expando.SetProperty(spectrumColumn, str); //Remove markdown bold
+                    return statisticValue;
+                }).ToArray();
+
+                var min = statisticValues.Min();
+                var max = GetMaximumFunc?.Invoke(spectrumColumn, statisticValues) ?? statisticValues.Max();
+
+                max = Math.Max(max, min * SpectrumMaxThreshold);
+                var diff = max - min;
+
+                return (SpectrumColumn: spectrumColumn, MinMaxDiff: (Min: min, Max: max, Diff: diff));
+            }).ToDictionary(p => p.SpectrumColumn, p => p.MinMaxDiff);
+
+        foreach (var expando in enumerable)
         {
-            var items = enumerable.Select(expando =>
+            var isFirstColumn = true;
+            foreach (var spectrumColumn in spectrumColumns)
             {
-                var str = expando.GetProperty(numericColumn)!.ToString()!.RemoveMarkdownBold();
-                var value = str.ExtractNumberOrDefault();
-                expando.SetProperty(numericColumn, str); //Remove markdown bold
-                return new { Expando = expando, StatisticValue = value };
-            }).ToArray();
+                var (min, max, diff) = dictionary[spectrumColumn];
+                var statisticValue = expando.GetProperty(spectrumColumn)!.ToString()!.RemoveMarkdownBold().ExtractNumberOrDefault();
+                if (statisticValue > max) //for skipped maximums
+                    statisticValue = max;
 
-            var min = items.Min(item => item.StatisticValue);
-            var max = items.Max(item => item.StatisticValue);
-            max = Math.Max(max, min * SpectrumMaxThreshold);
-            var diff = max - min;
-
-            foreach (var item in items)
-            {
-                var relativeScore = diff == 0 ? 1 : (max - item.StatisticValue) / diff;
-                if (item.StatisticValue == min)
+                var relativeScore = diff == 0 ? 1 : (max - statisticValue) / diff;
+                if (statisticValue == min)
                 {
                     if (isFirstColumn && boldEntireRowOfLowestValue)
-                        item.Expando.SetMarkdownBoldForProperties(); //Bolds the entire row of the lowest value
+                        expando.SetMarkdownBoldForProperties(); //Bolds the entire row of the lowest value
                     else
-                        item.Expando.SetMarkdownBoldForProperties(numericColumn); //Bolds only the lowest value cell
+                        expando.SetMarkdownBoldForProperties(spectrumColumn); //Bolds only the lowest value cell
                 }
 
                 var color = ColorHelper.GetColorBetweenRedAndGreen(Convert.ToSingle(relativeScore));
                 color = ColorHelper.Lighten(color, 0.6);
 
-                item.Expando.SetMetaProperty($"{numericColumn}.background-color", color);
+                expando.SetMetaProperty($"{spectrumColumn}.background-color", color);
+                isFirstColumn = false;
             }
-
-            isFirstColumn = false;
+            yield return expando;
         }
-    }
 
+        //Old implementation
+        //var isFirstColumn = true;
+        //foreach (var numericColumn in spectrumColumns)
+        //{
+        //    var items = enumerable.Select(expando =>
+        //    {
+        //        var str = expando.GetProperty(numericColumn)!.ToString()!.RemoveMarkdownBold();
+        //        var value = str.ExtractNumberOrDefault();
+        //        expando.SetProperty(numericColumn, str); //Remove markdown bold
+        //        return new { Expando = expando, StatisticValue = value };
+        //    }).ToArray();
+
+        //    var min = items.Min(item => item.StatisticValue);
+        //    var max = items.Max(item => item.StatisticValue);
+        //    max = Math.Max(max, min * SpectrumMaxThreshold);
+        //    var diff = max - min;
+
+        //    foreach (var item in items)
+        //    {
+        //        var relativeScore = diff == 0 ? 1 : (max - item.StatisticValue) / diff;
+        //        if (item.StatisticValue == min)
+        //        {
+        //            if (isFirstColumn && boldEntireRowOfLowestValue)
+        //                item.Expando.SetMarkdownBoldForProperties(); //Bolds the entire row of the lowest value
+        //            else
+        //                item.Expando.SetMarkdownBoldForProperties(numericColumn); //Bolds only the lowest value cell
+        //        }
+
+        //        var color = ColorHelper.GetColorBetweenRedAndGreen(Convert.ToSingle(relativeScore));
+        //        color = ColorHelper.Lighten(color, 0.6);
+
+        //        item.Expando.SetMetaProperty($"{numericColumn}.background-color", color);
+        //    }
+
+        //    isFirstColumn = false;
+        //}
+        //return enumerable;
+    }
     #endregion
 
     #region SortEachGroup/Collection
@@ -723,6 +808,8 @@ public static class BenchmarkReportProcessor
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         ArgumentNullException.ThrowIfNull(propertyNames, nameof(propertyNames));
 
+        //NOTE: may needed => enumerable = enumerable.Select(expando => expando?.CloneWithMetaProperties()).ToArray().AsEnumerable(); and return enumerable; as returned object
+
         foreach (var expando in enumerable)
         {
             if (expando is null)
@@ -742,8 +829,10 @@ public static class BenchmarkReportProcessor
     {
         ArgumentNullException.ThrowIfNull(expando, nameof(expando));
 
+        //NOTE: may needed => expando = expando.CloneWithMetaProperties(); and return expando; as returned object
+
 #pragma warning disable IDE0305 // Simplify collection initialization
-        var props = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.ToArray();
+        var props = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.Select(p => p).ToArray(); //Select is necessary
 #pragma warning restore IDE0305 // Simplify collection initialization
         foreach (var prop in props!)
         {
@@ -762,8 +851,10 @@ public static class BenchmarkReportProcessor
     {
         ArgumentNullException.ThrowIfNull(expando, nameof(expando));
 
+        //NOTE: may needed => expando = expando.CloneWithMetaProperties(); and return expando; as returned object
+
 #pragma warning disable IDE0305 // Simplify collection initialization
-        var props = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.ToArray();
+        var props = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.Select(p => p).ToArray(); //Select is necessary
 #pragma warning restore IDE0305 // Simplify collection initialization
         foreach (var prop in props!)
         {
@@ -773,6 +864,7 @@ public static class BenchmarkReportProcessor
     }
     #endregion
 
+    #region ExpandoObject Utils
     /// <summary>
     /// Determines whether the specified enumerable has (is split by) null divider.
     /// </summary>
@@ -784,4 +876,17 @@ public static class BenchmarkReportProcessor
     {
         return enumerable.Any(p => p is null);
     }
+
+    /// <summary>
+    /// Creates a clone with meta properties included.
+    /// </summary>
+    /// <param name="expando">The expando.</param>
+    /// <returns></returns>
+    public static ExpandoObject CloneWithMetaProperties(this ExpandoObject expando)// where T : IDynamicMetaObjectProvider?, IDictionary<string, object?>? //ExpandoObject
+    {
+        var newItem = expando.DeepClone();
+        newItem!.SetMetaProperties(expando.GetMetaProperties());
+        return newItem;
+    }
+    #endregion
 }
