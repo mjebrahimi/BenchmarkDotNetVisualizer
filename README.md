@@ -39,9 +39,51 @@ Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML
 PM> Install-Package BenchmarkDotNetVisualizer
 ```
 
-### 2. Using Exporters
+### 2. Simple Using
 
-#### Example 1 (JSON Serializers Benchmark)
+**Methods:**
+
+- **SaveAsImageAsync()**
+- **SaveAsHtmlAsync()**
+- **SaveAsHtmlAndImageAsync()**
+
+**Example:**
+
+```csharp
+var summary = BenchmarkRunner.Run<JsonSerializersBenchmark>(); 
+
+//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.html
+var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\JsonSerializers\Benchmark.html");
+
+//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.png
+var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\JsonSerializers\Benchmark.png");
+await summary.SaveAsHtmlAndImageAsync(
+    htmlPath: htmlFileName, 
+    imagePath: imageFileName,
+    options: new ReportHtmlOptions
+    {
+        Title = "Json Serializers Benchmark",
+        GroupByColumns = ["Method"],                          // Groups by 'Method' column and highlights groups
+        SpectrumColumns = ["Mean", "Allocated"],              // Colorizes 'Mean' and 'Allocated' columns as Spectrum
+        DividerMode = RenderTableDividerMode.EmptyDividerRow, // Separates tables by Empty Divider Row
+        HtmlWrapMode = HtmlDocumentWrapMode.Simple            // Uses simple HTML table
+    });
+```
+
+**Output HTML:**
+Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/json-serializers-benchmark.html) in `samples/Reports/JsonSerializers/Benchmark.html`
+
+**Output Image:**
+![Json Serializers Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/JsonSerializers/Benchmark.png)
+
+### 3. Using Exporters
+
+**Exporters:**
+
+- **[RichImageExporter]**
+- **[RichHtmlExporter]**
+
+**Example:**
 
 ```csharp
 BenchmarkRunner.Run<JsonSerializersBenchmark>();
@@ -72,80 +114,34 @@ To see the results, navigate to the following path:
 
 `[ProjectDirectory]\bin\[Debug|Release]\[.NET-version]\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.html|png`
 
-### 3. Using Extensions methods on benchmark's Summary
+**For Example:**
+
+- `MyBenchmark\bin\Release\net8.0\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.png`
+- `MyBenchmark\bin\Release\net8.0\BenchmarkDotNet.Artifacts\results\Benchmark-report-rich.html`
+
+### Using BenchmarkAutoRunner to Run your benchmarks
+
+It's **Recommend** to use **BenchmarkAutoRunner.Run()** instead of **BenchmarkRunner.Run()** to run your benchmarks.
+
+`BenchmarkAutoRunner` is **similar** to `BenchmarkRunner`, but uses `Job.Dry` with `InProcessEmitToolchain` is case of **DEBUG** Mode (due to **ease of debugging**), and your **specified job** in case of **RELEASE** Mode.
+
+It also **Warns** you if you are running project **incorrectly**. (for example running with **Attached Debugger** while **RELEASE Mode is enabled**)
 
 ```csharp
-var summary = BenchmarkRunner.Run<JsonSerializersBenchmark>(); 
-
-//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.html
-var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\JsonSerializers\Benchmark.html");
-
-//[ProjectDirectory]\Reports\JsonSerializers\Benchmark.png
-var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\JsonSerializers\Benchmark.png");
-await summary.SaveAsHtmlAndImageAsync(
-    htmlPath: htmlFileName, 
-    imagePath: imageFileName,
-    options: new ReportHtmlOptions
-    {
-        Title = "Json Serializers Benchmark",
-        GroupByColumns = ["Method"],                          // Groups by 'Method' column and highlights groups
-        SpectrumColumns = ["Mean", "Allocated"],              // Colorizes 'Mean' and 'Allocated' columns as Spectrum
-        DividerMode = RenderTableDividerMode.EmptyDividerRow, // Separates tables by Empty Divider Row
-        HtmlWrapMode = HtmlDocumentWrapMode.Simple            // Uses simple HTML table
-    });
+var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>();
 ```
 
-**Output HTML:**
-Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/json-serializers-benchmark.html) in `samples/Reports/JsonSerializers/Benchmark.html`
+### Using JoinReports method to Join and Pivot your reports
 
-**Output Image:**
-![Json Serializers Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/JsonSerializers/Benchmark.png)
+**Example:**
 
-#### Example 2 (Iterators for/foreach/ForEach() Benchmark)
+**Performance benchmark between for, foreach, and ForEach() in different versions of .NET**
 
-**Note (Recommended to use BenchmarkAutoRunner instead of BenchmarkRunner):**
-
-`BenchmarkAutoRunner` is similar to `BenchmarkRunner` but uses `Job.Dry` with `InProcessEmitToolchain` for `DEBUG` Mode (due to ease of debugging) and your defined job for `RELEASE` Mode
-Also it **Warns** you if you are running project **incorrectly** (For example running with **Attached Debugger** while `RELEASE` Mode is enabled)
+#### Pivot by .NET Runtime version column
 
 ```csharp
-//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
-//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)
-var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>(); //Recommend instead use BenchmarkAutoRunner.Run<IteratorsBenchmark>();
-
-//[ProjectDirectory]\Reports\Iterators\Benchmark.html
-var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\Benchmark.html");
-
-//[ProjectDirectory]\Reports\Iterators\Benchmark.png
-var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\Benchmark.png");
-
-await summary.SaveAsHtmlAndImageAsync(
-    htmlPath: htmlFileName,
-    imagePath: imageFileName,
-    options: new ReportHtmlOptions
-    {
-        Title = "Performance Comparison between for, foreach, and ForEeach() method",
-        GroupByColumns = ["Runtime"],                        // Groups by column 'Runtime'
-        SpectrumColumns = ["Mean", "Allocated"],             // Colorizes 'Mean' and 'Allocated' columns as Spectrum
-        DividerMode = RenderTableDividerMode.SeparateTables, // Separates tables by Grouping by 'GroupByColumns'
-        HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  // Uses feature-rich https://datatables.net plugin
-    });
-```
-
-**Output HTML:**
-Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark1.html) in `samples/Reports/Iterators/Benchmark.html`
-
-**Output Image:**
-![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/Benchmark.png)
-
-### 4. Using JoinReports method to Join and Pivot reports
-
-#### Example 3 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)
-
-```csharp
-//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
-//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)
-var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>(); //Recommend instead use BenchmarkAutoRunner.Run<IteratorsBenchmark>();
+//Recommend to use BenchmarkAutoRunner instead of BenchmarkRunner
+var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>();
 
 //[ProjectDirectory]\Reports\Iterators\JoinedBenchmark-PivotBy-Runtime.html
 var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\JoinedBenchmark-PivotBy-Runtime.html");
@@ -158,7 +154,7 @@ await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
     imagePath: imageFileName,
     options: new JoinReportHtmlOptions
     {
-        Title = "Performance Comparison between for, foreach, and ForEeach() method",
+        Title = "Performance Comparison between for, foreach, and ForEach() method",
         MainColumn = "Method",
         GroupByColumns = ["Categories", "Length"],           // Groups by column 'Categories' and 'Length'
         PivotProperty = "Runtime",
@@ -170,17 +166,17 @@ await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
 ```
 
 **Output HTML:**
-Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark2.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html`
+Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark2.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.html`
 
 **Output Image:**
 ![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Runtime.png)
 
-#### Example 4 (Performance comparison between for, foreach, and ForEach() in different versions of .NET)
+
+#### Pivot by Method column
 
 ```csharp
-//BenchmarkAutoRunner is similar to BenchmarkRunner but uses Job.Dry with InProcessEmitToolchain for DEBUG Mode (due to ease of debugging) and your defined job for RELEASE Mode
-//Also it Warns you if you are running project incorrectly (For example running with Attached Debugger while RELEASE Mode is enabled)
-var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>(); //Recommend instead use BenchmarkAutoRunner.Run<IteratorsBenchmark>();
+//Recommend to use BenchmarkAutoRunner instead of BenchmarkRunner
+var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>();
 
 //[ProjectDirectory]\Reports\Iterators\JoinedBenchmark-PivotBy-Method.html
 var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\JoinedBenchmark-PivotBy-Method.html");
@@ -193,7 +189,7 @@ await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
     imagePath: imageFileName,
     options: new JoinReportHtmlOptions
     {
-        Title = "Performance Comparison between for, foreach, and ForEeach() method",
+        Title = "Performance Comparison between for, foreach, and ForEach() method",
         MainColumn = "Runtime",
         GroupByColumns = ["Categories", "Length"],           // Groups by column 'Categories' and 'Length'
         PivotProperty = "Method",
@@ -205,10 +201,43 @@ await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
 ```
 
 **Output HTML:**
-Visit [HTML file](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark3.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html`
+Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark3.html) in `samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.html`
 
 **Output Image:**
 ![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/JoinedBenchmark-PivotBy-Method.png)
+
+<!-- 
+### Performance Benchmark between for, foreach, and ForEach() method
+
+```csharp
+//Recommend to use BenchmarkAutoRunner instead of BenchmarkRunner
+var summary = BenchmarkAutoRunner.Run<IteratorsBenchmark>();
+
+//[ProjectDirectory]\Reports\Iterators\Benchmark.html
+var htmlFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\Benchmark.html");
+
+//[ProjectDirectory]\Reports\Iterators\Benchmark.png
+var imageFileName = DirectoryHelper.GetPathRelativeToProjectDirectory(@"Reports\Iterators\Benchmark.png");
+
+await summary.SaveAsHtmlAndImageAsync(
+    htmlPath: htmlFileName,
+    imagePath: imageFileName,
+    options: new ReportHtmlOptions
+    {
+        Title = "Performance Comparison between for, foreach, and ForEach() method",
+        GroupByColumns = ["Runtime"],                        // Groups by column 'Runtime'
+        SpectrumColumns = ["Mean", "Allocated"],             // Colorizes 'Mean' and 'Allocated' columns as Spectrum
+        DividerMode = RenderTableDividerMode.SeparateTables, // Separates tables by Grouping by 'GroupByColumns'
+        HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  // Uses feature-rich https://datatables.net plugin
+    });
+```
+
+**Output HTML:**
+Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/iterators-benchmark1.html) in `samples/Reports/Iterators/Benchmark.html`
+
+**Output Image:**
+![Iterators Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/Reports/Iterators/Benchmark.png)
+-->
 
 ## Todo
 
