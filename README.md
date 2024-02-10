@@ -4,10 +4,8 @@
 - [Online Demo 3](docs/iterators-benchmark2.html)
 - [Online Demo 4](docs/iterators-benchmark3.html)
 
-[![NuGet](https://img.shields.io/nuget/dt/BenchmarkDotNetVisualizer?style=flat&logo=nuget&cacheSeconds=1&label=Downloads
-)](https://www.nuget.org/packages/BenchmarkDotNetVisualizer)
-[![NuGet](https://img.shields.io/nuget/v/BenchmarkDotNetVisualizer?label=Version&cacheSeconds=1
-)](https://www.nuget.org/packages/BenchmarkDotNetVisualizer)
+[![NuGet](https://img.shields.io/nuget/dt/BenchmarkDotNetVisualizer?style=flat&logo=nuget&cacheSeconds=1&label=Downloads)](https://www.nuget.org/packages/BenchmarkDotNetVisualizer)
+[![NuGet](https://img.shields.io/nuget/v/BenchmarkDotNetVisualizer?label=Version&cacheSeconds=1)](https://www.nuget.org/packages/BenchmarkDotNetVisualizer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer/workflows/.NET/badge.svg)](https://github.com/mjebrahimi/BenchmarkDotNetVisualizer)
 
