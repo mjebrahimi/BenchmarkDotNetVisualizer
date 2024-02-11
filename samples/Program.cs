@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNetVisualizer;
+using BenchmarkDotNetVisualizer.Demo.Benchmarks;
 
 #region JsonSerializersBenchmark
 #if NET8_0_OR_GREATER
@@ -62,6 +63,23 @@ await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
         DividerMode = RenderTableDividerMode.SeparateTables, //Separates tables by Grouping by 'GroupByColumns'
         HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  //Uses feature-rich https://datatables.net plugin
     });
+#endregion
+
+#region EnumToStringBenchmark
+var summary3 = BenchmarkAutoRunner.Run<ConvertEnumToStringBenchmark>();
+
+await summary3.SaveAsHtmlAndImageAsync(
+    htmlPath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\EnumToString\\Benchmark.html"),
+    imagePath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\EnumToString\\Benchmark.png"),
+    options: new ReportHtmlOptions
+    {
+        Title = "Converting Enum To A String Benchmarks",
+        GroupByColumns = ["Method"],
+        SpectrumColumns = ["Mean", "Allocated"],
+        DividerMode = RenderTableDividerMode.EmptyDividerRow,
+        HtmlWrapMode = HtmlDocumentWrapMode.Simple
+    });
+
 #endregion
 
 //DirectoryHelper.MoveBenchmarkArtifactsToProjectDirectory();
