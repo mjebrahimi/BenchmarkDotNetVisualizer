@@ -99,7 +99,7 @@ public static partial class HtmlHelper
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            using var browserFetcher = new BrowserFetcher();
+            var browserFetcher = new BrowserFetcher();
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -201,7 +201,7 @@ public static partial class HtmlHelper
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            using var browserFetcher = new BrowserFetcher();
+            var browserFetcher = new BrowserFetcher();
 
             cancellationToken.ThrowIfCancellationRequested();
 

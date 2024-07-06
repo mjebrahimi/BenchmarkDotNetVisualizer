@@ -154,7 +154,7 @@ public static class DirectoryHelper
     /// <returns></returns>
     public static string GetBenchmarkArtifactsDirectory()
     {
-        var currentDirectory = Directory.GetCurrentDirectory();
+        var currentDirectory = AppContext.BaseDirectory;
         return Path.Combine(currentDirectory, "BenchmarkDotNet.Artifacts");
     }
 
@@ -164,7 +164,7 @@ public static class DirectoryHelper
     /// <returns></returns>
     public static string GetBenchmarkArtifactResultsDirectory()
     {
-        var currentDirectory = Directory.GetCurrentDirectory();
+        var currentDirectory = AppContext.BaseDirectory;
         return Path.Combine(currentDirectory, "BenchmarkDotNet.Artifacts", "results");
     }
 
@@ -174,7 +174,7 @@ public static class DirectoryHelper
     /// <returns></returns>
     public static string GetProjectDirectory()
     {
-        var currentDirectory = Directory.GetCurrentDirectory();
+        var currentDirectory = AppContext.BaseDirectory;
         var path = Path.Combine(currentDirectory, "..", "..", "..");
         return Path.GetFullPath(path);
     }
