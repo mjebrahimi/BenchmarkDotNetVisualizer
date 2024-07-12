@@ -72,12 +72,12 @@ public static partial class HtmlHelper
     private static bool downloadIsRunning = false;
     private static bool progressIsRunning = false;
 
-    private static bool IsBrowserInstalled()
+    internal static bool IsBrowserInstalled()
     {
         return browserFetcher.GetInstalledBrowsers().Any(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
     }
 
-    private static async Task DownloadBrowserAsync(bool silent = false)
+    internal static async Task DownloadBrowserAsync(bool silent = false)
     {
         var isInstalled = IsBrowserInstalled();
         if (isInstalled)
