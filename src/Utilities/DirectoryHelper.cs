@@ -18,7 +18,7 @@ public static class DirectoryHelper
         path = IsAbsolutePath(ref path) ? path : GetPathRelativeToProjectDirectory(path);
 
         var directory = Path.GetDirectoryName(path);
-        if (Directory.Exists(directory) is false)
+        if (string.IsNullOrWhiteSpace(directory) is false && Directory.Exists(directory) is false)
             Directory.CreateDirectory(directory!);
 
         return File.WriteAllTextAsync(path, text, cancellationToken);
@@ -35,9 +35,7 @@ public static class DirectoryHelper
     {
         path = IsAbsolutePath(ref path) ? path : GetPathRelativeToProjectDirectory(path);
 
-        var directory = Path.GetDirectoryName(path);
-        if (Directory.Exists(directory) is false)
-            Directory.CreateDirectory(directory!);
+        EnsureDirectoryExists(path);
 
         return File.WriteAllBytesAsync(path, bytes, cancellationToken);
     }
@@ -51,9 +49,7 @@ public static class DirectoryHelper
     {
         path = IsAbsolutePath(ref path) ? path : GetPathRelativeToProjectDirectory(path);
 
-        var directory = Path.GetDirectoryName(path);
-        if (Directory.Exists(directory) is false)
-            Directory.CreateDirectory(directory!);
+        EnsureDirectoryExists(path);
 
         File.WriteAllText(path, text);
     }
@@ -67,9 +63,7 @@ public static class DirectoryHelper
     {
         path = IsAbsolutePath(ref path) ? path : GetPathRelativeToProjectDirectory(path);
 
-        var directory = Path.GetDirectoryName(path);
-        if (Directory.Exists(directory) is false)
-            Directory.CreateDirectory(directory!);
+        EnsureDirectoryExists(path);
 
         File.WriteAllBytes(path, bytes);
     }
@@ -192,6 +186,17 @@ public static class DirectoryHelper
         path = path.TrimStart('\\');
 
         return Path.IsPathRooted(path);
+    }
+
+    /// <summary>
+    /// Ensures the directory exists.
+    /// </summary>
+    /// <param name="path">The path.</param>
+    public static void EnsureDirectoryExists(string path)
+    {
+        var directory = Path.GetDirectoryName(path);
+        if (string.IsNullOrWhiteSpace(directory) is false && Directory.Exists(directory) is false)
+            Directory.CreateDirectory(directory!);
     }
 
     /// <summary>

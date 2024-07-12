@@ -28,6 +28,7 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var text = ToHtmlTableDocument(source, title, dividerMode, htmlWrapMode);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, text, cancellationToken);
     }
 
@@ -46,6 +47,7 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var text = ToHtmlTableDocument(source, title, dividerMode, htmlWrapMode);
+        DirectoryHelper.EnsureDirectoryExists(path);
         File.WriteAllText(path, text);
     }
 
@@ -79,6 +81,7 @@ public static partial class HtmlHelper
         CancellationToken cancellationToken = default)
     {
         var html = WrapInHtmlDocument(body, title, htmlWrapMode);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, html, cancellationToken);
     }
 
@@ -92,6 +95,7 @@ public static partial class HtmlHelper
     public static void WrapInHtmlDocumentAndSaveAs(string path, string body, string title, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
     {
         var html = WrapInHtmlDocument(body, title, htmlWrapMode);
+        DirectoryHelper.EnsureDirectoryExists(path);
         File.WriteAllText(path, html);
     }
 

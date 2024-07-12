@@ -24,6 +24,7 @@ public static partial class MarkdownHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var text = source.ToMarkdownTable(dividerMode);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, text, cancellationToken);
     }
 
@@ -39,6 +40,7 @@ public static partial class MarkdownHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var text = source.ToMarkdownTable(dividerMode);
+        DirectoryHelper.EnsureDirectoryExists(path);
         File.WriteAllText(path, text);
     }
 

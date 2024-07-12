@@ -123,6 +123,7 @@ public static partial class BenchmarkVisualizer
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var html = ConcatReportsAndGetHtml(benchmarkInfo, options);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, html, cancellationToken);
     }
 
@@ -225,6 +226,7 @@ public static partial class BenchmarkVisualizer
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var markdown = ConcatReportsAndGetMarkdown(benchmarkInfo, options);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, markdown, cancellationToken);
     }
 

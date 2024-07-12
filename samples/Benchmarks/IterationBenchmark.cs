@@ -1,9 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNetVisualizer;
 
-[RichImageExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], spectrumColumns: ["Mean", "Allocated"])]
-[RichHtmlExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], spectrumColumns: ["Mean", "Allocated"])]
-[RichMarkdownExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], sortByColumns: ["Mean", "Allocated"])]
+// Using Exporter Attributes (not recommended) (required namespace using BenchmarkDotNetVisualizer)
+//[RichImageExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], spectrumColumns: ["Mean", "Allocated"])]
+//[RichHtmlExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], spectrumColumns: ["Mean", "Allocated"])]
+//[RichMarkdownExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], sortByColumns: ["Mean", "Allocated"])]
 
 #if RELEASE
 [ShortRunJob(BenchmarkDotNet.Jobs.RuntimeMoniker.NetCoreApp30)]

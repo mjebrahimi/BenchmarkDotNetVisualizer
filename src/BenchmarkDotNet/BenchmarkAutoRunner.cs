@@ -22,7 +22,7 @@ public static class BenchmarkAutoRunner
     public static Summary Run<T>(string[]? args = null)
     {
         PrintMessages();
-
+        DownloadBrowserInBackgroundIfEnabled();
         return BenchmarkRunner.Run<T>(GetConfig(), args);
     }
 
@@ -37,7 +37,7 @@ public static class BenchmarkAutoRunner
         ArgumentNullException.ThrowIfNull(type, nameof(type));
 
         PrintMessages();
-
+        DownloadBrowserInBackgroundIfEnabled();
         return BenchmarkRunner.Run(type, GetConfig(), args);
     }
 
@@ -52,7 +52,7 @@ public static class BenchmarkAutoRunner
         Guard.ThrowIfNullOrEmpty(types, nameof(types));
 
         PrintMessages();
-
+        DownloadBrowserInBackgroundIfEnabled();
         return BenchmarkRunner.Run(types, GetConfig(), args);
     }
 
@@ -67,7 +67,7 @@ public static class BenchmarkAutoRunner
         ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
 
         PrintMessages();
-
+        DownloadBrowserInBackgroundIfEnabled();
         return BenchmarkRunner.Run(assembly, GetConfig(), args);
     }
     #endregion
@@ -84,7 +84,7 @@ public static class BenchmarkAutoRunner
         Guard.ThrowIfNullOrEmpty(types, nameof(types));
 
         PrintMessages();
-
+        DownloadBrowserInBackgroundIfEnabled();
         return BenchmarkSwitcher.FromTypes(types).Run(args, GetConfig()).ToArray();
     }
 
@@ -99,7 +99,7 @@ public static class BenchmarkAutoRunner
         ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
 
         PrintMessages();
-
+        DownloadBrowserInBackgroundIfEnabled();
         return BenchmarkSwitcher.FromAssembly(assembly).Run(args, GetConfig()).ToArray();
     }
     #endregion
@@ -157,5 +157,35 @@ public static class BenchmarkAutoRunner
             return attribute.IsJITOptimizerDisabled && attribute.IsJITTrackingEnabled;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether download the browser in background.
+    /// </summary>
+    public static bool DownloadBrowserInBackground { get; set; } = true;
+
+    /// <summary>
+    /// Downloads the browser in background if <see cref="DownloadBrowserInBackground"/> is enabled.
+    /// </summary>
+    private static void DownloadBrowserInBackgroundIfEnabled()
+    {
+        if (DownloadBrowserInBackground is false)
+            return;
+
+        Task.Run(async () =>
+        {
+            if (HtmlHelper.IsBrowserInstalled())
+                return;
+
+            try
+            {
+                Console.WriteLine("Download Browser Started in Background.");
+                await HtmlHelper.DownloadBrowserAsync(silent: true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        });
     }
 }

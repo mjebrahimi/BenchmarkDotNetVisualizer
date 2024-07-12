@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: Jpeg Png Webp metadata
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace BenchmarkDotNetVisualizer;
 

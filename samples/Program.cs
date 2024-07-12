@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNetVisualizer;
 
 #region JsonSerializersBenchmark
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
 var summary1 = BenchmarkAutoRunner.Run<JsonSerializersBenchmark>();
 
 await summary1.SaveAsHtmlAndImageAsync(
@@ -13,12 +13,13 @@ await summary1.SaveAsHtmlAndImageAsync(
         GroupByColumns = ["Method"],                          // Colorizes 'Mean' and 'Allocated' columns as Spectrum
         SpectrumColumns = ["Mean", "Allocated"],
         DividerMode = RenderTableDividerMode.EmptyDividerRow, // Separates tables by Empty Divider Row
-        HtmlWrapMode = HtmlDocumentWrapMode.Simple
+        HtmlWrapMode = HtmlDocumentWrapMode.Simple,
     });
 #endif
 #endregion
 
 #region IteratorsBenchmark
+#if RELEASE
 var summary2 = BenchmarkAutoRunner.Run<IteratorsBenchmark>();
 
 await summary2.SaveAsHtmlAndImageAsync(
@@ -62,6 +63,5 @@ await summary2.JoinReportsAndSaveAsHtmlAndImageAsync(
         DividerMode = RenderTableDividerMode.SeparateTables, //Separates tables by Grouping by 'GroupByColumns'
         HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  //Uses feature-rich https://datatables.net plugin
     });
+#endif
 #endregion
-
-//DirectoryHelper.MoveBenchmarkArtifactsToProjectDirectory();

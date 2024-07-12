@@ -123,6 +123,7 @@ public static partial class BenchmarkVisualizer
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var html = JoinReportsAndGetHtml(benchmarkInfo, options);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, html, cancellationToken);
     }
 
@@ -250,6 +251,7 @@ public static partial class BenchmarkVisualizer
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var html = JoinReportsAndGetHtml(benchmarkInfo, options);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, html, cancellationToken);
     }
 
@@ -350,6 +352,7 @@ public static partial class BenchmarkVisualizer
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var markdown = JoinReportsAndGetMarkdown(benchmarkInfo, options);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, markdown, cancellationToken);
     }
 
@@ -411,6 +414,7 @@ public static partial class BenchmarkVisualizer
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
         var markdown = JoinReportsAndGetMarkdown(benchmarkInfo, options);
+        DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, markdown, cancellationToken);
     }
 

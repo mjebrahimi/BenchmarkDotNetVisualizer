@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: Jpeg Png Webp metadata
-
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
@@ -102,6 +100,7 @@ public static class ImageHelper
         var format = FindFormatByFileExtension(path);
         using var image = Image.Load(bytes);
         var encoder = format.GetImageEncoder();
+        DirectoryHelper.EnsureDirectoryExists(path);
         await image.SaveAsync(path, encoder, cancellationToken);
     }
 
@@ -121,6 +120,7 @@ public static class ImageHelper
         var format = FindFormatByFileExtension(path);
         using var image = Image.Load(bytes);
         var encoder = format.GetImageEncoder(compressionLevel);
+        DirectoryHelper.EnsureDirectoryExists(path);
         await image.SaveAsync(path, encoder, cancellationToken);
     }
 
@@ -137,6 +137,7 @@ public static class ImageHelper
         var format = FindFormatByFileExtension(path);
         using var image = Image.Load(bytes);
         var encoder = format.GetImageEncoder();
+        DirectoryHelper.EnsureDirectoryExists(path);
         image.Save(path, encoder);
     }
 
@@ -154,6 +155,7 @@ public static class ImageHelper
         var format = FindFormatByFileExtension(path);
         using var image = Image.Load(bytes);
         var encoder = format.GetImageEncoder(compressionLevel);
+        DirectoryHelper.EnsureDirectoryExists(path);
         image.Save(path, encoder);
     }
     #endregion
@@ -171,6 +173,7 @@ public static class ImageHelper
 
         using var image = await Image.LoadAsync(path, cancellationToken);
         var encoder = image.Metadata.GetDecodedImageFormat()!.GetImageEncoder();
+        DirectoryHelper.EnsureDirectoryExists(path);
         await image.SaveAsync(path, encoder, cancellationToken);
     }
 
@@ -187,6 +190,7 @@ public static class ImageHelper
 
         using var image = await Image.LoadAsync(path, cancellationToken);
         var encoder = image.Metadata.GetDecodedImageFormat()!.GetImageEncoder(compressionLevel);
+        DirectoryHelper.EnsureDirectoryExists(path);
         await image.SaveAsync(path, encoder, cancellationToken);
     }
 
@@ -200,6 +204,7 @@ public static class ImageHelper
 
         using var image = Image.Load(path);
         var encoder = image.Metadata.GetDecodedImageFormat()!.GetImageEncoder();
+        DirectoryHelper.EnsureDirectoryExists(path);
         image.Save(path, encoder);
     }
 
@@ -214,6 +219,7 @@ public static class ImageHelper
 
         using var image = Image.Load(path);
         var encoder = image.Metadata.GetDecodedImageFormat()!.GetImageEncoder(compressionLevel);
+        DirectoryHelper.EnsureDirectoryExists(path);
         image.Save(path, encoder);
     }
     #endregion

@@ -1,15 +1,13 @@
-﻿// Ignore Spelling: App
-
-#if NET8_0_OR_GREATER
+﻿#if NET6_0_OR_GREATER
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
-using BenchmarkDotNetVisualizer;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-[RichImageExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"])]
-[RichHtmlExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"])]
-[RichMarkdownExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], sortByColumns: ["Mean", "Allocated"])]
+// Using Exporter Attributes (not recommended) (required namespace using BenchmarkDotNetVisualizer)
+//[RichImageExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"])]
+//[RichHtmlExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"])]
+//[RichMarkdownExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], sortByColumns: ["Mean", "Allocated"])]
 
 #if RELEASE
 [ShortRunJob]

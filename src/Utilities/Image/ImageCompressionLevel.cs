@@ -1,9 +1,6 @@
-﻿// Ignore Spelling: Jpeg Png Webp metadata
-
-namespace BenchmarkDotNetVisualizer.Utilities;
+﻿namespace BenchmarkDotNetVisualizer.Utilities;
 
 #pragma warning disable CA1069, RCS1234 // Enums values should not be duplicated
-#pragma warning disable RCS1154 // Sort enum members
 /// <summary>
 /// Image Compression Level
 /// </summary>
@@ -86,5 +83,4 @@ public enum ImageCompressionLevel
     /// </summary>
     Level100 = 100
 }
-#pragma warning restore RCS1154 // Sort enum members
 #pragma warning restore CA1069, RCS1234 // Enums values should not be duplicated

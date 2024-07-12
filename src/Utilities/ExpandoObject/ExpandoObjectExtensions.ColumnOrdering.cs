@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: expando
-
-using System.Dynamic;
+﻿using System.Dynamic;
 
 namespace BenchmarkDotNetVisualizer.Utilities;
 

@@ -1,6 +1,4 @@
-﻿using BenchmarkDotNetVisualizer.Utilities;
-
-namespace BenchmarkDotNetVisualizer;
+﻿namespace BenchmarkDotNetVisualizer;
 
 /// <summary>
 /// Options for concat reports and render as HTML output.
@@ -72,12 +70,13 @@ public class ConcatReportImageOptions : ConcatReportMarkdownOptions
     /// <inheritdoc />
     public override void Validate()
     {
-        if (HighlightGroups && GroupByColumns.IsNullOrEmpty())
-        {
-            throw new InvalidDataException(
-                $"Argument '{nameof(HighlightGroups)}' is set to true but '{nameof(GroupByColumns)}' are not specified." +
-                $" Set '{nameof(HighlightGroups)}' to false or provide '{nameof(GroupByColumns)}'.");
-        }
+        // Commented because of better developer experience
+        //if (HighlightGroups && GroupByColumns.IsNullOrEmpty())
+        //{
+        //    throw new InvalidDataException(
+        //        $"Argument '{nameof(HighlightGroups)}' is set to true but '{nameof(GroupByColumns)}' are not specified." +
+        //        $" Set '{nameof(HighlightGroups)}' to false or provide '{nameof(GroupByColumns)}'.");
+        //}
 
         base.Validate();
     }

@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: Pdf
-
-using PuppeteerSharp;
+﻿using PuppeteerSharp;
 using PuppeteerSharp.Media;
 using System.Dynamic;
 
@@ -70,6 +68,62 @@ public static partial class HtmlHelper
         await ImageHelper.CompressImageBytesAndSaveAsAsync(imageBytes, path, cancellationToken);
     }
 
+    private readonly static BrowserFetcher browserFetcher = new();
+    private static bool downloadIsRunning = false;
+    private static bool progressIsRunning = false;
+
+    private static bool IsBrowserInstalled()
+    {
+        return browserFetcher.GetInstalledBrowsers().Any(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
+    }
+
+    private static async Task DownloadBrowserAsync(bool silent = false)
+    {
+        var isInstalled = IsBrowserInstalled();
+        if (isInstalled)
+            return;
+
+        var tasks = new List<Task>();
+
+        if (downloadIsRunning is false)
+        {
+            tasks.Add(Task.Run(async () =>
+            {
+                try
+                {
+                    downloadIsRunning = true;
+                    return await browserFetcher.DownloadAsync();
+                }
+                finally
+                {
+                    downloadIsRunning = false;
+                }
+            }));
+        }
+
+        if (silent is false && progressIsRunning is false)
+        {
+            tasks.Add(Task.Run(async () =>
+            {
+                progressIsRunning = true;
+                await Task.Delay(2000);
+                Console.WriteLine();
+                var index = 0;
+                while (downloadIsRunning)
+                {
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.WriteLine($"Browser is downloading, please wait{new string('.', index + 1),-5}");
+                    index = (index + 1) % 5;
+                    await Task.Delay(500);
+                }
+                Console.WriteLine("Browser download is finished.");
+                progressIsRunning = false;
+            }));
+        }
+
+        await Task.WhenAll(tasks);
+    }
+
     /// <summary>
     /// Renders the HTML to image data asynchronously.
     /// </summary>
@@ -82,71 +136,57 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(html, nameof(html));
         ArgumentException.ThrowIfNullOrWhiteSpace(elementQuery, nameof(elementQuery));
 
-        IBrowser browser = null!;
-
-        //NOTE: It doesn't support cancellationToken built-in, this is just a workaround for support.
-        cancellationToken.Register(() =>
-        {
-#pragma warning disable S2486 // Generic exceptions should not be ignored
-#pragma warning disable AsyncFixer02 // Long-running or blocking operations inside an async method
-            try { browser?.CloseAsync().Wait(); } catch { }
-            try { browser?.Dispose(); } catch { }
-#pragma warning restore AsyncFixer02 // Long-running or blocking operations inside an async method
-#pragma warning restore S2486 // Generic exceptions should not be ignored
-        });
-
+        IBrowser? browser = null;
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var browserFetcher = new BrowserFetcher();
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Download chrome (headless) browser (first time takes a while).
-            await browserFetcher.DownloadAsync();
+            // Downloads the browser (takes a while the first time)
+            await DownloadBrowserAsync();
 
             cancellationToken.ThrowIfCancellationRequested();
 
             // Launch the browser and set the given html.
-            await using var _ = browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            await using var page = await browser.NewPageAsync();
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            await page.SetContentAsync(html);
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Wait for page to be idle or the selector to load.
-            //await page.WaitForNetworkIdleAsync(new WaitForNetworkIdleOptions { Timeout = 2000 });
-            await page.WaitForSelectorAsync(elementQuery, new WaitForSelectorOptions { Timeout = 2000 });
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Select the element and take a screen-shot
-            var elementHandle = await page.QuerySelectorAsync(elementQuery);
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            var bounding = await elementHandle.BoundingBoxAsync(); // await elementHandle.BoxModelAsync();
-            var options = new ElementScreenshotOptions
+            await using (browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true }))
             {
-                Clip = new Clip() { X = 0, Y = 0, Height = bounding.Height, Width = bounding.Width },
-                Type = ScreenshotType.Png, // Poor quality with Jpeg/WebP.
-                // Quality = Not supported with PNG/WebP images! (Only Jpeg)
-            };
+                cancellationToken.ThrowIfCancellationRequested();
 
-            cancellationToken.ThrowIfCancellationRequested();
+                await using var page = await browser.NewPageAsync();
 
-            return await elementHandle.ScreenshotDataAsync(options);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                await page.SetContentAsync(html);
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                // Wait for page to be idle or the selector to load.
+                //await page.WaitForNetworkIdleAsync(new WaitForNetworkIdleOptions { Timeout = 2000 });
+                await page.WaitForSelectorAsync(elementQuery, new WaitForSelectorOptions { Timeout = 2000 });
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                // Select the element and take a screen-shot
+                var elementHandle = await page.QuerySelectorAsync(elementQuery);
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var bounding = await elementHandle.BoundingBoxAsync(); // await elementHandle.BoxModelAsync();
+                var options = new ElementScreenshotOptions
+                {
+                    Clip = new Clip() { X = 0, Y = 0, Height = bounding.Height, Width = bounding.Width },
+                    Type = ScreenshotType.Png, // Poor quality with Jpeg/WebP.
+                                               // Quality = Not supported with PNG/WebP images! (Only Jpeg)
+                };
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                return await elementHandle.ScreenshotDataAsync(options);
+            }
         }
         finally
         {
-            await browser.CloseAsync();
+            if (browser is not null)
+                await browser.CloseAsync();
         }
     }
 
@@ -184,29 +224,13 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(html, nameof(html));
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
-        IBrowser browser = null!;
-
-        //NOTE: It doesn't support cancellationToken built-in, this is just a workaround for support.
-        cancellationToken.Register(() =>
-        {
-#pragma warning disable S2486 // Generic exceptions should not be ignored
-#pragma warning disable AsyncFixer02 // Long-running or blocking operations inside an async method
-            try { browser?.CloseAsync().Wait(); } catch { }
-            try { browser?.Dispose(); } catch { }
-#pragma warning restore AsyncFixer02 // Long-running or blocking operations inside an async method
-#pragma warning restore S2486 // Generic exceptions should not be ignored
-        });
-
+        IBrowser? browser = null;
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var browserFetcher = new BrowserFetcher();
-
-            cancellationToken.ThrowIfCancellationRequested();
-
-            // Download chrome (headless) browser (first time takes a while).
-            await browserFetcher.DownloadAsync();
+            // Downloads the browser (takes a while the first time)
+            await DownloadBrowserAsync();
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -240,7 +264,8 @@ public static partial class HtmlHelper
         }
         finally
         {
-            await browser.CloseAsync();
+            if (browser is not null)
+                await browser.CloseAsync();
         }
     }
 }

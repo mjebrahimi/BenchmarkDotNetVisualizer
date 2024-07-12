@@ -1,6 +1,4 @@
-﻿// Ignore Spelling: expando
-
-using BenchmarkDotNetVisualizer.Utilities;
+﻿using BenchmarkDotNetVisualizer.Utilities;
 using Force.DeepCloner;
 using System.Dynamic;
 
@@ -76,12 +74,13 @@ public static class BenchmarkReportProcessor
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
 
-        if (highlightGroups && groupByColumns.IsNullOrEmpty())
-        {
-            throw new System.ArgumentException(
-                $"Argument '{nameof(highlightGroups)}' is set to true but '{nameof(groupByColumns)}' are not specified. " +
-                $"Set '{nameof(highlightGroups)}' to false or provide '{nameof(groupByColumns)}", nameof(groupByColumns));
-        }
+        // Commented because of better developer experience
+        //if (highlightGroups && groupByColumns.IsNullOrEmpty())
+        //{
+        //    throw new System.ArgumentException(
+        //        $"Argument '{nameof(highlightGroups)}' is set to true but '{nameof(groupByColumns)}' are not specified. " +
+        //        $"Set '{nameof(highlightGroups)}' to false or provide '{nameof(groupByColumns)}", nameof(groupByColumns));
+        //}
 
         enumerable = enumerable.Select(expando => expando?.CloneWithMetaProperties()).ToArray().AsEnumerable();
         enumerable.RemoveMarkdownBoldFromProperties();
