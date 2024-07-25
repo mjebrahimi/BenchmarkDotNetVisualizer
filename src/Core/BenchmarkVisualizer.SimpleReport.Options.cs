@@ -1,4 +1,6 @@
-﻿namespace BenchmarkDotNetVisualizer;
+﻿using BenchmarkDotNetVisualizer.Utilities.Html;
+
+namespace BenchmarkDotNetVisualizer;
 
 /// <summary>
 /// Options for simple report and render as HTML output.
@@ -31,6 +33,7 @@ public class ReportHtmlOptions : ReportImageOptions
             SortByColumns = options.SortByColumns,
             HighlightGroups = options.HighlightGroups,
             HtmlWrapMode = htmlWrapMode,
+            ThemeOption = options.ThemeOption
         };
     }
 
@@ -65,6 +68,11 @@ public class ReportImageOptions : ReportMarkdownOptions
     ///   <c>true</c> if highlight groups; otherwise, <c>false</c>.
     /// </value>
     public bool HighlightGroups { get; set; } = true;
+
+    /// <summary>
+    /// Specifies the theme for the image generation. default is Bright.
+    /// </summary>
+    public HtmlThemeOptions ThemeOption { get; set; } = HtmlThemeOptions.Bright;
 
     /// <inheritdoc />
     public override void Validate()

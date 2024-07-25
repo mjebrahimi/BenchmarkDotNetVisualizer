@@ -136,7 +136,7 @@ public static partial class BenchmarkVisualizer
     public static string GetHtml(this BenchmarkInfo benchmarkInfo, ReportHtmlOptions options)
     {
         var html = GetHtmlCore(benchmarkInfo, options);
-        return HtmlHelper.WrapInHtmlDocument(html, options.Title, options.HtmlWrapMode);
+        return HtmlHelper.WrapInHtmlDocument(html, options.Title,options.ThemeOption, options.HtmlWrapMode);
     }
 
     private static string GetHtmlCore(this BenchmarkInfo benchmarkInfo, ReportImageOptions options)
