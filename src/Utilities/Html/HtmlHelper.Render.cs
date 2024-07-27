@@ -237,7 +237,7 @@ public static partial class HtmlHelper
                                          h1, h2 { border-bottom: solid 1px #444444; }
                                          h1, h2, h3 { padding-bottom: 0.3em; }
                                          table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
-                                         td, th { padding: 6px 13px; border: 1px solid #444444; text-align: right; white-space: nowrap; }
+                                         td, th { padding: 6px 13px; border: 1px solid #444444; text-align: right; white-space: nowrap;color: #b3b3b3; }
                                          tr { background-color: #1E1E1E !important; border-top: 1px solid #CCC; }
                                          tr:nth-child(even):not(.divider) { background: #444444 !important; }
                                          tr.divider { border: 0; font-size: 10px; }

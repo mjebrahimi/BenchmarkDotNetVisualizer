@@ -8,7 +8,7 @@
     h1, h2 { border-bottom: solid 1px #444444; }
     h1, h2, h3 { padding-bottom: 0.3em; }
     table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
-    td, th { padding: 6px 13px; border: 1px solid #444444; text-align: right; white-space: nowrap; }
+    td, th { padding: 6px 13px; border: 1px solid #444444; text-align: right; white-space: nowrap;color: #b3b3b3; }
     tr { background-color: #1E1E1E !important; border-top: 1px solid #CCC; }
     tr:nth-child(even):not(.divider) { background: #444444 !important; }
     tr.divider { border: 0; font-size: 10px; }
@@ -43,25 +43,25 @@ WarmupCount=3
 <tr>
 <td style="text-align: left; background-color: #FFCCFF"><strong>Serialize</strong></td>
 <td style="text-align: left"><strong>SystemTextSourceGen</strong></td>
-<td style="background-color: #99FF99"><strong>509.9 ns</strong></td>
-<td><strong>78.57 ns</strong></td>
-<td><strong>4.31 ns</strong></td>
+<td style="background-color: #99FF99"><strong>510.2 ns</strong></td>
+<td><strong>151.48 ns</strong></td>
+<td><strong>8.30 ns</strong></td>
 <td style="background-color: #99FF99"><strong>728 B</strong></td>
 </tr>
 <tr>
 <td style="text-align: left; background-color: #FFCCFF">Serialize</td>
 <td style="text-align: left">SystemTextJson</td>
-<td style="background-color: #FAFF99">782.1 ns</td>
-<td>99.23 ns</td>
-<td>5.44 ns</td>
+<td style="background-color: #F9FF99">789.4 ns</td>
+<td>96.26 ns</td>
+<td>5.28 ns</td>
 <td style="background-color: #C8FF99">1040 B</td>
 </tr>
 <tr>
 <td style="text-align: left; background-color: #FFCCFF">Serialize</td>
 <td style="text-align: left">NewtonsoftJson</td>
-<td style="background-color: #FF9999">1,197.3 ns</td>
-<td>476.73 ns</td>
-<td>26.13 ns</td>
+<td style="background-color: #FF9999">1,235.3 ns</td>
+<td>332.31 ns</td>
+<td>18.21 ns</td>
 <td style="background-color: #FF9999">3048 B</td>
 </tr>
 <tr class="divider">
@@ -73,25 +73,25 @@ WarmupCount=3
 <tr>
 <td style="text-align: left; background-color: #CCFFFF"><strong>Deserialize</strong></td>
 <td style="text-align: left"><strong>SystemTextJson</strong></td>
-<td style="background-color: #99FF99"><strong>1,527.8 ns</strong></td>
-<td><strong>291.76 ns</strong></td>
-<td><strong>15.99 ns</strong></td>
+<td style="background-color: #99FF99"><strong>1,568.6 ns</strong></td>
+<td><strong>728.75 ns</strong></td>
+<td><strong>39.95 ns</strong></td>
 <td style="background-color: #A3FF99"><strong>1784 B</strong></td>
 </tr>
 <tr>
 <td style="text-align: left; background-color: #CCFFFF">Deserialize</td>
 <td style="text-align: left">SystemTextSourceGen</td>
-<td style="background-color: #AAFF99">1,593.7 ns</td>
-<td>246.81 ns</td>
-<td>13.53 ns</td>
+<td style="background-color: #B4FF99">1,680.2 ns</td>
+<td>1,051.99 ns</td>
+<td>57.66 ns</td>
 <td style="background-color: #99FF99"><strong>1688 B</strong></td>
 </tr>
 <tr>
 <td style="text-align: left; background-color: #CCFFFF">Deserialize</td>
 <td style="text-align: left">NewtonsoftJson</td>
-<td style="background-color: #FFEE99">2,521.6 ns</td>
-<td>915.13 ns</td>
-<td>50.16 ns</td>
+<td style="background-color: #FFFB99">2,407.8 ns</td>
+<td>557.06 ns</td>
+<td>30.53 ns</td>
 <td style="background-color: #FF9999">5504 B</td>
 </tr>
 </tbody>
