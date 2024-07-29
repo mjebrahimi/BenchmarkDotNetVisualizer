@@ -136,7 +136,7 @@ public static partial class BenchmarkVisualizer
     public static string ConcatReportsAndGetHtml(this IEnumerable<BenchmarkInfo> benchmarkInfo, ConcatReportHtmlOptions options)
     {
         var html = ConcatReportsAndGetHtmlCore(benchmarkInfo, options);
-        return HtmlHelper.WrapInHtmlDocument(html, options.Title, options.HtmlWrapMode);
+        return HtmlHelper.WrapInHtmlDocument(html, options.Title,options.ThemeOption, options.HtmlWrapMode);
     }
 
     private static string ConcatReportsAndGetHtmlCore(this IEnumerable<BenchmarkInfo> benchmarkInfo, ConcatReportImageOptions options)

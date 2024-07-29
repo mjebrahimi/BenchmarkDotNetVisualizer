@@ -1,4 +1,6 @@
-﻿namespace BenchmarkDotNetVisualizer;
+﻿using BenchmarkDotNetVisualizer.Utilities.Html;
+
+namespace BenchmarkDotNetVisualizer;
 
 /// <summary>
 /// Options for concat reports and render as HTML output.
@@ -13,6 +15,11 @@ public class ConcatReportHtmlOptions : ConcatReportImageOptions
     /// The HTML wrap mode.
     /// </value>
     public HtmlDocumentWrapMode HtmlWrapMode { get; set; } = HtmlDocumentWrapMode.Simple;
+
+    /// <summary>
+    /// The theme option for html report (Default is Bright)
+    /// </summary>
+    public HtmlThemeOptions ThemeOption { get; set; } = HtmlThemeOptions.Bright;
 
     /// <summary>
     /// Creates from the specified options.

@@ -1,6 +1,7 @@
 ﻿using PuppeteerSharp;
 using PuppeteerSharp.Media;
 using System.Dynamic;
+using BenchmarkDotNetVisualizer.Utilities.Html;
 
 namespace BenchmarkDotNetVisualizer.Utilities;
 
@@ -14,11 +15,12 @@ public static partial class HtmlHelper
     /// </summary>
     /// <param name="source">The source.</param>
     /// <param name="path">The path to save.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="dividerMode">The divider mode when generating html.</param>
     /// <param name="elementQuery">The element query to screen-shot.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public static Task RenderToImageAsync(this IEnumerable<ExpandoObject?> source, string path,
+    public static Task RenderToImageAsync(this IEnumerable<ExpandoObject?> source, string path,HtmlThemeOptions themeOption,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, string elementQuery = "body", CancellationToken cancellationToken = default)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
@@ -26,7 +28,7 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(elementQuery, nameof(elementQuery));
 
         var table = ToHtmlTable(source, dividerMode);
-        var html = WrapInHtmlDocument(table, string.Empty, HtmlDocumentWrapMode.Simple);
+        var html = WrapInHtmlDocument(table, string.Empty,themeOption, HtmlDocumentWrapMode.Simple);
         return RenderHtmlToImageAsync(html, path, elementQuery, cancellationToken);
     }
 
@@ -34,18 +36,19 @@ public static partial class HtmlHelper
     /// Renders to image data asynchronously.
     /// </summary>
     /// <param name="source">The source.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="dividerMode">The divider mode when generating html.</param>
     /// <param name="elementQuery">The element query to screen-shot.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public static Task<byte[]> RenderToImageDataAsync(this IEnumerable<ExpandoObject?> source,
+    public static Task<byte[]> RenderToImageDataAsync(this IEnumerable<ExpandoObject?> source,HtmlThemeOptions themeOption,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, string elementQuery = "body", CancellationToken cancellationToken = default)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
         ArgumentException.ThrowIfNullOrWhiteSpace(elementQuery, nameof(elementQuery));
 
         var table = ToHtmlTable(source, dividerMode);
-        var html = WrapInHtmlDocument(table, string.Empty, HtmlDocumentWrapMode.Simple);
+        var html = WrapInHtmlDocument(table, string.Empty,themeOption, HtmlDocumentWrapMode.Simple);
         return RenderHtmlToImageDataAsync(html, elementQuery, cancellationToken);
     }
 

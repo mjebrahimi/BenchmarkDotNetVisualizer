@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNetVisualizer.Utilities;
+using BenchmarkDotNetVisualizer.Utilities.Html;
 
 namespace BenchmarkDotNetVisualizer;
 
@@ -15,6 +16,12 @@ public class JoinReportHtmlOptions : JoinReportImageOptions
     /// The HTML wrap mode.
     /// </value>
     public HtmlDocumentWrapMode HtmlWrapMode { get; set; } = HtmlDocumentWrapMode.Simple;
+
+    
+    /// <summary>
+    /// Set the theme option for HTML report. Default is Bright
+    /// </summary>
+    public HtmlThemeOptions ThemeOption { get; set; } = HtmlThemeOptions.Bright;
 
     /// <summary>
     /// Creates from the specified options.

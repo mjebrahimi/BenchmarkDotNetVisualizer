@@ -2,6 +2,7 @@
 using System.Dynamic;
 using System.Net;
 using System.Text;
+using BenchmarkDotNetVisualizer.Utilities.Html;
 
 namespace BenchmarkDotNetVisualizer.Utilities;
 
@@ -16,18 +17,19 @@ public static partial class HtmlHelper
     /// <param name="source">The source.</param>
     /// <param name="path">The path.</param>
     /// <param name="title">The title.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="dividerMode">The divider mode.</param>
     /// <param name="htmlWrapMode">The HTML wrap mode.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public static Task SaveAsHtmlTableDocumentAsync(this IEnumerable<ExpandoObject?> source, string path, string title,
+    public static Task SaveAsHtmlTableDocumentAsync(this IEnumerable<ExpandoObject?> source, string path, string title,HtmlThemeOptions themeOption,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple,
         CancellationToken cancellationToken = default)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
-        var text = ToHtmlTableDocument(source, title, dividerMode, htmlWrapMode);
+        var text = ToHtmlTableDocument(source, title,themeOption, dividerMode, htmlWrapMode);
         DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, text, cancellationToken);
     }
@@ -38,15 +40,16 @@ public static partial class HtmlHelper
     /// <param name="source">The source.</param>
     /// <param name="path">The path.</param>
     /// <param name="title">The title.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="dividerMode">The divider mode.</param>
     /// <param name="htmlWrapMode">The HTML wrap mode.</param>
-    public static void SaveAsHtmlTableDocument(this IEnumerable<ExpandoObject?> source, string path, string title,
+    public static void SaveAsHtmlTableDocument(this IEnumerable<ExpandoObject?> source, string path, string title,HtmlThemeOptions themeOption,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
 
-        var text = ToHtmlTableDocument(source, title, dividerMode, htmlWrapMode);
+        var text = ToHtmlTableDocument(source, title,themeOption, dividerMode, htmlWrapMode);
         DirectoryHelper.EnsureDirectoryExists(path);
         File.WriteAllText(path, text);
     }
@@ -56,16 +59,17 @@ public static partial class HtmlHelper
     /// </summary>
     /// <param name="source">The source.</param>
     /// <param name="title">The title.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="dividerMode">The divider mode.</param>
     /// <param name="htmlWrapMode">The HTML wrap mode.</param>
     /// <returns></returns>
-    public static string ToHtmlTableDocument(this IEnumerable<ExpandoObject?> source, string title,
+    public static string ToHtmlTableDocument(this IEnumerable<ExpandoObject?> source, string title,HtmlThemeOptions themeOption,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
 
         var table = ToHtmlTable(source, dividerMode);
-        return WrapInHtmlDocument(table, title, htmlWrapMode);
+        return WrapInHtmlDocument(table, title,themeOption, htmlWrapMode);
     }
 
     /// <summary>
@@ -74,13 +78,14 @@ public static partial class HtmlHelper
     /// <param name="path">The path.</param>
     /// <param name="body">The body.</param>
     /// <param name="title">The title.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="htmlWrapMode">The HTML wrap mode.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public static Task WrapInHtmlDocumentAndSaveAsAsync(string path, string body, string title, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple,
+    public static Task WrapInHtmlDocumentAndSaveAsAsync(string path, string body, string title,HtmlThemeOptions themeOption, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple,
         CancellationToken cancellationToken = default)
     {
-        var html = WrapInHtmlDocument(body, title, htmlWrapMode);
+        var html = WrapInHtmlDocument(body, title,themeOption, htmlWrapMode);
         DirectoryHelper.EnsureDirectoryExists(path);
         return File.WriteAllTextAsync(path, html, cancellationToken);
     }
@@ -91,10 +96,11 @@ public static partial class HtmlHelper
     /// <param name="path">The path.</param>
     /// <param name="body">The body.</param>
     /// <param name="title">The title.</param>
+    /// <param name="themeOption">The theme option</param>
     /// <param name="htmlWrapMode">The HTML wrap mode.</param>
-    public static void WrapInHtmlDocumentAndSaveAs(string path, string body, string title, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
+    public static void WrapInHtmlDocumentAndSaveAs(string path, string body, string title,HtmlThemeOptions themeOption, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
     {
-        var html = WrapInHtmlDocument(body, title, htmlWrapMode);
+        var html = WrapInHtmlDocument(body, title,themeOption, htmlWrapMode);
         DirectoryHelper.EnsureDirectoryExists(path);
         File.WriteAllText(path, html);
     }
@@ -117,30 +123,15 @@ public static partial class HtmlHelper
     /// </summary>
     /// <param name="body">The body.</param>
     /// <param name="title">The title.</param>
+    /// <param name="themeOption">The HTML theme mode</param>
     /// <param name="htmlWrapMode">The HTML wrap mode.</param>
     /// <returns></returns>
     /// <exception cref="InvalidEnumArgumentException">nameof(htmlWrapMode), Convert.ToInt32(htmlWrapMode), typeof(HtmlDocumentWrapMode)</exception>
-    public static string WrapInHtmlDocument(string body, string title, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
+    public static string WrapInHtmlDocument(string body, string title,HtmlThemeOptions themeOption, HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
     {
-        const string CSS =
-            """
-            <style type="text/css">
-                body { font-family: system-ui; padding: 0 30px 30px 30px; width: min-content; display: inline-block; }
-                h1, h2 { border-bottom: solid 1px #D8DEE4;}
-                h1, h2, h3 { padding-bottom: 0.3em; }
-                table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
-                td, th { padding: 6px 13px; border: 1px solid #CCC; text-align: right; white-space: nowrap; }
-                tr { background-color: #FFF !important; border-top: 1px solid #CCC; }
-                tr:nth-child(even):not(.divider) { background: #F8F8F8 !important; }
-                tr.divider { border: 0; font-size: 10px; }
-                tr.divider td { padding: 0; border: 0; }
-                pre { background: #EFEFEF; padding: 0 1em; }
-                thead th { background-color: #EFEFEF; }
-                tbody tr:not(.divider):hover { background-color: #EFEFEF !important; border: 2px solid #ADADAD; }
-                .powered-by { text-align: center; margin-bottom: -20px !important; font-weight: bold; }
-            </style>
-            """;
-
+        
+        var css = SetupCssStylingBasedOnThemeOption(themeOption);
+        
 #pragma warning disable IDE0066 // Convert switch statement to expression
         switch (htmlWrapMode)
         {
@@ -152,7 +143,7 @@ public static partial class HtmlHelper
                     <head>
                     <meta charset='utf-8' />
                     <title>{{{title}}}</title>
-                    {{{CSS}}}
+                    {{{css}}}
                     </head>
                     <body>
                     {{{body}}}
@@ -168,7 +159,7 @@ public static partial class HtmlHelper
                     <head>
                     <meta charset='utf-8' />
                     <title>{{{title}}}</title>
-                    {{{CSS}}}
+                    {{{css}}}
                     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
                     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.4/css/colReorder.dataTables.min.css">
                     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
@@ -218,6 +209,48 @@ public static partial class HtmlHelper
                 throw new InvalidEnumArgumentException(nameof(htmlWrapMode), Convert.ToInt32(htmlWrapMode), typeof(HtmlDocumentWrapMode));
         }
 #pragma warning restore IDE0066 // Convert switch statement to expression
+    }
+
+    private static string SetupCssStylingBasedOnThemeOption(HtmlThemeOptions themeOption)
+    {
+        const string BRIGHTCSSFORMAT = """
+                                       <style type="text/css">
+                                                    body { font-family: system-ui; padding: 0 30px 30px 30px; width: min-content; display: inline-block; }
+                                                    h1, h2 { border-bottom: solid 1px #D8DEE4;}
+                                                    h1, h2, h3 { padding-bottom: 0.3em; }
+                                                    table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
+                                                    td, th { padding: 6px 13px; border: 1px solid #CCC; text-align: right; white-space: nowrap; }
+                                                    tr { background-color: #FFF !important; border-top: 1px solid #CCC; }
+                                                    tr:nth-child(even):not(.divider) { background: #F8F8F8 !important; }
+                                                    tr.divider { border: 0; font-size: 10px; }
+                                                    tr.divider td { padding: 0; border: 0; }
+                                                    pre { background: #EFEFEF; padding: 0 1em; }
+                                                    thead th { background-color: #EFEFEF; }
+                                                    tbody tr:not(.divider):hover { background-color: #EFEFEF !important; border: 2px solid #ADADAD; }
+                                                    .powered-by { text-align: center; margin-bottom: -20px !important; font-weight: bold; }
+                                                </style>
+                                       """;
+
+        const string DARKCSSFORMAT = """
+                                     <style type="text/css">
+                                         body { font-family: system-ui; padding: 0 30px 30px 30px; width: min-content; display: inline-block; background-color: #121212; color: #E0E0E0; }
+                                         h1, h2 { border-bottom: solid 1px #444444; }
+                                         h1, h2, h3 { padding-bottom: 0.3em; }
+                                         table { border-collapse: collapse !important; margin-top: 3px !important; width: 100%; display: inline-table; margin-bottom: 20px !important; }
+                                         td, th { padding: 6px 13px; border: 1px solid #444444; text-align: right; white-space: nowrap;color: #b3b3b3; }
+                                         tr { background-color: #1E1E1E !important; border-top: 1px solid #CCC; }
+                                         tr:nth-child(even):not(.divider) { background: #444444 !important; }
+                                         tr.divider { border: 0; font-size: 10px; }
+                                         tr.divider td { padding: 0; border: 0; }
+                                         pre { background: #2E2E2E; padding: 0 1em; color: #E0E0E0; }
+                                         thead th { background-color: #2E2E2E; color: #E0E0E0; }
+                                         tbody tr:not(.divider):hover { background-color: #333333 !important; border: 2px solid #777777; }
+                                         .powered-by { text-align: center; margin-bottom: -20px !important; font-weight: bold; }
+                                     </style>
+                                     """
+            ;
+
+        return themeOption == HtmlThemeOptions.Bright ? BRIGHTCSSFORMAT : DARKCSSFORMAT;
     }
 
     /// <summary>
