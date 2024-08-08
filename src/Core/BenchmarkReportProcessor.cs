@@ -44,16 +44,13 @@ public static class BenchmarkReportProcessor
 
         enumerable = PivotColumnEachCollection(enumerable, pivotProperty, statisticColumn);
 
-        enumerable = PivotColumnEachCollection(enumerable, pivotProperty, statisticColumn);
+        string[] joinKeyColumns = [mainColumn, .. otherColumnsToSelect, .. groupByColumns];
+        var joined = JoinCollectionsTogether(enumerable, joinKeyColumns, columnsOrder);
 
-        string[] joinKeyColumnsWithOtherColumns = [mainColumn, .. otherColumnsToSelect, .. groupByColumns];
-        ExpandoObject[] joined = JoinCollectionsTogether(enumerable, joinKeyColumnsWithOtherColumns, columnsOrder).ToArray();
-        
         RemoveMarkdownBoldFromProperties(joined);
 
-        string[] joinKeyColumns = [mainColumn, .. groupByColumns];
-        string[]? spectrumColumns = spectrumStatisticColumn ? columnsOrder : null;
-        IEnumerable<ExpandoObject?> result = Process(joined, groupByColumns, spectrumColumns, columnsOrder, highlightGroups, false);
+        var spectrumColumns = spectrumStatisticColumn ? columnsOrder : null;
+        var result = Process(joined, groupByColumns, spectrumColumns, columnsOrder, highlightGroups, boldEntireRowOfLowestValue: false);
 
         string[] allColumnsByOrder = [mainColumn, .. otherColumnsToSelect, .. groupByColumns, .. columnsOrder];
         result.RemovePropertiesExcept(allColumnsByOrder);
