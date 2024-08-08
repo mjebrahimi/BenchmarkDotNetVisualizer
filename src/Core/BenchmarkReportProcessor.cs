@@ -44,7 +44,7 @@ public static class BenchmarkReportProcessor
 
         enumerable = PivotColumnEachCollection(enumerable, pivotProperty, statisticColumn);
 
-        string[] joinKeyColumns = [mainColumn, .. groupByColumns];
+        string[] joinKeyColumns = [mainColumn, .. otherColumnsToSelect, .. groupByColumns];
         var joined = JoinCollectionsTogether(enumerable, joinKeyColumns, columnsOrder);
 
         RemoveMarkdownBoldFromProperties(joined);
