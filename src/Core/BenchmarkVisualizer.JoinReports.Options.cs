@@ -17,12 +17,6 @@ public class JoinReportHtmlOptions : JoinReportImageOptions
     /// </value>
     public HtmlDocumentWrapMode HtmlWrapMode { get; set; } = HtmlDocumentWrapMode.Simple;
 
-    
-    /// <summary>
-    /// Set the theme option for HTML report. Default is Bright
-    /// </summary>
-    public HtmlThemeOptions ThemeOption { get; set; } = HtmlThemeOptions.Bright;
-
     /// <summary>
     /// Creates from the specified options.
     /// </summary>
@@ -36,13 +30,14 @@ public class JoinReportHtmlOptions : JoinReportImageOptions
             Title = options.Title,
             MainColumn = options.MainColumn,
             GroupByColumns = options.GroupByColumns,
-            PivotProperty = options.PivotProperty,
+            PivotColumn = options.PivotColumn,
             StatisticColumns = options.StatisticColumns,
             OtherColumnsToSelect = options.OtherColumnsToSelect,
             ColumnsOrder = options.ColumnsOrder,
             DividerMode = options.DividerMode,
             SpectrumStatisticColumn = options.SpectrumStatisticColumn,
             HighlightGroups = options.HighlightGroups,
+            Theme = options.Theme,
             HtmlWrapMode = htmlWrapMode,
         };
     }
@@ -78,6 +73,11 @@ public class JoinReportImageOptions : JoinReportMarkdownOptions
     ///   <c>true</c> if highlight groups; otherwise, <c>false</c>.
     /// </value>
     public bool HighlightGroups { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the theme of the report. (Defaults to <see cref="Theme.Dark"/>)
+    /// </summary>
+    public Theme Theme { get; set; } = Theme.Dark;
 }
 
 /// <summary>
@@ -116,7 +116,7 @@ public class JoinReportMarkdownOptions
     /// <value>
     /// The pivot property.
     /// </value>
-    public required string PivotProperty { get; set; }
+    public required string PivotColumn { get; set; }
 
     /// <summary>
     /// Gets or sets the statistic columns.
@@ -164,7 +164,7 @@ public class JoinReportMarkdownOptions
     /// <value>
     /// The pivot property.
     /// </value>
-    public string PivotProperty { get; set; } = null!;
+    public string PivotColumn { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets the statistic columns.
@@ -206,7 +206,7 @@ public class JoinReportMarkdownOptions
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(Title, nameof(Title));
         Guard.ThrowIfNullOrEmpty(GroupByColumns, nameof(GroupByColumns));
-        ArgumentException.ThrowIfNullOrWhiteSpace(PivotProperty, nameof(PivotProperty));
+        ArgumentException.ThrowIfNullOrWhiteSpace(PivotColumn, nameof(PivotColumn));
         Guard.ThrowIfNullOrEmpty(StatisticColumns, nameof(StatisticColumns));
         Guard.ThrowIfNullOrEmpty(ColumnsOrder, nameof(ColumnsOrder));
     }

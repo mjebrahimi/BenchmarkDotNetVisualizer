@@ -136,7 +136,7 @@ public static partial class BenchmarkVisualizer
     public static string JoinReportsAndGetHtml(this BenchmarkInfo benchmarkInfo, JoinReportHtmlOptions options)
     {
         var html = JoinReportsAndGetHtmlCore([benchmarkInfo], options);
-        return HtmlHelper.WrapInHtmlDocument(html, options.Title,options.ThemeOption, options.HtmlWrapMode);
+        return HtmlHelper.WrapInHtmlDocument(html, options.Title, options.Theme, options.HtmlWrapMode);
     }
     #endregion
 
@@ -264,7 +264,7 @@ public static partial class BenchmarkVisualizer
     public static string JoinReportsAndGetHtml(this IEnumerable<BenchmarkInfo> benchmarkInfo, JoinReportHtmlOptions options)
     {
         var html = JoinReportsAndGetHtmlCore(benchmarkInfo, options);
-        return HtmlHelper.WrapInHtmlDocument(html, options.Title,options.ThemeOption, options.HtmlWrapMode);
+        return HtmlHelper.WrapInHtmlDocument(html, options.Title, options.Theme, options.HtmlWrapMode);
     }
 
     private static string JoinReportsAndGetHtmlCore(this IEnumerable<BenchmarkInfo> benchmarkInfo, JoinReportImageOptions options)
@@ -288,7 +288,7 @@ public static partial class BenchmarkVisualizer
 
             foreach (var statisticColumn in options.StatisticColumns)
             {
-                var result = tables.JoinAndProcess(options.MainColumn, options.GroupByColumns, options.PivotProperty, statisticColumn,
+                var result = tables.JoinAndProcess(options.MainColumn, options.GroupByColumns, options.PivotColumn, statisticColumn,
                     options.ColumnsOrder, options.OtherColumnsToSelect, options.SpectrumStatisticColumn, options.HighlightGroups);
 
                 var html = result.ToHtmlTable(options.DividerMode);
@@ -448,7 +448,7 @@ public static partial class BenchmarkVisualizer
 
             foreach (var statisticColumn in options.StatisticColumns)
             {
-                var result = tables.JoinAndProcess(options.MainColumn, options.GroupByColumns, options.PivotProperty, statisticColumn,
+                var result = tables.JoinAndProcess(options.MainColumn, options.GroupByColumns, options.PivotColumn, statisticColumn,
                     options.ColumnsOrder, options.OtherColumnsToSelect, spectrumStatisticColumn: false, highlightGroups: false);
 
                 var markdown = result.ToMarkdownTable(options.DividerMode);

@@ -17,9 +17,9 @@ public class ConcatReportHtmlOptions : ConcatReportImageOptions
     public HtmlDocumentWrapMode HtmlWrapMode { get; set; } = HtmlDocumentWrapMode.Simple;
 
     /// <summary>
-    /// The theme option for html report (Default is Bright)
+    /// The theme option for html report (Defaults to <see cref="Theme.Dark"/>)
     /// </summary>
-    public HtmlThemeOptions ThemeOption { get; set; } = HtmlThemeOptions.Bright;
+    public Theme Theme { get; set; } = Theme.Dark;
 
     /// <summary>
     /// Creates from the specified options.

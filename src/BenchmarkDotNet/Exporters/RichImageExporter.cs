@@ -48,7 +48,7 @@ public class RichImageExporter(ReportImageOptions options, ImageFormat format = 
 
         ExportToLog(summary, null!);
 
-        return new string[1] { text };
+        return [text];
     }
 
     /// <inheritdoc/>

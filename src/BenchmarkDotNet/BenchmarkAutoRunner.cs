@@ -174,7 +174,7 @@ public static class BenchmarkAutoRunner
 
         Task.Run(async () =>
         {
-            if (HtmlHelper.IsBrowserInstalled())
+            if (HtmlHelper.DefaultBrowser is not null)
                 return;
 
             try

@@ -1,7 +1,6 @@
 ﻿using PuppeteerSharp;
 using PuppeteerSharp.Media;
 using System.Dynamic;
-using BenchmarkDotNetVisualizer.Utilities.Html;
 
 namespace BenchmarkDotNetVisualizer.Utilities;
 
@@ -15,12 +14,12 @@ public static partial class HtmlHelper
     /// </summary>
     /// <param name="source">The source.</param>
     /// <param name="path">The path to save.</param>
-    /// <param name="themeOption">The theme option</param>
+    /// <param name="theme">The theme option</param>
     /// <param name="dividerMode">The divider mode when generating html.</param>
     /// <param name="elementQuery">The element query to screen-shot.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public static Task RenderToImageAsync(this IEnumerable<ExpandoObject?> source, string path,HtmlThemeOptions themeOption,
+    public static Task RenderToImageAsync(this IEnumerable<ExpandoObject?> source, string path, Theme theme,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, string elementQuery = "body", CancellationToken cancellationToken = default)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
@@ -28,7 +27,7 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(elementQuery, nameof(elementQuery));
 
         var table = ToHtmlTable(source, dividerMode);
-        var html = WrapInHtmlDocument(table, string.Empty,themeOption, HtmlDocumentWrapMode.Simple);
+        var html = WrapInHtmlDocument(table, string.Empty, theme, HtmlDocumentWrapMode.Simple);
         return RenderHtmlToImageAsync(html, path, elementQuery, cancellationToken);
     }
 
@@ -36,19 +35,20 @@ public static partial class HtmlHelper
     /// Renders to image data asynchronously.
     /// </summary>
     /// <param name="source">The source.</param>
-    /// <param name="themeOption">The theme option</param>
+    /// <param name="theme">The theme option</param>
     /// <param name="dividerMode">The divider mode when generating html.</param>
     /// <param name="elementQuery">The element query to screen-shot.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    public static Task<byte[]> RenderToImageDataAsync(this IEnumerable<ExpandoObject?> source,HtmlThemeOptions themeOption,
+    public static Task<byte[]> RenderToImageDataAsync(this IEnumerable<ExpandoObject?> source, Theme theme,
         RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow, string elementQuery = "body", CancellationToken cancellationToken = default)
     {
         Guard.ThrowIfNullOrEmpty(source, nameof(source));
         ArgumentException.ThrowIfNullOrWhiteSpace(elementQuery, nameof(elementQuery));
 
         var table = ToHtmlTable(source, dividerMode);
-        var html = WrapInHtmlDocument(table, string.Empty,themeOption, HtmlDocumentWrapMode.Simple);
+        var html = WrapInHtmlDocument(table, string.Empty, theme, HtmlDocumentWrapMode.Simple);
+        html += "<style> .theme-toggle { display: none; } </style>"; //Hide theme-toggle button
         return RenderHtmlToImageDataAsync(html, elementQuery, cancellationToken);
     }
 
@@ -66,6 +66,7 @@ public static partial class HtmlHelper
         ArgumentException.ThrowIfNullOrWhiteSpace(path, nameof(path));
         ArgumentException.ThrowIfNullOrWhiteSpace(elementQuery, nameof(elementQuery));
 
+        html += "<style> .theme-toggle { display: none; } </style>"; //Hide theme-toggle button
         var imageBytes = await RenderHtmlToImageDataAsync(html, elementQuery, cancellationToken);
         //await File.WriteAllBytesAsync(path, imageBytes, cancellationToken); //Saving the original image
         await ImageHelper.CompressImageBytesAndSaveAsAsync(imageBytes, path, cancellationToken);
@@ -75,15 +76,31 @@ public static partial class HtmlHelper
     private static bool downloadIsRunning = false;
     private static bool progressIsRunning = false;
 
-    internal static bool IsBrowserInstalled()
-    {
-        return browserFetcher.GetInstalledBrowsers().Any(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
-    }
+    /// <summary>
+    /// Gets or sets the default browser
+    /// </summary>
+    public static Browser? DefaultBrowser { get; set; }
 
+#pragma warning disable S3963 // "static" fields should be initialized inline
+    static HtmlHelper()
+    {
+        var installedBrowsers = browserFetcher.GetInstalledBrowsers().ToList();
+        var defaultBrowser = installedBrowsers.Find(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
+        if (defaultBrowser is not null)
+        {
+            var executablePath = browserFetcher.GetExecutablePath(defaultBrowser.BuildId);
+            DefaultBrowser = new Browser(defaultBrowser.Browser, executablePath);
+        }
+    }
+#pragma warning restore S3963 // "static" fields should be initialized inline
+
+    /// <summary>
+    /// Downloads browser with default configuration asynchronously.
+    /// </summary>
+    /// <param name="silent">Performs silently or prints logs to console output (Defaults to <see langword="false"/>)</param>
     internal static async Task DownloadBrowserAsync(bool silent = false)
     {
-        var isInstalled = IsBrowserInstalled();
-        if (isInstalled)
+        if (DefaultBrowser is not null)
             return;
 
         var tasks = new List<Task>();
@@ -95,7 +112,9 @@ public static partial class HtmlHelper
                 try
                 {
                     downloadIsRunning = true;
-                    return await browserFetcher.DownloadAsync();
+                    var installedBrowser = await browserFetcher.DownloadAsync();
+                    var executablePath = browserFetcher.GetExecutablePath(installedBrowser.BuildId);
+                    DefaultBrowser = new Browser(installedBrowser.Browser, executablePath);
                 }
                 finally
                 {
@@ -150,7 +169,12 @@ public static partial class HtmlHelper
             cancellationToken.ThrowIfCancellationRequested();
 
             // Launch the browser and set the given html.
-            await using (browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true }))
+            await using (browser = await Puppeteer.LaunchAsync(new LaunchOptions
+            {
+                Headless = true,
+                Browser = DefaultBrowser!.BrowserType,
+                ExecutablePath = DefaultBrowser!.ExecutablePath
+            }))
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -238,7 +262,12 @@ public static partial class HtmlHelper
             cancellationToken.ThrowIfCancellationRequested();
 
             // Launch the browser and set the given html.
-            await using var _ = browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true });
+            await using var _ = browser = await Puppeteer.LaunchAsync(new LaunchOptions
+            {
+                Headless = true,
+                Browser = DefaultBrowser!.BrowserType,
+                ExecutablePath = DefaultBrowser!.ExecutablePath
+            });
 
             cancellationToken.ThrowIfCancellationRequested();
 

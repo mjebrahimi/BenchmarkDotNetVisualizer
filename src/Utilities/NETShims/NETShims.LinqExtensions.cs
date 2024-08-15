@@ -51,7 +51,7 @@ internal static class LinqExtensions
 
         if (default(TKey) is null)
         {
-            if (key == null)
+            if (key is null)
             {
                 TSource firstValue = value;
 
@@ -66,14 +66,14 @@ internal static class LinqExtensions
                     value = e.Current;
                     key = keySelector(value);
                 }
-                while (key == null);
+                while (key is null);
             }
 
             while (e.MoveNext())
             {
                 TSource nextValue = e.Current;
                 TKey nextKey = keySelector(nextValue);
-                if (nextKey != null && comparer.Compare(nextKey, key) < 0)
+                if (nextKey is not null && comparer.Compare(nextKey, key) < 0)
                 {
                     key = nextKey;
                     value = nextValue;
@@ -163,7 +163,7 @@ internal static class LinqExtensions
 
         if (default(TKey) is null)
         {
-            if (key == null)
+            if (key is null)
             {
                 TSource firstValue = value;
 
@@ -178,14 +178,14 @@ internal static class LinqExtensions
                     value = e.Current;
                     key = keySelector(value);
                 }
-                while (key == null);
+                while (key is null);
             }
 
             while (e.MoveNext())
             {
                 TSource nextValue = e.Current;
                 TKey nextKey = keySelector(nextValue);
-                if (nextKey != null && comparer.Compare(nextKey, key) > 0)
+                if (nextKey is not null && comparer.Compare(nextKey, key) > 0)
                 {
                     key = nextKey;
                     value = nextValue;

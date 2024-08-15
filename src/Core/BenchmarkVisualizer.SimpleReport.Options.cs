@@ -33,7 +33,7 @@ public class ReportHtmlOptions : ReportImageOptions
             SortByColumns = options.SortByColumns,
             HighlightGroups = options.HighlightGroups,
             HtmlWrapMode = htmlWrapMode,
-            ThemeOption = options.ThemeOption
+            Theme = options.Theme
         };
     }
 
@@ -70,9 +70,9 @@ public class ReportImageOptions : ReportMarkdownOptions
     public bool HighlightGroups { get; set; } = true;
 
     /// <summary>
-    /// Specifies the theme for the image generation. default is Bright.
+    /// Gets or sets the theme of the report. (Defaults to <see cref="Theme.Dark"/>)
     /// </summary>
-    public HtmlThemeOptions ThemeOption { get; set; } = HtmlThemeOptions.Bright;
+    public Theme Theme { get; set; } = Theme.Dark;
 
     /// <inheritdoc />
     public override void Validate()

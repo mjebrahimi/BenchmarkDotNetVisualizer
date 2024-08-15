@@ -84,7 +84,7 @@ public static partial class MarkdownHelper
 
             var maxColumnValues = table.Where(expando => expando is not null)
                 .Select(expando => columnNames.Select(column => expando?.GetProperty(column)?.ToString()?.Length ?? 0))
-                .Union(new[] { columnNames.Select(column => column.Length) }) // Include header in column sizes
+                .Union([columnNames.Select(column => column.Length)]) // Include header in column sizes
                 .Aggregate(
                     new int[columnNames.Length].AsEnumerable(),
                     (accumulate, x) => accumulate.Zip(x, Math.Max))

@@ -16,7 +16,7 @@ public static class BenchmarkReportProcessor
     /// <param name="enumerable">The enumerable.</param>
     /// <param name="mainColumn">The main column.</param>
     /// <param name="groupByColumns">The group by columns.</param>
-    /// <param name="pivotProperty">The pivot property.</param>
+    /// <param name="pivotColumn">The pivot column.</param>
     /// <param name="statisticColumn">The statistic column.</param>
     /// <param name="columnsOrder">The order columns.</param>
     /// <param name="otherColumnsToSelect">The other columns to select.</param>
@@ -24,13 +24,13 @@ public static class BenchmarkReportProcessor
     /// <param name="highlightGroups">Highlights groups if set to <c>true</c>.</param>
     /// <returns></returns>
     public static IEnumerable<ExpandoObject?> JoinAndProcess(this IEnumerable<IEnumerable<ExpandoObject?>> enumerable,
-        string mainColumn, string[] groupByColumns, string pivotProperty, string statisticColumn, string[] columnsOrder,
+        string mainColumn, string[] groupByColumns, string pivotColumn, string statisticColumn, string[] columnsOrder,
         string[]? otherColumnsToSelect = null, bool spectrumStatisticColumn = true, bool highlightGroups = true)
     {
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         ArgumentException.ThrowIfNullOrWhiteSpace(mainColumn, nameof(mainColumn));
         Guard.ThrowIfNullOrEmpty(groupByColumns, nameof(groupByColumns));
-        ArgumentException.ThrowIfNullOrWhiteSpace(pivotProperty, nameof(pivotProperty));
+        ArgumentException.ThrowIfNullOrWhiteSpace(pivotColumn, nameof(pivotColumn));
         ArgumentException.ThrowIfNullOrWhiteSpace(statisticColumn, nameof(statisticColumn));
         Guard.ThrowIfNullOrEmpty(columnsOrder, nameof(columnsOrder));
 
@@ -39,10 +39,10 @@ public static class BenchmarkReportProcessor
         enumerable = enumerable.Select(innerCollection => innerCollection.Select(expando => expando?.CloneWithMetaProperties()).ToArray()).ToArray();
 
         enumerable = enumerable
-            .MergeAndSplitByGroup(pivotProperty).ToArray();
-        //.OrderCollectionsByValues(pivotProperty, columnsOrder).ToArray(); //Old approach for columns ordering
+            .MergeAndSplitByGroup(pivotColumn).ToArray();
+        //.OrderCollectionsByValues(pivotColumn, columnsOrder).ToArray(); //Old approach for columns ordering
 
-        enumerable = PivotColumnEachCollection(enumerable, pivotProperty, statisticColumn);
+        enumerable = PivotColumnEachCollection(enumerable, pivotColumn, statisticColumn);
 
         string[] joinKeyColumns = [mainColumn, .. otherColumnsToSelect, .. groupByColumns];
         var joined = JoinCollectionsTogether(enumerable, joinKeyColumns, columnsOrder);
