@@ -33,6 +33,14 @@ jobs:
     - name: Test (Release)
       run: dotnet test --configuration Release --no-build --no-restore
 
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4.3.6
+      if: always()
+      with:
+        name: test-artifact
+        path: ./test/BenchmarkDotNetVisualizer.Tests
+        retention-days: 5
+
     - name: Pack (Release)
       run: dotnet pack --configuration Release --output ./nuget --no-build --no-restore
 
