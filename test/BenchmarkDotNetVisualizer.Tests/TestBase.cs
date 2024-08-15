@@ -51,9 +51,9 @@ public abstract class TestBase
     public async Task VerifyHtmlAndImage(string htmlPath, string imgPath,
         [CallerFilePath] string callerFilePath = null!, [CallerMemberName] string callerMethod = null!)
     {
-        await VerifyImage(imgPath, callerFilePath, callerMethod);
-
         await VerifyHtml(htmlPath);
+
+        await VerifyImage(imgPath, callerFilePath, callerMethod);
     }
 
     public async Task VerifyHtml(string htmlPath)

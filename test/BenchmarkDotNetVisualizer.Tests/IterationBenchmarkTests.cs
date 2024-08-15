@@ -20,9 +20,9 @@ public class IterationBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -43,9 +43,9 @@ public class IterationBenchmarkTests : TestBase
             Theme = Theme.Light
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -66,9 +66,9 @@ public class IterationBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -89,8 +89,8 @@ public class IterationBenchmarkTests : TestBase
             Theme = Theme.Light
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 }

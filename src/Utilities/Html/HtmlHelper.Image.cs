@@ -9,9 +9,9 @@ namespace BenchmarkDotNetVisualizer.Utilities;
 /// </summary>
 public static partial class HtmlHelper
 {
-    private static readonly BrowserFetcher browserFetcher = new();
-    private static readonly SemaphoreSlim browserDownloadSync = new(1, 1);
-    private static readonly SemaphoreSlim consoleProgressSync = new(1, 1);
+    private static readonly BrowserFetcher _browserFetcher = new();
+    private static readonly SemaphoreSlim _browserDownloadSync = new(1, 1);
+    private static readonly SemaphoreSlim _consoleProgressSync = new(1, 1);
 
     /// <summary>
     /// Gets or sets the default browser
@@ -21,11 +21,11 @@ public static partial class HtmlHelper
 #pragma warning disable S3963 // "static" fields should be initialized inline
     static HtmlHelper()
     {
-        var installedBrowsers = browserFetcher.GetInstalledBrowsers().ToList();
-        var defaultBrowser = installedBrowsers.Find(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
+        var installedBrowsers = _browserFetcher.GetInstalledBrowsers().ToList();
+        var defaultBrowser = installedBrowsers.Find(p => p.Browser == _browserFetcher.Browser && p.Platform == _browserFetcher.Platform);
         if (defaultBrowser is not null)
         {
-            var executablePath = browserFetcher.GetExecutablePath(defaultBrowser.BuildId);
+            var executablePath = _browserFetcher.GetExecutablePath(defaultBrowser.BuildId);
             DefaultBrowser = new Browser(defaultBrowser.Browser, executablePath);
         }
     }
@@ -106,33 +106,33 @@ public static partial class HtmlHelper
         {
             try
             {
-                await browserDownloadSync.WaitAsync();
+                await _browserDownloadSync.WaitAsync();
 
                 if (DefaultBrowser is not null)
                     return;
 
-                var installedBrowser = await browserFetcher.DownloadAsync();
-                var executablePath = browserFetcher.GetExecutablePath(installedBrowser.BuildId);
+                var installedBrowser = await _browserFetcher.DownloadAsync();
+                var executablePath = _browserFetcher.GetExecutablePath(installedBrowser.BuildId);
                 DefaultBrowser = new Browser(installedBrowser.Browser, executablePath);
             }
             finally
             {
-                browserDownloadSync.Release();
+                _browserDownloadSync.Release();
             }
         }));
 
-        var isProgressing = await consoleProgressSync.IsLockAlreadyAcquiredAsync();
+        var isProgressing = await _consoleProgressSync.IsLockAlreadyAcquiredAsync();
         if (silent is false && isProgressing is false)
         {
             tasks.Add(Task.Run(async () =>
             {
                 try
                 {
-                    await consoleProgressSync.WaitAsync();
+                    await _consoleProgressSync.WaitAsync();
 
                     await Task.Delay(1000);
                     var index = 0;
-                    var isDownloading = await browserDownloadSync.IsLockAlreadyAcquiredAsync();
+                    var isDownloading = await _browserDownloadSync.IsLockAlreadyAcquiredAsync();
                     while (isDownloading)
                     {
                         Console.Write($"Browser is downloading, please wait{new string('.', index + 1),-5}");
@@ -145,7 +145,7 @@ public static partial class HtmlHelper
                 }
                 finally
                 {
-                    consoleProgressSync.Release();
+                    _consoleProgressSync.Release();
                 }
             }));
         }

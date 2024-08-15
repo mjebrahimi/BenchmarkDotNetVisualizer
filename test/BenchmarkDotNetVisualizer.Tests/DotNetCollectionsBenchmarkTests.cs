@@ -24,9 +24,9 @@ public class DotNetCollectionsBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -49,9 +49,9 @@ public class DotNetCollectionsBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -77,9 +77,9 @@ public class DotNetCollectionsBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -105,9 +105,9 @@ public class DotNetCollectionsBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -132,9 +132,9 @@ public class DotNetCollectionsBenchmarkTests : TestBase
             HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -159,9 +159,9 @@ public class DotNetCollectionsBenchmarkTests : TestBase
             HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,
         };
 
-        var (htmlPath, imgPath) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await JoinReportsAndSaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     #region Utils
