@@ -16,7 +16,7 @@
 [CategoriesColumn]
 [HideColumns("Job")]
 [MemoryDiagnoser(displayGenColumns: false)]
-public class IteratorsBenchmark
+public class IterationBenchmark
 {
     [Params(1000)]
     public int Length { get; set; }

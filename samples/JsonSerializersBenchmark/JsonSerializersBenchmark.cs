@@ -1,5 +1,4 @@
-﻿#if NET6_0_OR_GREATER
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -110,4 +109,3 @@ public record FamilyInfo(string[] Parents, string[] Siblings);
 
 [JsonSerializable(typeof(Person))]
 public partial class AppJsonSerializerContext : JsonSerializerContext;
-#endif
