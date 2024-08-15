@@ -35,7 +35,7 @@ jobs:
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4.3.6
-      if: always()
+      if: failure()
       with:
         name: test-artifact
         path: |
