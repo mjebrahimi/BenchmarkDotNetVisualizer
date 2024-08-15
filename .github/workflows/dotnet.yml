@@ -38,7 +38,9 @@ jobs:
       if: always()
       with:
         name: test-artifact
-        path: ./test/BenchmarkDotNetVisualizer.Tests
+        path: |
+          ./test/BenchmarkDotNetVisualizer.Tests/_reports
+          ./test/BenchmarkDotNetVisualizer.Tests/_snapshots
         retention-days: 5
 
     - name: Pack (Release)
