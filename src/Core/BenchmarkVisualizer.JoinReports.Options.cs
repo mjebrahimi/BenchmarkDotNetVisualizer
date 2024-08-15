@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNetVisualizer.Utilities;
-using BenchmarkDotNetVisualizer.Utilities.Html;
 
 namespace BenchmarkDotNetVisualizer;
 

@@ -1,6 +1,4 @@
-﻿using BenchmarkDotNetVisualizer.Utilities.Html;
-
-namespace BenchmarkDotNetVisualizer;
+﻿namespace BenchmarkDotNetVisualizer;
 
 /// <summary>
 /// Options for concat reports and render as HTML output.
