@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using BenchmarkDotNetVisualizer.Utilities;
+using System.Runtime.CompilerServices;
 using VerifyTests.DiffPlex;
 
 namespace BenchmarkDotNetVisualizer.Tests;
@@ -13,6 +14,7 @@ public abstract class TestBase
     {
         VerifyDiffPlex.Initialize(OutputType.Compact);
         DerivePathInfo((_, _, type, method) => new PathInfo(_snapshotsPath, type.Name, method.Name));
+        HtmlHelper.EnsureBrowserDownloadedAsync(true).GetAwaiter().GetResult();
     }
 
     public async Task<(string htmlPath, string imgPath)> JoinReportsAndSaveAsHtmlAndImageAsync(BenchmarkInfo[] benchmarkInfo, JoinReportHtmlOptions options,
