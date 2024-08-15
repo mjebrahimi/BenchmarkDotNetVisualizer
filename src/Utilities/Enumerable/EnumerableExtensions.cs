@@ -201,6 +201,6 @@ public static partial class EnumerableExtensions
     /// <returns></returns>
     public static IEnumerable<T?> ConcatBy<T>(this IEnumerable<IEnumerable<T>> source, T? item)
     {
-        return source.Aggregate((current, next) => current.Concat([item]).Concat(next));
+        return source.Aggregate((current, next) => current.Concat([item])!.Concat(next));
     }
 }
