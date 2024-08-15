@@ -180,7 +180,7 @@ public static class BenchmarkAutoRunner
             try
             {
                 Console.WriteLine("Download Browser Started in Background.");
-                await HtmlHelper.DownloadBrowserAsync(silent: true);
+                await HtmlHelper.EnsureBrowserDownloadedAsync(silent: true);
             }
             catch (Exception ex)
             {

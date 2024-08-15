@@ -5,7 +5,7 @@ namespace BenchmarkDotNetVisualizer.Tests;
 
 public abstract class TestBase
 {
-    protected static readonly string _artifactsPath = DirectoryHelper.GetPathRelativeToProjectDirectory("_artifacts");
+    protected static readonly string _benchmarkArtifactsPath = DirectoryHelper.GetPathRelativeToProjectDirectory("BenchmarkDotNet.Artifacts");
     private static readonly string _snapshotsPath = DirectoryHelper.GetPathRelativeToProjectDirectory("_snapshots");
     private static readonly string _reportsPath = DirectoryHelper.GetPathRelativeToProjectDirectory("_reports");
 

@@ -7,7 +7,7 @@ public class DotNetCollectionsBenchmarkTests : TestBase
     [Fact]
     public async Task Benchmark_Initialize_Mean()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "Benchmarks.InitializeBenchmark*-report-github.md").ToArray();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "Benchmarks.InitializeBenchmark*-report-github.md").ToArray();
 
         var options = new JoinReportHtmlOptions()
         {
@@ -32,7 +32,7 @@ public class DotNetCollectionsBenchmarkTests : TestBase
     [Fact]
     public async Task Benchmark_Initialize_Allocated()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "Benchmarks.InitializeBenchmark*-report-github.md").ToArray();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "Benchmarks.InitializeBenchmark*-report-github.md").ToArray();
 
         var options = new JoinReportHtmlOptions()
         {
@@ -57,7 +57,7 @@ public class DotNetCollectionsBenchmarkTests : TestBase
     [Fact]
     public async Task Benchmark_SearchContains_Mean()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "Benchmarks.ContainsBenchmark*-report-github.md").ToArray();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "Benchmarks.ContainsBenchmark*-report-github.md").ToArray();
 
         ChangeColorAndNameOfBigOColumn(benchmarkInfo);
 
@@ -85,7 +85,7 @@ public class DotNetCollectionsBenchmarkTests : TestBase
     [Fact]
     public async Task Benchmark_SearchContains_Allocated()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "Benchmarks.ContainsBenchmark*-report-github.md").ToArray();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "Benchmarks.ContainsBenchmark*-report-github.md").ToArray();
 
         ChangeColorAndNameOfBigOColumn(benchmarkInfo);
 
@@ -113,7 +113,7 @@ public class DotNetCollectionsBenchmarkTests : TestBase
     [Fact]
     public async Task Benchmark_SearchTryGetValue_Mean()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "Benchmarks.TryGetValueBenchmark*-report-github.md").ToArray();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "Benchmarks.TryGetValueBenchmark*-report-github.md").ToArray();
 
         ChangeColorAndNameOfBigOColumn(benchmarkInfo);
 
@@ -140,7 +140,7 @@ public class DotNetCollectionsBenchmarkTests : TestBase
     [Fact]
     public async Task Benchmark_SearchTryGetValue_Allocated()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "Benchmarks.TryGetValueBenchmark*-report-github.md").ToArray();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "Benchmarks.TryGetValueBenchmark*-report-github.md").ToArray();
 
         ChangeColorAndNameOfBigOColumn(benchmarkInfo);
 

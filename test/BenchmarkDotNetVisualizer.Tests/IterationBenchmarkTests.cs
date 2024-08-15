@@ -5,7 +5,7 @@ public class IterationBenchmarkTests : TestBase
     [Fact]
     public async Task Joined_PivotBy_Runtime_Dark()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
 
         var options = new JoinReportHtmlOptions
         {
@@ -28,7 +28,7 @@ public class IterationBenchmarkTests : TestBase
     [Fact]
     public async Task Joined_PivotBy_Runtime_Light()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
 
         var options = new JoinReportHtmlOptions
         {
@@ -51,7 +51,7 @@ public class IterationBenchmarkTests : TestBase
     [Fact]
     public async Task Joined_PivotBy_Method_Dark()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
 
         var options = new JoinReportHtmlOptions
         {
@@ -74,7 +74,7 @@ public class IterationBenchmarkTests : TestBase
     [Fact]
     public async Task Joined_PivotBy_Method_Light()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "IterationBenchmark-report-github.md").First();
 
         var options = new JoinReportHtmlOptions
         {

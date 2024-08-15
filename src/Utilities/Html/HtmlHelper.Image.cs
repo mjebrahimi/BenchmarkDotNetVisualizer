@@ -9,6 +9,28 @@ namespace BenchmarkDotNetVisualizer.Utilities;
 /// </summary>
 public static partial class HtmlHelper
 {
+    private static readonly BrowserFetcher browserFetcher = new();
+    private static readonly SemaphoreSlim browserDownloadSync = new(1, 1);
+    private static readonly SemaphoreSlim consoleProgressSync = new(1, 1);
+
+    /// <summary>
+    /// Gets or sets the default browser
+    /// </summary>
+    public static Browser? DefaultBrowser { get; set; }
+
+#pragma warning disable S3963 // "static" fields should be initialized inline
+    static HtmlHelper()
+    {
+        var installedBrowsers = browserFetcher.GetInstalledBrowsers().ToList();
+        var defaultBrowser = installedBrowsers.Find(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
+        if (defaultBrowser is not null)
+        {
+            var executablePath = browserFetcher.GetExecutablePath(defaultBrowser.BuildId);
+            DefaultBrowser = new Browser(defaultBrowser.Browser, executablePath);
+        }
+    }
+#pragma warning restore S3963 // "static" fields should be initialized inline
+
     /// <summary>
     /// Renders to image and save asynchronously.
     /// </summary>
@@ -72,74 +94,58 @@ public static partial class HtmlHelper
         await ImageHelper.CompressImageBytesAndSaveAsAsync(imageBytes, path, cancellationToken);
     }
 
-    private readonly static BrowserFetcher browserFetcher = new();
-    private static bool downloadIsRunning = false;
-    private static bool progressIsRunning = false;
-
     /// <summary>
-    /// Gets or sets the default browser
-    /// </summary>
-    public static Browser? DefaultBrowser { get; set; }
-
-#pragma warning disable S3963 // "static" fields should be initialized inline
-    static HtmlHelper()
-    {
-        var installedBrowsers = browserFetcher.GetInstalledBrowsers().ToList();
-        var defaultBrowser = installedBrowsers.Find(p => p.Browser == browserFetcher.Browser && p.Platform == browserFetcher.Platform);
-        if (defaultBrowser is not null)
-        {
-            var executablePath = browserFetcher.GetExecutablePath(defaultBrowser.BuildId);
-            DefaultBrowser = new Browser(defaultBrowser.Browser, executablePath);
-        }
-    }
-#pragma warning restore S3963 // "static" fields should be initialized inline
-
-    /// <summary>
-    /// Downloads browser with default configuration asynchronously.
+    /// Ensures that browser is downloaded, otherwise downloads browser with default configuration asynchronously.
     /// </summary>
     /// <param name="silent">Performs silently or prints logs to console output (Defaults to <see langword="false"/>)</param>
-    internal static async Task DownloadBrowserAsync(bool silent = false)
+    public static async Task EnsureBrowserDownloadedAsync(bool silent = false)
     {
-        if (DefaultBrowser is not null)
-            return;
-
         var tasks = new List<Task>();
 
-        if (downloadIsRunning is false)
+        tasks.Add(Task.Run(async () =>
+        {
+            try
+            {
+                await browserDownloadSync.WaitAsync();
+
+                if (DefaultBrowser is not null)
+                    return;
+
+                var installedBrowser = await browserFetcher.DownloadAsync();
+                var executablePath = browserFetcher.GetExecutablePath(installedBrowser.BuildId);
+                DefaultBrowser = new Browser(installedBrowser.Browser, executablePath);
+            }
+            finally
+            {
+                browserDownloadSync.Release();
+            }
+        }));
+
+        var isProgressing = await consoleProgressSync.IsLockAlreadyAcquiredAsync();
+        if (silent is false && isProgressing is false)
         {
             tasks.Add(Task.Run(async () =>
             {
                 try
                 {
-                    downloadIsRunning = true;
-                    var installedBrowser = await browserFetcher.DownloadAsync();
-                    var executablePath = browserFetcher.GetExecutablePath(installedBrowser.BuildId);
-                    DefaultBrowser = new Browser(installedBrowser.Browser, executablePath);
+                    await consoleProgressSync.WaitAsync();
+
+                    await Task.Delay(1000);
+                    var index = 0;
+                    var isDownloading = await browserDownloadSync.IsLockAlreadyAcquiredAsync();
+                    while (isDownloading)
+                    {
+                        Console.WriteLine($"Browser is downloading, please wait{new string('.', index + 1),-5}");
+                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        index = (index + 1) % 5;
+                        await Task.Delay(500);
+                    }
+                    Console.WriteLine("Browser download is finished.");
                 }
                 finally
                 {
-                    downloadIsRunning = false;
+                    consoleProgressSync.Release();
                 }
-            }));
-        }
-
-        if (silent is false && progressIsRunning is false)
-        {
-            tasks.Add(Task.Run(async () =>
-            {
-                progressIsRunning = true;
-                await Task.Delay(2000);
-                Console.WriteLine();
-                var index = 0;
-                while (downloadIsRunning)
-                {
-                    Console.SetCursorPosition(0, Console.CursorTop - 1);
-                    Console.WriteLine($"Browser is downloading, please wait{new string('.', index + 1),-5}");
-                    index = (index + 1) % 5;
-                    await Task.Delay(500);
-                }
-                Console.WriteLine("Browser download is finished.");
-                progressIsRunning = false;
             }));
         }
 
@@ -164,7 +170,7 @@ public static partial class HtmlHelper
             cancellationToken.ThrowIfCancellationRequested();
 
             // Downloads the browser (takes a while the first time)
-            await DownloadBrowserAsync();
+            await EnsureBrowserDownloadedAsync();
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -257,7 +263,7 @@ public static partial class HtmlHelper
             cancellationToken.ThrowIfCancellationRequested();
 
             // Downloads the browser (takes a while the first time)
-            await DownloadBrowserAsync();
+            await EnsureBrowserDownloadedAsync();
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -298,6 +304,24 @@ public static partial class HtmlHelper
         {
             if (browser is not null)
                 await browser.CloseAsync();
+        }
+    }
+}
+
+public static class SemaphoreSlimExtensions
+{
+    public static async Task<bool> IsLockAlreadyAcquiredAsync(this SemaphoreSlim semaphoreSlim)
+    {
+        bool isAcquired = false;
+        try
+        {
+            isAcquired = await semaphoreSlim.WaitAsync(0);
+            return isAcquired is false;
+        }
+        finally
+        {
+            if (isAcquired)
+                semaphoreSlim.Release();
         }
     }
 }

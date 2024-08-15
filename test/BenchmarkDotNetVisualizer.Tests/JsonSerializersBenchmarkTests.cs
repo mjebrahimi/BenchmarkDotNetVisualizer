@@ -5,7 +5,7 @@ public class JsonSerializersBenchmarkTests : TestBase
     [Fact]
     public async Task Simple_Dark()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "JsonSerializersBenchmark-report-github.md").First();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "JsonSerializersBenchmark-report-github.md").First();
 
         var options = new ReportHtmlOptions
         {
@@ -25,7 +25,7 @@ public class JsonSerializersBenchmarkTests : TestBase
     [Fact]
     public async Task Simple_Light()
     {
-        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_artifactsPath, searchPattern: "JsonSerializersBenchmark-report-github.md").First();
+        var benchmarkInfo = BenchmarkInfo.CreateFromDirectory(_benchmarkArtifactsPath, searchPattern: "JsonSerializersBenchmark-report-github.md").First();
 
         var options = new ReportHtmlOptions
         {
