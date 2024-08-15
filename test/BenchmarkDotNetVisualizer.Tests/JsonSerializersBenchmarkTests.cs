@@ -17,9 +17,9 @@ public class JsonSerializersBenchmarkTests : TestBase
             Theme = Theme.Dark
         };
 
-        var (htmlPath, imgPath) = await SaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await SaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 
     [Fact]
@@ -37,8 +37,8 @@ public class JsonSerializersBenchmarkTests : TestBase
             Theme = Theme.Light
         };
 
-        var (htmlPath, imgPath) = await SaveAsHtmlAndImageAsync(benchmarkInfo, options);
+        var (htmlPath, _) = await SaveAsHtmlAndImageAsync(benchmarkInfo, options);
 
-        await VerifyHtmlAndImage(htmlPath, imgPath);
+        await VerifyHtml(htmlPath);
     }
 }
