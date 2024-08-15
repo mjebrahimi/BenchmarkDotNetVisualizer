@@ -38,7 +38,7 @@ jobs:
       if: always()
       with:
         name: test-artifact
-        path: /
+        path: ./*
 
     - name: Pack (Release)
       run: dotnet pack --configuration Release --output ./nuget --no-build --no-restore
