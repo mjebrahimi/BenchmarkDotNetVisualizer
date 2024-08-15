@@ -135,11 +135,12 @@ public static partial class HtmlHelper
                     var isDownloading = await browserDownloadSync.IsLockAlreadyAcquiredAsync();
                     while (isDownloading)
                     {
-                        Console.WriteLine($"Browser is downloading, please wait{new string('.', index + 1),-5}");
-                        Console.SetCursorPosition(0, Console.CursorTop - 1);
+                        Console.Write($"Browser is downloading, please wait{new string('.', index + 1),-5}");
+                        Console.SetCursorPosition(0, Console.CursorTop);
                         index = (index + 1) % 5;
                         await Task.Delay(500);
                     }
+                    Console.WriteLine();
                     Console.WriteLine("Browser download is finished.");
                 }
                 finally
