@@ -181,7 +181,7 @@ public static partial class HtmlHelper
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
                 ExecutablePath = DefaultBrowser!.ExecutablePath,
-                DefaultViewport = new ViewPortOptions { Width = 1920, Height = 1080 },
+                DefaultViewport = null,
             }))
             {
                 cancellationToken.ThrowIfCancellationRequested();
