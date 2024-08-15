@@ -643,8 +643,10 @@ public static class BenchmarkReportProcessor
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(sortByColumns, nameof(sortByColumns));
 
+        var firstColumn = enumerable.FirstOrDefault()!.FirstOrDefault()!.FirstOrDefault().Key; //"Method" column (if all values have same value then order by first column)
+
         return enumerable
-            .Select(collection => collection!.OrderByPropertiesAuto(sortByColumns));
+            .Select(collection => collection!.OrderByPropertiesAuto([.. sortByColumns, firstColumn]));
     }
 
     /// <summary>
@@ -696,8 +698,10 @@ public static class BenchmarkReportProcessor
         Guard.ThrowIfNullOrEmpty(enumerable, nameof(enumerable));
         Guard.ThrowIfNullOrEmpty(sortByColumns, nameof(sortByColumns));
 
+        var firstColumn = enumerable.FirstOrDefault()!.FirstOrDefault()!.FirstOrDefault().Key; //"Method" column (if all values have same value then order by first column)
+
         return enumerable
-            .Select(collection => collection!.OrderByPropertiesAutoDescending(sortByColumns));
+            .Select(collection => collection!.OrderByPropertiesAutoDescending([.. sortByColumns, firstColumn]));
     }
     #endregion
 

@@ -17,7 +17,7 @@ public static partial class EnumerableExtensions
     /// <returns></returns>
     public static IOrderedEnumerable<ExpandoObject> OrderByProperties(this IEnumerable<ExpandoObject> enumerable, params string[] orderProperties)
     {
-        return OrderByPropertiesAuto(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Ascending));
+        return OrderByProperties(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Ascending));
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public static partial class EnumerableExtensions
     /// <returns></returns>
     public static IOrderedEnumerable<ExpandoObject> OrderByNumericProperties(this IEnumerable<ExpandoObject> enumerable, params string[] orderProperties)
     {
-        return OrderByPropertiesAuto(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Ascending));
+        return OrderByNumericProperties(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Ascending));
     }
     #endregion
 
@@ -52,7 +52,7 @@ public static partial class EnumerableExtensions
     /// <returns></returns>
     public static IOrderedEnumerable<ExpandoObject> OrderByPropertiesDescending(this IEnumerable<ExpandoObject> enumerable, params string[] orderProperties)
     {
-        return OrderByPropertiesAuto(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Descending));
+        return OrderByProperties(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Descending));
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public static partial class EnumerableExtensions
     /// <returns></returns>
     public static IOrderedEnumerable<ExpandoObject> OrderByNumericPropertiesDescending(this IEnumerable<ExpandoObject> enumerable, params string[] orderProperties)
     {
-        return OrderByPropertiesAuto(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Descending));
+        return OrderByNumericProperties(enumerable, orderProperties.ToDictionary(p => p, _ => OrderMode.Descending));
     }
     #endregion
 

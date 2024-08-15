@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang='en' data-theme="dark">
 <head>
 <meta charset='utf-8' />
@@ -113,22 +113,6 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">List (Sorted + BinarySearch)</td>
-<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
 <td style="text-align: left">ImmutableArray (Sorted + BinarySearch)</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
@@ -145,7 +129,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">SortedSet</td>
+<td style="text-align: left">ImmutableList (Sorted + BinarySearch)</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -193,7 +177,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">ImmutableList (Sorted + BinarySearch)</td>
+<td style="text-align: left">List (Sorted + BinarySearch)</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -209,7 +193,23 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">FrozenSet</td>
+<td style="text-align: left">SortedSet</td>
+<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">Dictionary</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -241,7 +241,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">Dictionary</td>
+<td style="text-align: left">FrozenSet</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -258,22 +258,6 @@ WarmupCount=3
 </tr>
 <tr>
 <td style="text-align: left">HashSet</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #99FF99"hasBackground>32 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #99FF99"hasBackground>40 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">ReadOnlyDictionary</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -321,7 +305,23 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">SortedList</td>
+<td style="text-align: left">ReadOnlyDictionary</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #99FF99"hasBackground>32 B</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #99FF99"hasBackground>40 B</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">SortedDictionary</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -337,7 +337,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">SortedDictionary</td>
+<td style="text-align: left">SortedList</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -385,7 +385,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">ReadOnlyCollection</td>
+<td style="text-align: left">ImmutableArray</td>
 <td style="text-align: left; background-color: #FF9999"hasBackground>O(N)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -401,7 +401,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">ImmutableArray</td>
+<td style="text-align: left">ReadOnlyCollection</td>
 <td style="text-align: left; background-color: #FF9999"hasBackground>O(N)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #FFCCFF"hasBackground>False</td>
@@ -442,6 +442,70 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
+<td style="text-align: left">ImmutableArray (Sorted + BinarySearch)</td>
+<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ImmutableList (Sorted + BinarySearch)</td>
+<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ImmutableSortedDictionary</td>
+<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">ImmutableSortedSet</td>
+<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
 <td style="text-align: left">List (Sorted + BinarySearch)</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
@@ -474,67 +538,19 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">ImmutableArray (Sorted + BinarySearch)</td>
+<td style="text-align: left">SortedDictionary</td>
 <td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #99FF99"hasBackground>32 B</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #FF9999"hasBackground>32 B</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #99FF99"hasBackground>40 B</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">ImmutableSortedSet</td>
-<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">ImmutableSortedDictionary</td>
-<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">ImmutableList (Sorted + BinarySearch)</td>
-<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #FF9999"hasBackground>40 B</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
@@ -554,23 +570,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">SortedDictionary</td>
-<td style="text-align: left; background-color: #FFFF99"hasBackground>O(log(N))</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #99FF99"hasBackground>32 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #FF9999"hasBackground>32 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #99FF99"hasBackground>40 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #FF9999"hasBackground>40 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">FrozenSet</td>
+<td style="text-align: left">Dictionary</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
@@ -602,39 +602,23 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
+<td style="text-align: left">FrozenSet</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #9AFF99"hasBackground>96 B</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #9AFF99"hasBackground>168 B</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
 <td style="text-align: left">HashSet</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #9AFF99"hasBackground>96 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #9AFF99"hasBackground>168 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">Dictionary</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
-<td>1000</td>
-<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #9AFF99"hasBackground>96 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="background-color: #9AFF99"hasBackground>168 B</td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
-</tr>
-<tr>
-<td style="text-align: left">ReadOnlyDictionary</td>
 <td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
@@ -682,7 +666,23 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">ReadOnlyCollection</td>
+<td style="text-align: left">ReadOnlyDictionary</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground>O(1)</td>
+<td>1000</td>
+<td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #9AFF99"hasBackground>96 B</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="background-color: #9AFF99"hasBackground>168 B</td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+<td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
+</tr>
+<tr>
+<td style="text-align: left">Array</td>
 <td style="text-align: left; background-color: #FF9999"hasBackground>O(N)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
@@ -698,7 +698,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">Array</td>
+<td style="text-align: left">ImmutableArray</td>
 <td style="text-align: left; background-color: #FF9999"hasBackground>O(N)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
@@ -730,7 +730,7 @@ WarmupCount=3
 <td style="text-align: left; background-color: #99FF99"hasBackground><strong>-</strong></td>
 </tr>
 <tr>
-<td style="text-align: left">ImmutableArray</td>
+<td style="text-align: left">ReadOnlyCollection</td>
 <td style="text-align: left; background-color: #FF9999"hasBackground>O(N)</td>
 <td>1000</td>
 <td style="text-align: left; background-color: #CCFFFF"hasBackground>True</td>
