@@ -180,9 +180,7 @@ public static partial class HtmlHelper
             {
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
-                ExecutablePath = DefaultBrowser!.ExecutablePath,
-                DefaultViewport = new ViewPortOptions { Width = 1920, Height = 1080 },
-                Args = ["--window-size=1920,1080"]
+                ExecutablePath = DefaultBrowser!.ExecutablePath
             }))
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -275,9 +273,7 @@ public static partial class HtmlHelper
             {
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
-                ExecutablePath = DefaultBrowser!.ExecutablePath,
-                DefaultViewport = new ViewPortOptions { Width = 1920, Height = 1080 },
-                Args = ["--window-size=1920,1080"]
+                ExecutablePath = DefaultBrowser!.ExecutablePath
             });
 
             cancellationToken.ThrowIfCancellationRequested();

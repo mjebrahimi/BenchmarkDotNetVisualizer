@@ -1,14 +1,20 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace BenchmarkDotNetVisualizer.Tests;
 
 internal static class ImageComparer
 {
-    public static async Task<bool> IsEqualAsync(string imagePath1, string imagePath2)
+    public static async Task<bool> IsEqualAsync(string imagePath1, string imagePath2, bool resizeToSameSize = false)
     {
         using var image1 = await Image.LoadAsync<RgbaVector>(imagePath1);
         using var image2 = await Image.LoadAsync<RgbaVector>(imagePath2);
+
+        if (resizeToSameSize)
+        {
+            image2.Mutate(x => x.Resize(image1.Width, image1.Height));
+        }
 
         if (image1.Width != image2.Width || image1.Height != image2.Height)
         {
@@ -33,18 +39,23 @@ internal static class ImageComparer
         return true;
     }
 
-    public static async Task<bool> IsSimilarAsync(string imagePath1, string imagePath2, double ignoreDifferentColorPercentLessThan = 5.0, double thresholdDifferentPixlesPercent = 1.0)
+    public static async Task<bool> IsSimilarAsync(string imagePath1, string imagePath2, bool resizeToSameSize = false, double ignoreDifferentColorPercentLessThan = 5.0, double thresholdDifferentPixlesPercent = 1.0)
     {
-        var diff = await CalculateDiffAsync(imagePath1, imagePath2, ignoreDifferentColorPercentLessThan);
+        var diff = await CalculateDiffAsync(imagePath1, imagePath2, resizeToSameSize, ignoreDifferentColorPercentLessThan);
         return diff < thresholdDifferentPixlesPercent;
     }
 
-    public static async Task<double> CalculateDiffAsync(string imagePath1, string imagePath2, double ignoreDifferentColorPercentLessThan = 10.0)
+    public static async Task<double> CalculateDiffAsync(string imagePath1, string imagePath2, bool resizeToSameSize = false, double ignoreDifferentColorPercentLessThan = 10.0)
     {
         //TODO: Test with Rgba32 and PackedValue property
 
         using var image1 = await Image.LoadAsync<RgbaVector>(imagePath1);
         using var image2 = await Image.LoadAsync<RgbaVector>(imagePath2);
+
+        if (resizeToSameSize)
+        {
+            image2.Mutate(x => x.Resize(image1.Width, image1.Height));
+        }
 
         if (image1.Width != image2.Width || image1.Height != image2.Height)
         {
