@@ -180,7 +180,8 @@ public static partial class HtmlHelper
             {
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
-                ExecutablePath = DefaultBrowser!.ExecutablePath
+                ExecutablePath = DefaultBrowser!.ExecutablePath,
+                DefaultViewport = new ViewPortOptions { Width = 1920, Height = 1080 },
             }))
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -273,7 +274,8 @@ public static partial class HtmlHelper
             {
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
-                ExecutablePath = DefaultBrowser!.ExecutablePath
+                ExecutablePath = DefaultBrowser!.ExecutablePath,
+                DefaultViewport = new ViewPortOptions { Width = 1920, Height = 1080 },
             });
 
             cancellationToken.ThrowIfCancellationRequested();
@@ -309,9 +311,9 @@ public static partial class HtmlHelper
     }
 }
 
-public static class SemaphoreSlimExtensions
+internal static class SemaphoreSlimExtensions
 {
-    public static async Task<bool> IsLockAlreadyAcquiredAsync(this SemaphoreSlim semaphoreSlim)
+    internal static async Task<bool> IsLockAlreadyAcquiredAsync(this SemaphoreSlim semaphoreSlim)
     {
         bool isAcquired = false;
         try
