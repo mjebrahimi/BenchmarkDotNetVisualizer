@@ -834,9 +834,7 @@ public static class BenchmarkReportProcessor
 
         //NOTE: may needed => expando = expando.CloneWithMetaProperties(); and return expando; as returned object
 
-#pragma warning disable IDE0305 // Simplify collection initialization
         var props = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.Select(p => p).ToArray(); //Select is necessary
-#pragma warning restore IDE0305 // Simplify collection initialization
         foreach (var prop in props!)
         {
             var value = expando.GetProperty(prop)?.ToString()?.RemoveMarkdownBold();
@@ -856,9 +854,7 @@ public static class BenchmarkReportProcessor
 
         //NOTE: may needed => expando = expando.CloneWithMetaProperties(); and return expando; as returned object
 
-#pragma warning disable IDE0305 // Simplify collection initialization
         var props = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.Select(p => p).ToArray(); //Select is necessary
-#pragma warning restore IDE0305 // Simplify collection initialization
         foreach (var prop in props!)
         {
             var value = expando.GetProperty(prop)?.ToString()?.RemoveMarkdownBold();

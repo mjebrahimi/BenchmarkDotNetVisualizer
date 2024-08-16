@@ -275,7 +275,6 @@ public static partial class BenchmarkVisualizer
 
         var stringBuilder = new StringBuilder();
 
-#pragma warning disable RCS1197 // Optimize StringBuilder.Append/AppendLine call
         stringBuilder.AppendLine($"<h1>{options.Title}</h1>");
         stringBuilder.AppendLine(HtmlHelper.WrapInCodeBlock(benchmarkInfo.First().EnvironmentInfo));
 
@@ -298,7 +297,6 @@ public static partial class BenchmarkVisualizer
                 stringBuilder.AppendLine(html);
             }
         }
-#pragma warning restore RCS1197 // Optimize StringBuilder.Append/AppendLine call
 
         return stringBuilder.ToString().TrimEnd(Environment.NewLine.ToCharArray());
     }
@@ -432,7 +430,6 @@ public static partial class BenchmarkVisualizer
 
         var stringBuilder = new StringBuilder();
 
-#pragma warning disable RCS1197 // Optimize StringBuilder.Append/AppendLine call
         stringBuilder.AppendLine($"# {options.Title}");
         stringBuilder.AppendLine();
         stringBuilder.AppendLine(MarkdownHelper.WrapInCodeBlock(benchmarkInfo.First().EnvironmentInfo));
@@ -462,7 +459,6 @@ public static partial class BenchmarkVisualizer
                 stringBuilder.AppendLine();
             }
         }
-#pragma warning restore RCS1197 // Optimize StringBuilder.Append/AppendLine call
 
         return stringBuilder.ToString();
     }

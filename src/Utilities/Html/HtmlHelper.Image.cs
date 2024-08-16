@@ -18,7 +18,6 @@ public static partial class HtmlHelper
     /// </summary>
     public static Browser? DefaultBrowser { get; set; }
 
-#pragma warning disable S3963 // "static" fields should be initialized inline
     static HtmlHelper()
     {
         var installedBrowsers = _browserFetcher.GetInstalledBrowsers().ToList();
@@ -29,7 +28,6 @@ public static partial class HtmlHelper
             DefaultBrowser = new Browser(defaultBrowser.Browser, executablePath);
         }
     }
-#pragma warning restore S3963 // "static" fields should be initialized inline
 
     /// <summary>
     /// Renders to image and save asynchronously.
@@ -100,26 +98,27 @@ public static partial class HtmlHelper
     /// <param name="silent">Performs silently or prints logs to console output (Defaults to <see langword="false"/>)</param>
     public static async Task EnsureBrowserDownloadedAsync(bool silent = false)
     {
-        var tasks = new List<Task>();
-
-        tasks.Add(Task.Run(async () =>
+        var tasks = new List<Task>
         {
-            try
+            Task.Run(async () =>
             {
-                await _browserDownloadSync.WaitAsync();
+                try
+                {
+                    await _browserDownloadSync.WaitAsync();
 
-                if (DefaultBrowser is not null)
-                    return;
+                    if (DefaultBrowser is not null)
+                        return;
 
-                var installedBrowser = await _browserFetcher.DownloadAsync();
-                var executablePath = _browserFetcher.GetExecutablePath(installedBrowser.BuildId);
-                DefaultBrowser = new Browser(installedBrowser.Browser, executablePath);
-            }
-            finally
-            {
-                _browserDownloadSync.Release();
-            }
-        }));
+                    var installedBrowser = await _browserFetcher.DownloadAsync();
+                    var executablePath = _browserFetcher.GetExecutablePath(installedBrowser.BuildId);
+                    DefaultBrowser = new Browser(installedBrowser.Browser, executablePath);
+                }
+                finally
+                {
+                    _browserDownloadSync.Release();
+                }
+            })
+        };
 
         var isProgressing = await _consoleProgressSync.IsLockAlreadyAcquiredAsync();
         if (silent is false && isProgressing is false)

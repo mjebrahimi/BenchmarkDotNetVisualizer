@@ -108,12 +108,10 @@ public class BenchmarkInfo(Summary? summary, Type? benchmarkType, string display
         var benchmarkClassName = filePath.ExtractBenchmarkClassName();
         benchmarkGroupName ??= benchmarkClassName;
 
-#pragma warning disable S1117 // Local variables should not shadow class fields or properties
         var markdown = File.ReadAllText(filePath);
         var environmentInfo = BenchmarkVisualizer.ExtractEnvironmentInfo(markdown);
         var markdownTable = BenchmarkVisualizer.ExtractMarkdownTable(markdown);
         var table = MarkdownHelper.ParseMarkdownTable(markdownTable);
-#pragma warning restore S1117 // Local variables should not shadow class fields or properties
 
         return new BenchmarkInfo(null, null, benchmarkClassName, benchmarkGroupName, environmentInfo, table);
     }
@@ -143,12 +141,10 @@ public class BenchmarkInfo(Summary? summary, Type? benchmarkType, string display
         var benchmarkDisplayName = benchmarkClassType.GetDisplayName()!;
         var benchmarkGroupName = benchmarkClassType.GetGroupName() ?? benchmarkDisplayName;
 
-#pragma warning disable S1117 // Local variables should not shadow class fields or properties
         var markdown = summary.GetExportedMarkdown();
         var environmentInfo = BenchmarkVisualizer.ExtractEnvironmentInfo(markdown);
         var markdownTable = BenchmarkVisualizer.ExtractMarkdownTable(markdown);
         var table = MarkdownHelper.ParseMarkdownTable(markdownTable);
-#pragma warning restore S1117 // Local variables should not shadow class fields or properties
 
         return new BenchmarkInfo(summary, benchmarkClassType, benchmarkDisplayName, benchmarkGroupName, environmentInfo, table);
     }

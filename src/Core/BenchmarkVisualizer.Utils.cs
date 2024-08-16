@@ -84,9 +84,7 @@ public static partial class BenchmarkVisualizer
         ArgumentNullException.ThrowIfNull(markdown, nameof(markdown));
         ArgumentException.ThrowIfNullOrEmpty(markdown, nameof(markdown));
 
-#pragma warning disable S3878 // Arrays should not be created for params parameters
         return markdown[..(markdown.LastIndexOf("```") + 4)].Trim([.. Environment.NewLine.ToCharArray(), ' ', '`']);
-#pragma warning restore S3878 // Arrays should not be created for params parameters
     }
 
     /// <summary>
@@ -98,9 +96,7 @@ public static partial class BenchmarkVisualizer
     {
         ArgumentException.ThrowIfNullOrEmpty(markdown, nameof(markdown));
 
-#pragma warning disable S3878 // Arrays should not be created for params parameters
         return markdown[(markdown.LastIndexOf("```") + 4)..].Trim([.. Environment.NewLine.ToCharArray(), ' ']);
-#pragma warning restore S3878 // Arrays should not be created for params parameters
     }
     #endregion
 

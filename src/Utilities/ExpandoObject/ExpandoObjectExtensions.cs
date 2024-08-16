@@ -255,9 +255,7 @@ public static partial class ExpandoObjectExtensions
             if (expando is null)
                 continue;
 
-#pragma warning disable IDE0305 // Simplify collection initialization
             var propsToRemove = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.Select(p => p).ToArray(); //Select is necessary
-#pragma warning restore IDE0305 // Simplify collection initialization
             expando.RemoveProperties(propsToRemove);
         }
     }
@@ -292,9 +290,7 @@ public static partial class ExpandoObjectExtensions
             if (expando is null)
                 continue;
 
-#pragma warning disable IDE0305 // Simplify collection initialization
             var propsToRemove = propertyNames.Length > 0 ? propertyNames : expando.AsDictionary()!.Keys.Select(p => p).ToArray(); //Select is necessary
-#pragma warning restore IDE0305 // Simplify collection initialization
             expando.RemovePropertiesExcept(propsToRemove);
         }
     }

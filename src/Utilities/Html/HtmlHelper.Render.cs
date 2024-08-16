@@ -343,7 +343,6 @@ public static partial class HtmlHelper
         {
             var props = source.First()!.GetColumnsByOrder();
 
-#pragma warning disable RCS1197 // Optimize StringBuilder.Append/AppendLine call
             stringBuilder.AppendLine("<table>");
 
             //Header
@@ -407,7 +406,6 @@ public static partial class HtmlHelper
             stringBuilder.AppendLine("</tbody>");
             stringBuilder.AppendLine("</table>");
             stringBuilder.AppendLine();
-#pragma warning restore RCS1197 // Optimize StringBuilder.Append/AppendLine call
         }
     }
 
