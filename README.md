@@ -12,10 +12,12 @@
 
 Visualizes your [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet/) benchmarks to **Colorful** images and **Feature-rich** HTML (and maybe powerful charts in the future!)
 
-**Dark Theme**
+**Dark Theme:**
+
 ![for, foreach, ForEach() Benchmark - Dark Theme](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/JsonSerializersBenchmark/Reports/Benchmark-Dark.png)
 
-**Light Theme**
+**Light Theme:**
+
 ![for, foreach, ForEach() Benchmark - Light Theme](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/JsonSerializersBenchmark/Reports/Benchmark-Light.png)
 
 ## A Real World Demo (.NET Collections Benchmark 🚀)
@@ -82,9 +84,11 @@ BenchmarkAutoRunner.Run<JsonSerializersBenchmark>();
 ```
 
 **Output HTML:**
+
 Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/docs/json-serializers-benchmark.html) at `samples/JsonSerializersBenchmark/Reports/Benchmark-Dark.html`
 
 **Output Image:**
+
 ![Json Serializers Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/JsonSerializersBenchmark/Reports/Benchmark-Dark.png)
 
 ### 3. Or Using Exporters
@@ -168,9 +172,11 @@ await summary.JoinReportsAndSaveAsHtmlAndImageAsync(htmlPath, imagePath, options
 ```
 
 **Output HTML:**
+
 Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/docs/iteration-benchmark1.html) at `samples/IterationBenchmark/Reports/JoinedBenchmark-PivotBy-Method-Dark.html`
 
 **Output Image:**
+
 ![Iteration Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/IterationBenchmark/Reports/JoinedBenchmark-PivotBy-Method-Dark.png)
 
 #### Pivot by .NET Runtime column
@@ -201,9 +207,11 @@ await summary.JoinReportsAndSaveAsHtmlAndImageAsync(htmlPath, imagePath, options
 ```
 
 **Output HTML:**
+
 Visit [this HTML page](https://mjebrahimi.github.io/BenchmarkDotNetVisualizer/docs/iteration-benchmark2.html) at `samples/IterationBenchmark/Reports/JoinedBenchmark-PivotBy-Runtime-Dark.html`
 
 **Output Image:**
+
 ![Iteration Benchmark](https://raw.githubusercontent.com/mjebrahimi/BenchmarkDotNetVisualizer/master/samples/IterationBenchmark/Reports/JoinedBenchmark-PivotBy-Runtime-Dark.png)
 
 ## Todo
