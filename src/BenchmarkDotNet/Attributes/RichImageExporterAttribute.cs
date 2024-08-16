@@ -10,8 +10,9 @@ namespace BenchmarkDotNetVisualizer;
 /// <param name="sortByColumns">The sort by columns.</param>
 /// <param name="spectrumColumns">The spectrum columns.</param>
 /// <param name="highlightGroups">if set to <c>true</c> highlights groups.</param>
-/// <param name="dividerMode">The divider mode.</param>
+/// <param name="dividerMode">The divider mode. (Defaults to <see cref="RenderTableDividerMode.EmptyDividerRow"/>)</param>
 /// <param name="format">The image format. (Defaults to <see cref="ImageFormat.Png"/>)</param>
+/// <param name="theme">The theme. (Defaults to <see cref="Theme.Dark"/>)</param>
 /// <seealso cref="ExporterConfigBaseAttribute" />
 public class RichImageExporterAttribute(
     string title,
@@ -20,7 +21,8 @@ public class RichImageExporterAttribute(
     string[]? spectrumColumns = null,
     bool highlightGroups = true,
     RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow,
-    ImageFormat format = ImageFormat.Png)
+    ImageFormat format = ImageFormat.Png,
+    Theme theme = Theme.Dark)
     : ExporterConfigBaseAttribute(new RichImageExporter(new()
     {
         Title = title,
@@ -28,7 +30,8 @@ public class RichImageExporterAttribute(
         SortByColumns = sortByColumns,
         SpectrumColumns = spectrumColumns,
         HighlightGroups = highlightGroups,
-        DividerMode = dividerMode
+        DividerMode = dividerMode,
+        Theme = theme,
     }, format))
 {
 }

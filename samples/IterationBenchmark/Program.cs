@@ -10,19 +10,19 @@ var summary = BenchmarkAutoRunner.Run<IterationBenchmark>();
 
 var options1 = new JoinReportHtmlOptions
 {
-    Title = "Performance Comparison between for, foreach, and ForEeach() method",
+    Title = "Performance Comparison between for, foreach, and ForEach() method",
     MainColumn = "Method",
-    GroupByColumns = ["Categories", "Length"],           //Groups by column 'Categories' and 'Length'
-    PivotColumn = "Runtime",                             //Pivot 'Runtime' column per value of 'Mean'
-    StatisticColumns = ["Mean"],                         //Colorizes 'Mean' columns as Spectrum
+    GroupByColumns = ["Categories", "Length"],           // Groups by column 'Categories' and 'Length'
+    PivotColumn = "Runtime",                             // Pivot 'Runtime' column per value of 'Mean'
+    StatisticColumns = ["Mean"],                         // Colorizes 'Mean' columns as Spectrum
     ColumnsOrder = [".NET Core 3.0", ".NET Core 3.1", ".NET 5.0", ".NET 6.0", ".NET 7.0", ".NET 8.0"], //Order of columns
-    DividerMode = RenderTableDividerMode.SeparateTables, //Separates tables by Grouping by 'GroupByColumns'
-    HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  //Uses feature-rich https://datatables.net plugin
-    Theme = Theme.Dark                                   //Optional (Default is Dark)
+    DividerMode = RenderTableDividerMode.SeparateTables, // Separates tables by Grouping by 'GroupByColumns'
+    HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  // Uses feature-rich https://datatables.net plugin
+    Theme = Theme.Dark                                   // Optional (Default is Dark)
 };
 
 await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
-    htmlPath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\JoinedBenchmark-PivotBy-Runtime.html"),
+    htmlPath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\JoinedBenchmark-PivotBy-Runtime-Dark.html"),
     imagePath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\JoinedBenchmark-PivotBy-Runtime-Dark.png"),
     options: options1);
 
@@ -33,18 +33,18 @@ await summary.JoinReportsAndSaveAsImageAsync(
 
 var options2 = new JoinReportHtmlOptions
 {
-    Title = "Performance Comparison between for, foreach, and ForEeach() method",
+    Title = "Performance Comparison between for, foreach, and ForEach() method",
     MainColumn = "Runtime",
-    GroupByColumns = ["Categories", "Length"],           //Groups by column 'Categories' and 'Length'
-    PivotColumn = "Method",                              //Pivot 'Method' column per value of 'Mean'
-    StatisticColumns = ["Mean"],                         //Colorizes 'Mean' columns as Spectrum
-    ColumnsOrder = ["for", "foreach", "ForEach()"],      //Order of columns
-    DividerMode = RenderTableDividerMode.SeparateTables, //Separates tables by Grouping by 'GroupByColumns'
-    HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  //Uses feature-rich https://datatables.net plugin
-    Theme = Theme.Dark                                   //Optional (Default is Dark)
+    GroupByColumns = ["Categories", "Length"],           // Groups by column 'Categories' and 'Length'
+    PivotColumn = "Method",                              // Pivot 'Method' column per value of 'Mean'
+    StatisticColumns = ["Mean"],                         // Colorizes 'Mean' columns as Spectrum
+    ColumnsOrder = ["for", "foreach", "ForEach()"],      // Order of columns
+    DividerMode = RenderTableDividerMode.SeparateTables, // Separates tables by Grouping by 'GroupByColumns'
+    HtmlWrapMode = HtmlDocumentWrapMode.RichDataTables,  // Uses feature-rich https://datatables.net plugin
+    Theme = Theme.Dark                                   // Optional (Default is Dark)
 };
 await summary.JoinReportsAndSaveAsHtmlAndImageAsync(
-    htmlPath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\JoinedBenchmark-PivotBy-Method.html"),
+    htmlPath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\JoinedBenchmark-PivotBy-Method-Dark.html"),
     imagePath: DirectoryHelper.GetPathRelativeToProjectDirectory("Reports\\JoinedBenchmark-PivotBy-Method-Dark.png"),
     options: options2);
 

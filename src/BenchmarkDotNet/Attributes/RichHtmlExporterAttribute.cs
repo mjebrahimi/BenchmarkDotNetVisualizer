@@ -10,8 +10,9 @@ namespace BenchmarkDotNetVisualizer;
 /// <param name="sortByColumns">The sort by columns.</param>
 /// <param name="spectrumColumns">The spectrum columns.</param>
 /// <param name="highlightGroups">if set to <c>true</c> highlights groups.</param>
-/// <param name="dividerMode">The divider mode.</param>
-/// <param name="htmlWrapMode">The HTML wrap mode.</param>
+/// <param name="dividerMode">The divider mode. (Defaults to <see cref="RenderTableDividerMode.EmptyDividerRow"/>)</param>
+/// <param name="htmlWrapMode">The HTML wrap mode. (Defaults to <see cref="HtmlDocumentWrapMode.Simple"/>)</param>
+/// <param name="theme">The theme. (Defaults to <see cref="Theme.Dark"/>)</param>
 /// <seealso cref="ExporterConfigBaseAttribute" />
 public class RichHtmlExporterAttribute(
     string title,
@@ -20,7 +21,8 @@ public class RichHtmlExporterAttribute(
     string[]? spectrumColumns = null,
     bool highlightGroups = true,
     RenderTableDividerMode dividerMode = RenderTableDividerMode.EmptyDividerRow,
-    HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple)
+    HtmlDocumentWrapMode htmlWrapMode = HtmlDocumentWrapMode.Simple,
+    Theme theme = Theme.Dark)
     : ExporterConfigBaseAttribute(new RichHtmlExporter(new()
     {
         Title = title,
@@ -30,6 +32,7 @@ public class RichHtmlExporterAttribute(
         HighlightGroups = highlightGroups,
         DividerMode = dividerMode,
         HtmlWrapMode = htmlWrapMode,
+        Theme = theme,
     }))
 {
 }

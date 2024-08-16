@@ -3,10 +3,10 @@ using BenchmarkDotNet.Columns;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-// Using Exporter Attributes (not recommended) (required namespace using BenchmarkDotNetVisualizer)
-//[RichImageExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"])]
-//[RichHtmlExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"])]
-//[RichMarkdownExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], sortByColumns: ["Mean", "Allocated"])]
+// Using Exporter Attributes
+//[BenchmarkDotNetVisualizer.RichImageExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"], theme: Theme.Dark)]
+//[BenchmarkDotNetVisualizer.RichHtmlExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], spectrumColumns: ["Mean", "Allocated"], theme: Theme.Dark)]
+//[BenchmarkDotNetVisualizer.RichMarkdownExporter(title: "Json Serializers Benchmark", groupByColumns: ["Method"], sortByColumns: ["Mean", "Allocated"])]
 
 #if RELEASE
 [ShortRunJob]

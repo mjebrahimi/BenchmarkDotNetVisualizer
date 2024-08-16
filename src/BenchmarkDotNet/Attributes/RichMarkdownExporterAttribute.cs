@@ -8,7 +8,7 @@ namespace BenchmarkDotNetVisualizer;
 /// <param name="title">The title.</param>
 /// <param name="groupByColumns">The group by columns.</param>
 /// <param name="sortByColumns">The sort by columns.</param>
-/// <param name="dividerMode">The divider mode.</param>
+/// <param name="dividerMode">The divider mode. (Defaults to <see cref="RenderTableDividerMode.EmptyDividerRow"/>)</param>
 /// <seealso cref="ExporterConfigBaseAttribute" />
 public class RichMarkdownExporterAttribute(
     string title,
