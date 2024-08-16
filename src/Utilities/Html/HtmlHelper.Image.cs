@@ -10,8 +10,8 @@ namespace BenchmarkDotNetVisualizer.Utilities;
 public static partial class HtmlHelper
 {
     private static readonly BrowserFetcher _browserFetcher = new();
-    private static readonly SemaphoreSlim _browserDownloadSync = new(1, 1);
-    private static readonly SemaphoreSlim _consoleProgressSync = new(1, 1);
+    private static readonly SemaphoreSlim _browserDownloadLock = new(1, 1);
+    private static readonly SemaphoreSlim _consolePrintLock = new(1, 1);
 
     /// <summary>
     /// Gets or sets the default browser
@@ -104,7 +104,7 @@ public static partial class HtmlHelper
             {
                 try
                 {
-                    await _browserDownloadSync.WaitAsync();
+                    await _browserDownloadLock.WaitAsync();
 
                     if (DefaultBrowser is not null)
                         return;
@@ -115,24 +115,26 @@ public static partial class HtmlHelper
                 }
                 finally
                 {
-                    _browserDownloadSync.Release();
+                    _browserDownloadLock.Release();
                 }
             })
         };
 
-        var isProgressing = await _consoleProgressSync.IsLockAlreadyAcquiredAsync();
-        if (silent is false && isProgressing is false)
+        await Task.Delay(1000);
+
+        if (silent is false //print progress to console
+            && await _consolePrintLock.IsLockAlreadyAcquiredAsync() is false //is not already printing to console
+            && await _browserDownloadLock.IsLockAlreadyAcquiredAsync() //browser is downloading
+            )
         {
             tasks.Add(Task.Run(async () =>
             {
                 try
                 {
-                    await _consoleProgressSync.WaitAsync();
+                    await _consolePrintLock.WaitAsync();
 
-                    await Task.Delay(1000);
                     var index = 0;
-                    var isDownloading = await _browserDownloadSync.IsLockAlreadyAcquiredAsync();
-                    while (isDownloading)
+                    while (await _browserDownloadLock.IsLockAlreadyAcquiredAsync()) //browser is downloading
                     {
                         Console.Write($"Browser is downloading, please wait{new string('.', index + 1),-5}");
                         Console.SetCursorPosition(0, Console.CursorTop);
@@ -144,7 +146,7 @@ public static partial class HtmlHelper
                 }
                 finally
                 {
-                    _consoleProgressSync.Release();
+                    _consolePrintLock.Release();
                 }
             }));
         }
