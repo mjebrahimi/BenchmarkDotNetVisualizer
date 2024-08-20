@@ -51,7 +51,7 @@
 		<PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 		<!--<PackageReference Include="NuGetizer" Version="1.2.0" PrivateAssets="all" />-->
 		<PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
-		<PackageReference Include="PuppeteerSharp" Version="18.1.0" />
+		<PackageReference Include="PuppeteerSharp" Version="19.0.1" />
 		<PackageReference Include="DeepCloner" Version="0.10.4" />
 	</ItemGroup>
 
