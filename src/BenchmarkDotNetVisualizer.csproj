@@ -67,7 +67,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
-		<PackageReference Include="PuppeteerSharp" Version="18.1.0" />
+		<PackageReference Include="PuppeteerSharp" Version="20.0.2" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
