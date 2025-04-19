@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;<!--netcoreapp3.0;netcoreapp3.1;-->net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;<!--netcoreapp3.0;netcoreapp3.1;net5.0;-->net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
@@ -9,12 +9,12 @@
 		<PackageId>BenchmarkDotNetVisualizer</PackageId>
 		<Title>BenchmarkDotNetVisualizer</Title>
 		<Product>BenchmarkDotNetVisualizer</Product>
-		<Version>2.0.1</Version>
-		<PackageVersion>2.0.1</PackageVersion>
-		<AssemblyVersion>2.0.1</AssemblyVersion>
+		<Version>2.1.0</Version>
+		<PackageVersion>2.1.0</PackageVersion>
+		<AssemblyVersion>2.1.0</AssemblyVersion>
 		<Authors>Mohammad Javad Ebrahimi</Authors>
 		<Company>Mohammad Javad Ebrahimi</Company>
-		<Copyright>Copyright © Mohammad Javad Ebrahimi 2024</Copyright>
+		<Copyright>Copyright © Mohammad Javad Ebrahimi 2025</Copyright>
 		<Description>
 			Visualizes your BenchmarkDotNet benchmarks to colorful images, feature-rich HTML, and customizable markdown files (and maybe powerful charts in the future!)
 		</Description>
@@ -55,19 +55,13 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1'">
-		<PackageReference Include="PuppeteerSharp" Version="19.0.1" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' AND '$(TargetFramework)'!='net5.0'">
-		<PackageReference Include="SixLabors.ImageSharp" Version="[3.1.5,)" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1' OR '$(TargetFramework)'=='net5.0'">
-		<PackageReference Include="SixLabors.ImageSharp" Version="[2.1.9]" />
+		<PackageReference Include="PuppeteerSharp" Version="20.1.3" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
-		<PackageReference Include="PuppeteerSharp" Version="18.1.0" />
+		<PackageReference Include="PuppeteerSharp" Version="[18.1.0]" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="[2.1.10]" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
