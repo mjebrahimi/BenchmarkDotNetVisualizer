@@ -187,8 +187,7 @@ public static partial class HtmlHelper
                 //see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
                 //Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox.
                 //If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-                //https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
-                //https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md
+                //Solution: https://github.com/hardkoded/puppeteer-sharp/issues/2593
                 Args = ["--no-sandbox"]
             }))
             {
@@ -288,8 +287,7 @@ public static partial class HtmlHelper
                 //see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
                 //Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox.
                 //If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
-                //https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
-                //https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md
+                //Solution: https://github.com/hardkoded/puppeteer-sharp/issues/2593
                 Args = ["--no-sandbox"]
             });
 
