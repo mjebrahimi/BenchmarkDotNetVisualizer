@@ -181,7 +181,15 @@ public static partial class HtmlHelper
             {
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
-                ExecutablePath = DefaultBrowser!.ExecutablePath
+                ExecutablePath = DefaultBrowser!.ExecutablePath,
+                //PuppeteerSharp.ProcessException : Failed to launch browser! [3163:3163:0420/000113.340765:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox!
+                //If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor,
+                //see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+                //Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox.
+                //If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+                //https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+                //https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md
+                Args = ["--no-sandbox"]
             }))
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -274,7 +282,15 @@ public static partial class HtmlHelper
             {
                 Headless = true,
                 Browser = DefaultBrowser!.BrowserType,
-                ExecutablePath = DefaultBrowser!.ExecutablePath
+                ExecutablePath = DefaultBrowser!.ExecutablePath,
+                //PuppeteerSharp.ProcessException : Failed to launch browser! [3163:3163:0420/000113.340765:FATAL:zygote_host_impl_linux.cc(128)] No usable sandbox!
+                //If you are running on Ubuntu 23.10+ or another Linux distro that has disabled unprivileged user namespaces with AppArmor,
+                //see https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+                //Otherwise see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md for more information on developing with the (older) SUID sandbox.
+                //If you want to live dangerously and need an immediate workaround, you can try using --no-sandbox.
+                //https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+                //https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md
+                Args = ["--no-sandbox"]
             });
 
             cancellationToken.ThrowIfCancellationRequested();
