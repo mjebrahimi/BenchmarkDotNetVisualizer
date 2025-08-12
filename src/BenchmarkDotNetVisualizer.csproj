@@ -60,7 +60,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
-		<PackageReference Include="PuppeteerSharp" Version="[18.1.0]" />
+		<PackageReference Include="PuppeteerSharp" Version="[20.2.2]" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="[2.1.10]" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
