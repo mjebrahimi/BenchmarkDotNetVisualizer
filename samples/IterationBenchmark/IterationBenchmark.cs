@@ -6,7 +6,6 @@
 //[BenchmarkDotNetVisualizer.RichMarkdownExporter(title: "Performance Comparison between for, foreach, and ForEeach() method", groupByColumns: ["Runtime"], sortByColumns: ["Mean", "Allocated"])]
 
 #if RELEASE
-[ShortRunJob(BenchmarkDotNet.Jobs.RuntimeMoniker.NetCoreApp30)]
 [ShortRunJob(BenchmarkDotNet.Jobs.RuntimeMoniker.NetCoreApp31)]
 [ShortRunJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net50)]
 [ShortRunJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net60)]
