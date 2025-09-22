@@ -50,7 +50,7 @@
 	<ItemGroup>
 		<PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 		<!--<PackageReference Include="NuGetizer" Version="1.2.0" PrivateAssets="all" />-->
-		<PackageReference Include="BenchmarkDotNet" Version="0.15.2" />
+		<PackageReference Include="BenchmarkDotNet" Version="0.15.3" />
 		<PackageReference Include="DeepCloner" Version="0.10.4" />
 	</ItemGroup>
 
